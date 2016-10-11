@@ -1,5 +1,5 @@
 function GameState(){
-    
+    this.keys;
 }
 
 GameState.prototype.init = function(configs){
