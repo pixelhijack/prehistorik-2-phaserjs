@@ -1,16 +1,24 @@
 var GameState = require('./components/gamestate/gamestate.js');
+var init = require('./init.js');
+var preload = require('./preload.js');
+var create = require('./create.js');
+var update = require('./update.js');
 
-var configs = {
-    WIDTH: 1000,
-    HEIGHT: 1000,
-    DOM_ELEMENT: 'app'
+var globalConfigs = require('./globalconfigs.js');
+
+GameState.prototype = {
+    init: init,
+    preload: preload,
+    create: create,
+    update: update
 };
 
-GameState.prototype.update = function(){
-    console.log('[PHASER] UPDATE lifecycle method overriden');
-};
-
-var game = new Phaser.Game(configs.WIDTH, configs.HEIGHT, Phaser.AUTO, configs.DOM_ELEMENT);
+var game = new Phaser.Game(
+    globalConfigs.WIDTH, 
+    globalConfigs.HEIGHT, 
+    globalConfigs.AUTO, 
+    globalConfigs.DOM_ELEMENT
+);
 
 game.state.add('Game', GameState);
 

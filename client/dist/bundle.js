@@ -48,18 +48,26 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var GameState = __webpack_require__(/*! ./components/gamestate/gamestate.js */ 2);
+	var init = __webpack_require__(/*! ./init.js */ 4);
+	var preload = __webpack_require__(/*! ./preload.js */ 5);
+	var create = __webpack_require__(/*! ./create.js */ 6);
+	var update = __webpack_require__(/*! ./update.js */ 3);
 	
-	var configs = {
-	    WIDTH: 1000,
-	    HEIGHT: 1000,
-	    DOM_ELEMENT: 'app'
+	var globalConfigs = __webpack_require__(/*! ./globalconfigs.js */ 7);
+	
+	GameState.prototype = {
+	    init: init,
+	    preload: preload,
+	    create: create,
+	    update: update
 	};
 	
-	GameState.prototype.update = function(){
-	    console.log('[PHASER] UPDATE lifecycle method overriden');
-	};
-	
-	var game = new Phaser.Game(configs.WIDTH, configs.HEIGHT, Phaser.AUTO, configs.DOM_ELEMENT);
+	var game = new Phaser.Game(
+	    globalConfigs.WIDTH, 
+	    globalConfigs.HEIGHT, 
+	    globalConfigs.AUTO, 
+	    globalConfigs.DOM_ELEMENT
+	);
 	
 	game.state.add('Game', GameState);
 	
@@ -96,6 +104,73 @@
 	};
 	
 	module.exports = GameState;
+
+/***/ },
+/* 3 */
+/*!******************************!*\
+  !*** ./client/src/update.js ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	var update = function(){
+	    console.log('[PHASER] UPDATE lifecycle method extracted');
+	};
+	
+	module.exports = update;
+
+/***/ },
+/* 4 */
+/*!****************************!*\
+  !*** ./client/src/init.js ***!
+  \****************************/
+/***/ function(module, exports) {
+
+	var init = function(configs){
+	    console.log('[PHASER] INIT lifecycle method extracted', configs);
+	};
+	
+	module.exports = init;
+
+/***/ },
+/* 5 */
+/*!*******************************!*\
+  !*** ./client/src/preload.js ***!
+  \*******************************/
+/***/ function(module, exports) {
+
+	var preload = function(){
+	    console.log('[PHASER] PRELOAD lifecycle method extracted');
+	};
+	
+	module.exports = preload;
+
+/***/ },
+/* 6 */
+/*!******************************!*\
+  !*** ./client/src/create.js ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	var create = function(){
+	    console.log('[PHASER] CREATE lifecycle method extracted');
+	};
+	
+	module.exports = create;
+
+/***/ },
+/* 7 */
+/*!*************************************!*\
+  !*** ./client/src/globalconfigs.js ***!
+  \*************************************/
+/***/ function(module, exports) {
+
+	var configs = {
+	    WIDTH: 1000,
+	    HEIGHT: 1000,
+	    DOM_ELEMENT: 'app'
+	};
+	
+	module.exports = configs;
 
 /***/ }
 /******/ ]);
