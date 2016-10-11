@@ -45,37 +45,57 @@
 /*!*****************************!*\
   !*** ./client/src/index.js ***!
   \*****************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var GameState = __webpack_require__(/*! ./components/gamestate/gamestate.js */ 2);
+	
 	var configs = {
 	    WIDTH: 1000,
 	    HEIGHT: 1000,
 	    DOM_ELEMENT: 'app'
 	};
 	
+	GameState.prototype.update = function(){
+	    console.log('[PHASER] UPDATE lifecycle method overriden');
+	};
+	
 	var game = new Phaser.Game(configs.WIDTH, configs.HEIGHT, Phaser.AUTO, configs.DOM_ELEMENT);
 	
-	game.state.add('Game', Game);
+	game.state.add('Game', GameState);
 	
 	game.state.start('Game', true, true, { 
 	    initialConfig: 'some initial state'
 	});
-	
-	function Game(){
+
+/***/ },
+/* 1 */,
+/* 2 */
+/*!******************************************************!*\
+  !*** ./client/src/components/gamestate/gamestate.js ***!
+  \******************************************************/
+/***/ function(module, exports) {
+
+	function GameState(){
 	    
-	    this.init = function(config){
-	        console.log('[PHASER] init', config);
-	    };
-	    this.preload = function(){
-	        console.log('[PHASER] preload');
-	    };
-	    this.create = function(){
-	        console.log('[PHASER] create');
-	    };
-	    this.update = function(){
-	        console.log('[PHASER] update');
-	    };
 	}
+	
+	GameState.prototype.init = function(configs){
+	    console.log('[PHASER] INIT - to be overrided', configs);
+	};
+	
+	GameState.prototype.preload = function(){
+	    console.log('[PHASER] PRELOAD - to be overrided');
+	};
+	
+	GameState.prototype.create = function(){
+	    console.log('[PHASER] CREATE - to be overrided');
+	};
+	
+	GameState.prototype.update = function(){
+	    console.log('[PHASER] UPDATE - to be overrided');
+	};
+	
+	module.exports = GameState;
 
 /***/ }
 /******/ ]);
