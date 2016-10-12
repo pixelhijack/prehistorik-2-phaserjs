@@ -1,5 +1,6 @@
 var globalConfigs = require('./globalconfigs.js');
 var Play = require("./gamestates/play/play.js");
+var Menu = require("./gamestates/menu/menu.js");
 
 var game = new Phaser.Game(
     globalConfigs.WIDTH, 
@@ -8,8 +9,9 @@ var game = new Phaser.Game(
     globalConfigs.DOM_ELEMENT
 );
 
-game.state.add('Game', Play);
+game.state.add('Menu', Menu);
+game.state.add('Play', Play);
 
-game.state.start('Game', true, true, { 
+game.state.start('Menu', true, true, { 
     initialConfig: 'some initial state'
 });

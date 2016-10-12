@@ -1,6 +1,6 @@
 var configs = {
-    WIDTH: 1000,
-    HEIGHT: 1000,
+    WIDTH: 500,
+    HEIGHT: 500,
     DOM_ELEMENT: 'app'
 };
 

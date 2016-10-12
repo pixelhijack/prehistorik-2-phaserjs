@@ -47,8 +47,9 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var globalConfigs = __webpack_require__(/*! ./globalconfigs.js */ 6);
-	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 7);
+	var globalConfigs = __webpack_require__(/*! ./globalconfigs.js */ 1);
+	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 2);
+	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 8);
 	
 	var game = new Phaser.Game(
 	    globalConfigs.WIDTH, 
@@ -57,14 +58,66 @@
 	    globalConfigs.DOM_ELEMENT
 	);
 	
-	game.state.add('Game', Play);
+	game.state.add('Menu', Menu);
+	game.state.add('Play', Play);
 	
-	game.state.start('Game', true, true, { 
+	game.state.start('Menu', true, true, { 
 	    initialConfig: 'some initial state'
 	});
 
 /***/ },
 /* 1 */
+/*!*************************************!*\
+  !*** ./client/src/globalconfigs.js ***!
+  \*************************************/
+/***/ function(module, exports) {
+
+	var configs = {
+	    WIDTH: 500,
+	    HEIGHT: 500,
+	    DOM_ELEMENT: 'app'
+	};
+	
+	module.exports = configs;
+
+/***/ },
+/* 2 */
+/*!********************************************!*\
+  !*** ./client/src/gamestates/play/play.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
+	var init = __webpack_require__(/*! ./init.js */ 4);
+	var preload = __webpack_require__(/*! ./preload.js */ 5);
+	var create = __webpack_require__(/*! ./create.js */ 6);
+	var update = __webpack_require__(/*! ./update.js */ 7);
+	
+	/*
+	    @Play
+	    inherits from GameState component
+	*/
+	function Play(){
+	    GameState.call(this);    
+	}
+	Play.prototype = Object.create(GameState.prototype);
+	Play.prototype.constructor = Play;
+	
+	/*
+	    @override 
+	*/
+	Play.prototype = {
+	    init: init,
+	    preload: preload,
+	    create: create,
+	    update: update
+	};
+	
+	module.exports = Play;
+
+
+/***/ },
+/* 3 */
 /*!******************************************************!*\
   !*** ./client/src/components/gamestate/gamestate.js ***!
   \******************************************************/
@@ -93,7 +146,7 @@
 	module.exports = GameState;
 
 /***/ },
-/* 2 */
+/* 4 */
 /*!********************************************!*\
   !*** ./client/src/gamestates/play/init.js ***!
   \********************************************/
@@ -106,7 +159,7 @@
 	module.exports = init;
 
 /***/ },
-/* 3 */
+/* 5 */
 /*!***********************************************!*\
   !*** ./client/src/gamestates/play/preload.js ***!
   \***********************************************/
@@ -119,7 +172,7 @@
 	module.exports = preload;
 
 /***/ },
-/* 4 */
+/* 6 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/create.js ***!
   \**********************************************/
@@ -136,7 +189,7 @@
 	module.exports = create;
 
 /***/ },
-/* 5 */
+/* 7 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/update.js ***!
   \**********************************************/
@@ -166,55 +219,83 @@
 	module.exports = update;
 
 /***/ },
-/* 6 */
-/*!*************************************!*\
-  !*** ./client/src/globalconfigs.js ***!
-  \*************************************/
-/***/ function(module, exports) {
-
-	var configs = {
-	    WIDTH: 1000,
-	    HEIGHT: 1000,
-	    DOM_ELEMENT: 'app'
-	};
-	
-	module.exports = configs;
-
-/***/ },
-/* 7 */
+/* 8 */
 /*!********************************************!*\
-  !*** ./client/src/gamestates/play/play.js ***!
+  !*** ./client/src/gamestates/menu/menu.js ***!
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 1);
-	var init = __webpack_require__(/*! ./init.js */ 2);
-	var preload = __webpack_require__(/*! ./preload.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 4);
-	var update = __webpack_require__(/*! ./update.js */ 5);
+	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
+	var create = __webpack_require__(/*! ./create.js */ 9);
+	var update = __webpack_require__(/*! ./update.js */ 10);
 	
 	/*
-	    @Play
+	    @Menu
 	    inherits from GameState component
 	*/
-	function Play(){
+	function Menu(){
 	    GameState.call(this);    
 	}
-	Play.prototype = Object.create(GameState.prototype);
-	Play.prototype.constructor = Play;
+	Menu.prototype = Object.create(GameState.prototype);
+	Menu.prototype.constructor = Menu;
 	
 	/*
 	    @override 
 	*/
-	Play.prototype = {
-	    init: init,
-	    preload: preload,
+	Menu.prototype = {
 	    create: create,
 	    update: update
 	};
 	
-	module.exports = Play;
+	module.exports = Menu;
 
+
+/***/ },
+/* 9 */
+/*!**********************************************!*\
+  !*** ./client/src/gamestates/menu/create.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	var create = function(){
+	    
+	    var style = { font: "48px Helvetica", fill: "#ffffff", align: "center" };
+	
+	    var text = this.game.add.text(
+	        this.game.world.centerX, 
+	        this.game.world.centerY, 
+	        "Press a key to continue", 
+	        style
+	    );
+	
+	    text.anchor.set(0.5);
+	    
+	    this.keys = this.game.input.keyboard.createCursorKeys();
+	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    
+	    console.log('[PHASER][Menu][Create]');
+	};
+	
+	module.exports = create;
+
+/***/ },
+/* 10 */
+/*!**********************************************!*\
+  !*** ./client/src/gamestates/menu/update.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	var update = function(){
+	    
+	    this.game.input.keyboard.onDownCallback = function(event){
+	        this.game.state.start('Play', true, true, { 
+	            level: event.key
+	        });
+	    };
+	    console.log('[PHASER][Menu][Update]');
+	};
+	
+	module.exports = update;
 
 /***/ }
 /******/ ]);
