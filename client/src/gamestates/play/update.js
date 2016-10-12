@@ -16,7 +16,7 @@ var update = function(){
         console.log('[PHASER] KEYS space');
     }
     
-    console.log('[PHASER] UPDATE lifecycle method extracted');
+    console.log('[PHASER][Play][Update]');
 };
 
 module.exports = update;

@@ -47,20 +47,8 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var GameState = __webpack_require__(/*! ./components/gamestate/gamestate.js */ 2);
-	var init = __webpack_require__(/*! ./init.js */ 4);
-	var preload = __webpack_require__(/*! ./preload.js */ 5);
-	var create = __webpack_require__(/*! ./create.js */ 6);
-	var update = __webpack_require__(/*! ./update.js */ 3);
-	
-	var globalConfigs = __webpack_require__(/*! ./globalconfigs.js */ 7);
-	
-	GameState.prototype = {
-	    init: init,
-	    preload: preload,
-	    create: create,
-	    update: update
-	};
+	var globalConfigs = __webpack_require__(/*! ./globalconfigs.js */ 6);
+	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 7);
 	
 	var game = new Phaser.Game(
 	    globalConfigs.WIDTH, 
@@ -69,15 +57,14 @@
 	    globalConfigs.DOM_ELEMENT
 	);
 	
-	game.state.add('Game', GameState);
+	game.state.add('Game', Play);
 	
 	game.state.start('Game', true, true, { 
 	    initialConfig: 'some initial state'
 	});
 
 /***/ },
-/* 1 */,
-/* 2 */
+/* 1 */
 /*!******************************************************!*\
   !*** ./client/src/components/gamestate/gamestate.js ***!
   \******************************************************/
@@ -88,28 +75,71 @@
 	}
 	
 	GameState.prototype.init = function(configs){
-	    console.log('[PHASER] INIT - to be overrided', configs);
+	    console.log('[PHASER][Component][Init]', configs);
 	};
 	
 	GameState.prototype.preload = function(){
-	    console.log('[PHASER] PRELOAD - to be overrided');
+	    console.log('[PHASER][Component][Preload]');
 	};
 	
 	GameState.prototype.create = function(){
-	    console.log('[PHASER] CREATE - to be overrided');
+	    console.log('[PHASER][Component][Create]');
 	};
 	
 	GameState.prototype.update = function(){
-	    console.log('[PHASER] UPDATE - to be overrided');
+	    console.log('[PHASER][Component][Update]');
 	};
 	
 	module.exports = GameState;
 
 /***/ },
+/* 2 */
+/*!********************************************!*\
+  !*** ./client/src/gamestates/play/init.js ***!
+  \********************************************/
+/***/ function(module, exports) {
+
+	var init = function(configs){
+	    console.log('[PHASER][Play][Init]', configs);
+	};
+	
+	module.exports = init;
+
+/***/ },
 /* 3 */
-/*!******************************!*\
-  !*** ./client/src/update.js ***!
-  \******************************/
+/*!***********************************************!*\
+  !*** ./client/src/gamestates/play/preload.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	var preload = function(){
+	    console.log('[PHASER][Play][Preload]');
+	};
+	
+	module.exports = preload;
+
+/***/ },
+/* 4 */
+/*!**********************************************!*\
+  !*** ./client/src/gamestates/play/create.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	var create = function(){
+	    
+	    this.keys = this.game.input.keyboard.createCursorKeys();
+	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    
+	    console.log('[PHASER][Play][Create]');
+	};
+	
+	module.exports = create;
+
+/***/ },
+/* 5 */
+/*!**********************************************!*\
+  !*** ./client/src/gamestates/play/update.js ***!
+  \**********************************************/
 /***/ function(module, exports) {
 
 	var update = function(){
@@ -130,56 +160,13 @@
 	        console.log('[PHASER] KEYS space');
 	    }
 	    
-	    console.log('[PHASER] UPDATE lifecycle method extracted');
+	    console.log('[PHASER][Play][Update]');
 	};
 	
 	module.exports = update;
 
 /***/ },
-/* 4 */
-/*!****************************!*\
-  !*** ./client/src/init.js ***!
-  \****************************/
-/***/ function(module, exports) {
-
-	var init = function(configs){
-	    console.log('[PHASER] INIT lifecycle method extracted', configs);
-	};
-	
-	module.exports = init;
-
-/***/ },
-/* 5 */
-/*!*******************************!*\
-  !*** ./client/src/preload.js ***!
-  \*******************************/
-/***/ function(module, exports) {
-
-	var preload = function(){
-	    console.log('[PHASER] PRELOAD lifecycle method extracted');
-	};
-	
-	module.exports = preload;
-
-/***/ },
 /* 6 */
-/*!******************************!*\
-  !*** ./client/src/create.js ***!
-  \******************************/
-/***/ function(module, exports) {
-
-	var create = function(){
-	    
-	    this.keys = this.game.input.keyboard.createCursorKeys();
-	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    
-	    console.log('[PHASER] CREATE lifecycle method extracted');
-	};
-	
-	module.exports = create;
-
-/***/ },
-/* 7 */
 /*!*************************************!*\
   !*** ./client/src/globalconfigs.js ***!
   \*************************************/
@@ -192,6 +179,42 @@
 	};
 	
 	module.exports = configs;
+
+/***/ },
+/* 7 */
+/*!********************************************!*\
+  !*** ./client/src/gamestates/play/play.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 1);
+	var init = __webpack_require__(/*! ./init.js */ 2);
+	var preload = __webpack_require__(/*! ./preload.js */ 3);
+	var create = __webpack_require__(/*! ./create.js */ 4);
+	var update = __webpack_require__(/*! ./update.js */ 5);
+	
+	/*
+	    @Play
+	    inherits from GameState component
+	*/
+	function Play(){
+	    GameState.call(this);    
+	}
+	Play.prototype = Object.create(GameState.prototype);
+	Play.prototype.constructor = Play;
+	
+	/*
+	    @override 
+	*/
+	Play.prototype = {
+	    init: init,
+	    preload: preload,
+	    create: create,
+	    update: update
+	};
+	
+	module.exports = Play;
+
 
 /***/ }
 /******/ ]);
