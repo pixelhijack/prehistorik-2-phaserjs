@@ -8,7 +8,7 @@ var server = http.createServer(app);
 app.use(express.static(path.resolve(__dirname, 'client')));
 
 app.get('/level/:id', function (req, res) {
-  res.json({"foo": "bar", "baz": req.params});
+  res.sendFile(path.normalize(__dirname + '/server/levels/level-' + req.params.id + '.json'));
 });
 
 server.listen(process.env.PORT || 8080, process.env.IP || "0.0.0.0", function(){
