@@ -1,5 +1,8 @@
 var create = function(){
     
+    // fps debugging
+    this.game.time.advancedTiming = true;
+    
     var style = { font: "48px Helvetica", fill: "#ffffff", align: "center" };
 
     var text = this.game.add.text(

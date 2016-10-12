@@ -1,5 +1,8 @@
 var update = function(){
     
+    // fps 
+    this.game.debug.text(this.game.time.fps, 5, 20);
+    
     this.game.input.keyboard.onDownCallback = function(event){
         fetch('/level/' + event.key, {
         	method: 'get'

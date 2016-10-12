@@ -1,5 +1,8 @@
 var update = function(){
     
+    // fps 
+    this.game.debug.text(this.game.time.fps, 5, 20);
+    
     if(this.keys.left.isDown){
         console.log('[PHASER] KEYS left');
     }
