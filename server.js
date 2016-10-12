@@ -2,11 +2,14 @@ var http = require('http');
 var path = require('path');
 var express = require('express');
 
-var router = express();
-var server = http.createServer(router);
+var app = express();
+var server = http.createServer(app);
 
-router.use(express.static(path.resolve(__dirname, 'client')));
+app.use(express.static(path.resolve(__dirname, 'client')));
 
+app.get('/level/:id', function (req, res) {
+  res.json({"foo": "bar", "baz": req.params});
+});
 
 server.listen(process.env.PORT || 8080, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
