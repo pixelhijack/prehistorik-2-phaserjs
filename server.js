@@ -7,6 +7,7 @@ var app = express();
 var server = http.createServer(app);
 
 app.use(express.static(path.resolve(__dirname, 'client')));
+app.use(express.static(path.resolve(__dirname, 'server\/assets')));
 
 app.get('/level/:id', function (req, res) {
   
