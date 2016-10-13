@@ -174,7 +174,7 @@
 	    this.game.scale.pageAlignVertically = true;
 	    
 	    // load background
-	    this.game.load.image(this.levelConfig.backgroundLayer, this.globalConfig.BACKGROUND_PATH + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
+	    this.game.load.image(this.levelConfig.backgroundKey, this.globalConfig.BACKGROUND_PATH + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
 	    // load tileset
 	    this.game.load.image(this.levelConfig.tileset, this.globalConfig.TILESET_PATH + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
 	    // load tilemap
@@ -189,23 +189,29 @@
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/create.js ***!
   \**********************************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 12);
+	
 	var create = function(){
 	    
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
 	    
+	    // [SET LEVEL] set dimensions, start physic system
 	    this.game.world.setBounds(0, 0, 546 * 3, 368);
 	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    
-	    this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundLayer);
-	    this.level.tilemap = this.game.add.tilemap(this.levelConfig.tilemap);
-	    this.level.tilemap.addTilesetImage(this.levelConfig.tilesetImage, this.levelConfig.tileset);
-	    this.level.groundLayer = this.level.tilemap.createLayer(this.levelConfig.groundLayer);
+	    // [SET LEVEL] load level background, tiles, layers
+	    levelLoader.createBackground.call(this, 'backgroundLayer');
+	    levelLoader.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
+	    levelLoader.createLayers.call(this, this.levelConfig.layers);
+	    
+	    // [SET LEVEL] fix background, resize
 	    this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
 	    this.level.groundLayer.resizeWorld();
 	    
+	    // [PLAYER]
 	    this.player = this.game.add.sprite(0, this.game.world.height - 100, 'nonExistingSpriteKey');
 	    this.game.physics.enable(this.player);
 	    this.game.camera.follow(this.player);
@@ -362,8 +368,8 @@
 /***/ function(module, exports) {
 
 	var configs = {
-	    WIDTH: 500,
-	    HEIGHT: 500,
+	    WIDTH: 546,
+	    HEIGHT: 368,
 	    DOM_ELEMENT: 'app',
 	    BACKGROUND_PATH: 'backgrounds/',
 	    TILESET_PATH: 'tilesets/',
@@ -371,6 +377,34 @@
 	};
 	
 	module.exports = configs;
+
+/***/ },
+/* 12 */
+/*!***************************************************!*\
+  !*** ./client/src/gamestates/play/levelloader.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	var levelLoader = {
+	    createBackground: function(layerName){
+	        this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundKey);
+	    },
+	    createLayer: function(layer){
+	        this.level[layer] = this.level.tilemap.createLayer(this.levelConfig[layer]);
+	    },
+	    createLayers: function(layers){
+	        for(var layer in layers){
+	            this.level[layer] = this.level.tilemap.createLayer(this.levelConfig.layers[layer].key);
+	            this.level[layer].visible = this.levelConfig.layers[layer].visible;
+	        }
+	    },
+	    createTiles: function(tilemapKey, tilesetKey, tilesetImage){
+	        this.level.tilemap = this.game.add.tilemap(tilemapKey);
+	        this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
+	    }
+	};
+	
+	module.exports = levelLoader;
 
 /***/ }
 /******/ ]);

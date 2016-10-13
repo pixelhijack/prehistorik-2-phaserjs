@@ -6,7 +6,7 @@ var preload = function(){
     this.game.scale.pageAlignVertically = true;
     
     // load background
-    this.game.load.image(this.levelConfig.backgroundLayer, this.globalConfig.BACKGROUND_PATH + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
+    this.game.load.image(this.levelConfig.backgroundKey, this.globalConfig.BACKGROUND_PATH + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
     // load tileset
     this.game.load.image(this.levelConfig.tileset, this.globalConfig.TILESET_PATH + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
     // load tilemap

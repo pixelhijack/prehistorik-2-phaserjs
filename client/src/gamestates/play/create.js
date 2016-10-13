@@ -1,18 +1,24 @@
+var levelLoader = require('./levelloader.js');
+
 var create = function(){
     
     // fps debugging
     this.game.time.advancedTiming = true;
     
+    // [SET LEVEL] set dimensions, start physic system
     this.game.world.setBounds(0, 0, 546 * 3, 368);
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
-    this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundLayer);
-    this.level.tilemap = this.game.add.tilemap(this.levelConfig.tilemap);
-    this.level.tilemap.addTilesetImage(this.levelConfig.tilesetImage, this.levelConfig.tileset);
-    this.level.groundLayer = this.level.tilemap.createLayer(this.levelConfig.groundLayer);
+    // [SET LEVEL] load level background, tiles, layers
+    levelLoader.createBackground.call(this, 'backgroundLayer');
+    levelLoader.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
+    levelLoader.createLayers.call(this, this.levelConfig.layers);
+    
+    // [SET LEVEL] fix background, resize
     this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
     this.level.groundLayer.resizeWorld();
     
+    // [PLAYER]
     this.player = this.game.add.sprite(0, this.game.world.height - 100, 'nonExistingSpriteKey');
     this.game.physics.enable(this.player);
     this.game.camera.follow(this.player);

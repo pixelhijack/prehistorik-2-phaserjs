@@ -1,6 +1,6 @@
 var configs = {
-    WIDTH: 500,
-    HEIGHT: 500,
+    WIDTH: 546,
+    HEIGHT: 368,
     DOM_ELEMENT: 'app',
     BACKGROUND_PATH: 'backgrounds/',
     TILESET_PATH: 'tilesets/',

@@ -8,16 +8,24 @@
 	"tilesetImageExtension": ".png",
 	"backgroundImage": "bg3seamless",
 	"backgroundImageExtension": ".jpg",
+	"backgroundKey": "background-2",
 	"width": 1120,
 	"height": 4800,
-	"backgroundLayer": "background-2",
+	"layers": {
+		"groundLayer": {
+			"key": "ground-layer",
+			"visible": true
+		},
+		"collisionLayer": {
+			"key": "collision-layer",
+			"visible": false
+		},
+		"deathLayer": {
+			"key": "death-layer",
+			"visible": false
+		}	
+	},
 	"fixedBackground": true,
-	"groundLayer": "ground-layer",
-	"foregroundLayer": null,
-	"collisionLayer": "collision-layer",
-	"deathLayer": "death-layer",
-	"parallaxLayer": null,
-	"objectsLayer": null,
 	"entryPoint": {
 		"x": 20,
 		"y": 4677
