@@ -174,11 +174,11 @@
 	    this.game.scale.pageAlignVertically = true;
 	    
 	    // load background
-	    this.game.load.image(this.levelConfig.backgroundLayer, 'backgrounds/' + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
+	    this.game.load.image(this.levelConfig.backgroundLayer, this.globalConfig.BACKGROUND_PATH + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
 	    // load tileset
-	    this.game.load.image(this.levelConfig.tileset, 'tilesets/' + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
+	    this.game.load.image(this.levelConfig.tileset, this.globalConfig.TILESET_PATH + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
 	    // load tilemap
-	    this.game.load.tilemap(this.levelConfig.tilemap, 'levels/' + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
+	    this.game.load.tilemap(this.levelConfig.tilemap, this.globalConfig.LEVEL_PATH + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
 	    
 	};
 	
@@ -364,7 +364,10 @@
 	var configs = {
 	    WIDTH: 500,
 	    HEIGHT: 500,
-	    DOM_ELEMENT: 'app'
+	    DOM_ELEMENT: 'app',
+	    BACKGROUND_PATH: 'backgrounds/',
+	    TILESET_PATH: 'tilesets/',
+	    LEVEL_PATH: 'levels/'
 	};
 	
 	module.exports = configs;
