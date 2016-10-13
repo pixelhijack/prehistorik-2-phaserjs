@@ -9,7 +9,14 @@ var update = require('./update.js');
     inherits from GameState component
 */
 function Play(){
-    GameState.call(this);    
+    GameState.call(this);
+    
+    // extend Phaser gamestate with: 
+    this.levelConfig = undefined;
+    this.level = {
+        backgroundLayer: undefined,
+        tilemap: undefined
+    };
 }
 Play.prototype = Object.create(GameState.prototype);
 Play.prototype.constructor = Play;

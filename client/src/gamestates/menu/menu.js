@@ -7,7 +7,7 @@ var update = require('./update.js');
     inherits from GameState component
 */
 function Menu(){
-    GameState.call(this);    
+    GameState.call(this);
 }
 Menu.prototype = Object.create(GameState.prototype);
 Menu.prototype.constructor = Menu;

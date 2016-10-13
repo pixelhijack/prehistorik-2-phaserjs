@@ -1,12 +1,8 @@
-var init = function(configs){
+var init = function(levelConfig){
     
-    console.log('[PHASER][Play][Init]', configs);
+    console.log('[PHASER][Play][Init]', levelConfig);
     
-    this.level = {
-        data: configs.levelData.level,
-        config: configs.levelData.config,
-        instance: undefined
-    };
+    this.levelConfig = levelConfig;
 };
 
 module.exports = init;

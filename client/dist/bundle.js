@@ -51,17 +51,17 @@
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 2);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 8);
 	
-	var game = new Phaser.Game(
+	var PRE2 = new Phaser.Game(
 	    globalConfigs.WIDTH, 
 	    globalConfigs.HEIGHT, 
 	    globalConfigs.AUTO, 
 	    globalConfigs.DOM_ELEMENT
 	);
 	
-	game.state.add('Menu', Menu);
-	game.state.add('Play', Play);
+	PRE2.state.add('Menu', Menu);
+	PRE2.state.add('Play', Play);
 	
-	game.state.start('Menu', true, true, { 
+	PRE2.state.start('Menu', true, true, { 
 	    initialConfig: 'some initial state'
 	});
 
@@ -98,7 +98,14 @@
 	    inherits from GameState component
 	*/
 	function Play(){
-	    GameState.call(this);    
+	    GameState.call(this);
+	    
+	    // extend Phaser gamestate with: 
+	    this.levelConfig = undefined;
+	    this.level = {
+	        backgroundLayer: undefined,
+	        tilemap: undefined
+	    };
 	}
 	Play.prototype = Object.create(GameState.prototype);
 	Play.prototype.constructor = Play;
@@ -152,15 +159,11 @@
   \********************************************/
 /***/ function(module, exports) {
 
-	var init = function(configs){
+	var init = function(levelConfig){
 	    
-	    console.log('[PHASER][Play][Init]', configs);
+	    console.log('[PHASER][Play][Init]', levelConfig);
 	    
-	    this.level = {
-	        data: configs.levelData.level,
-	        config: configs.levelData.config,
-	        instance: undefined
-	    };
+	    this.levelConfig = levelConfig;
 	};
 	
 	module.exports = init;
@@ -174,6 +177,18 @@
 
 	var preload = function(){
 	    console.log('[PHASER][Play][Preload]');
+	    
+	    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	    this.game.scale.pageAlignHorizontally = true;
+	    this.game.scale.pageAlignVertically = true;
+	    
+	    // load background
+	    this.game.load.image(this.levelConfig.backgroundLayer, 'backgrounds/' + this.levelConfig.backgroundImage + '.jpg');
+	    // load tileset
+	    this.game.load.image(this.levelConfig.tileset, 'tilesets/' + this.levelConfig.tilesetImage + '.png');
+	    // load tilemap
+	    this.game.load.tilemap(this.levelConfig.tilemap, 'levels/' + this.levelConfig.tiledJson + '.json', null, Phaser.Tilemap.TILED_JSON);
+	    
 	};
 	
 	module.exports = preload;
@@ -190,8 +205,27 @@
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
 	    
+	    this.game.world.setBounds(0, 0, 546 * 3, 368);
+	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	    
+	    this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundLayer);
+	    this.level.tilemap = this.game.add.tilemap(this.levelConfig.tilemap);
+	    this.level.tilemap.addTilesetImage(this.levelConfig.tilesetImage, this.levelConfig.tileset);
+	    this.level.groundLayer = this.level.tilemap.createLayer(this.levelConfig.groundLayer);
+	    this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
+	    this.level.groundLayer.resizeWorld();
+	    
+	    this.player = this.game.add.sprite(0, this.game.world.height - 100, 'nonExistingSpriteKey');
+	    this.game.physics.enable(this.player);
+	    this.game.camera.follow(this.player);
+	    
+	    // bind keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
 	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    
+	    // Phaser preserves binding through game states so it needs to be deleted
+	    // http://www.html5gamedevs.com/topic/5631-preserve-input-bindings/
+	    this.game.input.keyboard.onDownCallback = null;
 	    
 	    console.log('[PHASER][Play][Create]');
 	};
@@ -212,15 +246,19 @@
 	    
 	    if(this.keys.left.isDown){
 	        console.log('[PHASER] KEYS left');
+	        this.player.body.x-=20;
 	    }
 	    if(this.keys.right.isDown){
 	        console.log('[PHASER] KEYS right');
+	        this.player.body.x+=20;
 	    }
 	    if(this.keys.up.isDown){
 	        console.log('[PHASER] KEYS up');
+	        this.player.body.y-=20;
 	    }
 	    if(this.keys.down.isDown){
 	        console.log('[PHASER] KEYS down');
+	        this.player.body.y+=20;
 	    }
 	    if(this.keys.space.isDown){
 	        console.log('[PHASER] KEYS space');
@@ -247,7 +285,7 @@
 	    inherits from GameState component
 	*/
 	function Menu(){
-	    GameState.call(this);    
+	    GameState.call(this);
 	}
 	Menu.prototype = Object.create(GameState.prototype);
 	Menu.prototype.constructor = Menu;
@@ -275,6 +313,7 @@
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
 	    
+	    // CTA text
 	    var style = { font: "48px Helvetica", fill: "#ffffff", align: "center" };
 	
 	    var text = this.game.add.text(
@@ -286,8 +325,20 @@
 	
 	    text.anchor.set(0.5);
 	    
+	    // set keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
 	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    
+	    // load next game state by fetching level configs
+	    this.game.input.keyboard.onDownCallback = function(event){
+	        fetch('/level/' + event.key, {
+	        	method: 'get'
+	        }).then(function(response) {
+	            return response.json();
+	        }).then(function(json) {
+	            this.game.state.start('Play', true, true, json);
+	        }.bind(this));
+	    };
 	    
 	    console.log('[PHASER][Menu][Create]');
 	};
@@ -306,17 +357,6 @@
 	    // fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
 	    
-	    this.game.input.keyboard.onDownCallback = function(event){
-	        fetch('/level/' + event.key, {
-	        	method: 'get'
-	        }).then(function(response) {
-	            return response.json();
-	        }).then(function(json) {
-	            this.game.state.start('Play', true, true, { 
-	                levelData: json
-	            });
-	        }.bind(this));
-	    };
 	    console.log('[PHASER][Menu][Update]');
 	};
 	

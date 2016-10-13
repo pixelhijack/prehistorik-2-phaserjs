@@ -3,7 +3,7 @@
 	"name": "Rise of the Tide",
 	"tileset": "tileset-level-rise-of-the-tide",
 	"tilemap": "tilemap-level-rise-of-the-tide",
-	"tiledJson": "L3v1",
+	"tiledJson": "level-1",
 	"tilesetImage": "L3_map_bank",
 	"backgroundImage": "bg3seamless",
 	"width": 1120,
