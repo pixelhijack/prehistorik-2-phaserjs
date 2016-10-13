@@ -47,40 +47,29 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var globalConfigs = __webpack_require__(/*! ./globalconfigs.js */ 1);
-	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 2);
+	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 11);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 8);
+	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 2);
 	
+	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
-	    globalConfigs.WIDTH, 
-	    globalConfigs.HEIGHT, 
-	    globalConfigs.AUTO, 
-	    globalConfigs.DOM_ELEMENT
+	    globalConfig.WIDTH, 
+	    globalConfig.HEIGHT, 
+	    globalConfig.AUTO, 
+	    globalConfig.DOM_ELEMENT
 	);
 	
-	PRE2.state.add('Menu', Menu);
-	PRE2.state.add('Play', Play);
+	// register gamestates (will be instantiated w/ this.game as 1st param, pass globalConfig as 2nd)
+	PRE2.state.add('Menu', Menu.bind(null, globalConfig));
+	PRE2.state.add('Play', Play.bind(null, globalConfig));
 	
+	// kick off first gamestate: Menu
 	PRE2.state.start('Menu', true, true, { 
 	    initialConfig: 'some initial state'
 	});
 
 /***/ },
-/* 1 */
-/*!*************************************!*\
-  !*** ./client/src/globalconfigs.js ***!
-  \*************************************/
-/***/ function(module, exports) {
-
-	var configs = {
-	    WIDTH: 500,
-	    HEIGHT: 500,
-	    DOM_ELEMENT: 'app'
-	};
-	
-	module.exports = configs;
-
-/***/ },
+/* 1 */,
 /* 2 */
 /*!********************************************!*\
   !*** ./client/src/gamestates/play/play.js ***!
@@ -97,13 +86,15 @@
 	    @Play
 	    inherits from GameState component
 	*/
-	function Play(){
+	function Play(globalConfig){
 	    GameState.call(this);
+	    this.globalConfig = globalConfig;
 	    
 	    // extend Phaser gamestate with: 
 	    this.levelConfig = undefined;
 	    this.level = {
 	        backgroundLayer: undefined,
+	        groundLayer: undefined,
 	        tilemap: undefined
 	    };
 	}
@@ -131,7 +122,7 @@
 /***/ function(module, exports) {
 
 	function GameState(){
-	    this.keys;
+	    this.keys = undefined;
 	}
 	
 	GameState.prototype.init = function(configs){
@@ -284,8 +275,9 @@
 	    @Menu
 	    inherits from GameState component
 	*/
-	function Menu(){
+	function Menu(globalConfig){
 	    GameState.call(this);
+	    this.globalConfig = globalConfig;
 	}
 	Menu.prototype = Object.create(GameState.prototype);
 	Menu.prototype.constructor = Menu;
@@ -361,6 +353,21 @@
 	};
 	
 	module.exports = update;
+
+/***/ },
+/* 11 */
+/*!************************************!*\
+  !*** ./client/src/globalconfig.js ***!
+  \************************************/
+/***/ function(module, exports) {
+
+	var configs = {
+	    WIDTH: 500,
+	    HEIGHT: 500,
+	    DOM_ELEMENT: 'app'
+	};
+	
+	module.exports = configs;
 
 /***/ }
 /******/ ]);

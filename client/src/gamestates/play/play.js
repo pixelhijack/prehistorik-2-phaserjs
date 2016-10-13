@@ -8,13 +8,15 @@ var update = require('./update.js');
     @Play
     inherits from GameState component
 */
-function Play(){
+function Play(globalConfig){
     GameState.call(this);
+    this.globalConfig = globalConfig;
     
     // extend Phaser gamestate with: 
     this.levelConfig = undefined;
     this.level = {
         backgroundLayer: undefined,
+        groundLayer: undefined,
         tilemap: undefined
     };
 }

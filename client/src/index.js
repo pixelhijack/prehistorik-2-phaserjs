@@ -1,17 +1,20 @@
-var globalConfigs = require('./globalconfigs.js');
-var Play = require("./gamestates/play/play.js");
-var Menu = require("./gamestates/menu/menu.js");
+var globalConfig = require('./globalconfig.js');
+var Menu = require('./gamestates/menu/menu.js');
+var Play = require('./gamestates/play/play.js');
 
+// instantiate a Phaser.Game
 var PRE2 = new Phaser.Game(
-    globalConfigs.WIDTH, 
-    globalConfigs.HEIGHT, 
-    globalConfigs.AUTO, 
-    globalConfigs.DOM_ELEMENT
+    globalConfig.WIDTH, 
+    globalConfig.HEIGHT, 
+    globalConfig.AUTO, 
+    globalConfig.DOM_ELEMENT
 );
 
-PRE2.state.add('Menu', Menu);
-PRE2.state.add('Play', Play);
+// register gamestates (will be instantiated w/ this.game as 1st param, pass globalConfig as 2nd)
+PRE2.state.add('Menu', Menu.bind(null, globalConfig));
+PRE2.state.add('Play', Play.bind(null, globalConfig));
 
+// kick off first gamestate: Menu
 PRE2.state.start('Menu', true, true, { 
     initialConfig: 'some initial state'
 });
