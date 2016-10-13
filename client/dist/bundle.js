@@ -183,11 +183,11 @@
 	    this.game.scale.pageAlignVertically = true;
 	    
 	    // load background
-	    this.game.load.image(this.levelConfig.backgroundLayer, 'backgrounds/' + this.levelConfig.backgroundImage + '.jpg');
+	    this.game.load.image(this.levelConfig.backgroundLayer, 'backgrounds/' + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
 	    // load tileset
-	    this.game.load.image(this.levelConfig.tileset, 'tilesets/' + this.levelConfig.tilesetImage + '.png');
+	    this.game.load.image(this.levelConfig.tileset, 'tilesets/' + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
 	    // load tilemap
-	    this.game.load.tilemap(this.levelConfig.tilemap, 'levels/' + this.levelConfig.tiledJson + '.json', null, Phaser.Tilemap.TILED_JSON);
+	    this.game.load.tilemap(this.levelConfig.tilemap, 'levels/' + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
 	    
 	};
 	
