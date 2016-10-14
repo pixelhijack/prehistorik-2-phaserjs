@@ -19,6 +19,9 @@ function onMove(event){
             break;
         case 'down':
             break;
+        case 'stop':
+            this.stop();
+            break;
     }   
 }
 

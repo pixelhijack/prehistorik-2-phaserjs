@@ -9,16 +9,16 @@ var update = function(){
     // [KEYPRESS] event dispatch
     if(this.keys.left.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
-    }
-    if(this.keys.right.isDown){
+    } else if(this.keys.right.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
+    } else {
+        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
     }
+    
     if(this.keys.up.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
     }
-    if(this.keys.down.isDown){
-        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'down' });
-    }
+    
     if(this.keys.space.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
     }

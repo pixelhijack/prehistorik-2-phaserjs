@@ -422,16 +422,16 @@
 	    // [KEYPRESS] event dispatch
 	    if(this.keys.left.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
-	    }
-	    if(this.keys.right.isDown){
+	    } else if(this.keys.right.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
+	    } else {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
 	    }
+	    
 	    if(this.keys.up.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
 	    }
-	    if(this.keys.down.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'down' });
-	    }
+	    
 	    if(this.keys.space.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
 	    }
@@ -785,6 +785,7 @@
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 12);
 	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 18);
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 19);
+	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 21);
 	var run = __webpack_require__(/*! ./behaviours/run.js */ 20);
 	
 	/*
@@ -801,6 +802,7 @@
 	    Hero.prototype, 
 	    listen, 
 	    jump,
+	    stop,
 	    run
 	);
 	
@@ -849,6 +851,9 @@
 	            this.jump();
 	            break;
 	        case 'down':
+	            break;
+	        case 'stop':
+	            this.stop();
 	            break;
 	    }   
 	}
@@ -913,6 +918,22 @@
 	};
 	
 	module.exports = runBehaviour;
+
+/***/ },
+/* 21 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/stop.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var stopBehaviour = {
+	    stop: function(){
+	        // slippery rate: 1.1, should go later to levelConfig
+	        this.body.velocity.x /= 1.1;
+	    }
+	};
+	
+	module.exports = stopBehaviour;
 
 /***/ }
 /******/ ]);
