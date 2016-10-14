@@ -1,4 +1,5 @@
 var levelLoader = require('./levelloader.js');
+var ExtendedSprite = require('../../components/sprite/extendedsprite.js');
 
 var create = function(){
     
@@ -19,8 +20,13 @@ var create = function(){
     this.level.groundLayer.resizeWorld();
     
     // [PLAYER]
-    this.player = this.game.add.sprite(0, this.game.world.height - 100, 'nonExistingSpriteKey');
-    this.game.physics.enable(this.player);
+    this.player = new ExtendedSprite(
+        this.game,
+        this.levelConfig.entryPoint.x, 
+        this.levelConfig.entryPoint.y, 
+        'pre2atlas',
+        this.creatureConfig.man 
+    );
     this.game.camera.follow(this.player);
     
     // bind keys

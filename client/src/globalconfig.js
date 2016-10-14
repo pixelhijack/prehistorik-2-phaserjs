@@ -1,10 +1,13 @@
-var configs = {
-    WIDTH: 546,
-    HEIGHT: 368,
-    DOM_ELEMENT: 'app',
-    BACKGROUND_PATH: 'backgrounds/',
-    TILESET_PATH: 'tilesets/',
-    LEVEL_PATH: 'levels/'
+var globalConfig = {
+    width: 546,
+    height: 368,
+    domElement: 'app',
+    backgroundPath: 'backgrounds/',
+    tilesetPath: 'tilesets/',
+    levelPath: 'levels/',
+    textureAtlasPath: 'spritesheets/',
+    textureAtlasImage: 'pre2atlas.png',
+    textureAtlasJson: 'pre2atlas.json'
 };
 
-module.exports = configs;
+module.exports = globalConfig;
