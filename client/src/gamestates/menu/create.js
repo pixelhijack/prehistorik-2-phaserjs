@@ -9,7 +9,7 @@ var create = function(){
     var text = this.game.add.text(
         this.game.world.centerX, 
         this.game.world.centerY, 
-        "Press a key to continue", 
+        "Press key 1 to continue", 
         style
     );
 

@@ -170,7 +170,7 @@
 	    var text = this.game.add.text(
 	        this.game.world.centerX, 
 	        this.game.world.centerY, 
-	        "Press a key to continue", 
+	        "Press key 1 to continue", 
 	        style
 	    );
 	
@@ -225,6 +225,7 @@
 	var preload = __webpack_require__(/*! ./preload.js */ 8);
 	var create = __webpack_require__(/*! ./create.js */ 9);
 	var update = __webpack_require__(/*! ./update.js */ 11);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 16);
 	
 	/*
 	    @Play
@@ -254,6 +255,11 @@
 	    create: create,
 	    update: update
 	};
+	
+	/*
+	    @extend
+	*/
+	Play.prototype = Object.assign(Play.prototype, eventEmitters);
 	
 	module.exports = Play;
 
@@ -353,6 +359,24 @@
 	    );
 	    this.game.camera.follow(this.player);
 	    
+	    this.player.onEvents = function(event){
+	        switch (event.key) {
+	            case 'left':
+	                this.body.velocity.x -= this.props.acceleration;
+	                break;
+	            case 'right':
+	                this.body.velocity.x += this.props.acceleration;
+	                break;
+	            case 'up':
+	                this.body.velocity.y -= this.props.acceleration;
+	                break;
+	            case 'down':
+	                this.body.velocity.y += this.props.acceleration;
+	                break;
+	        }
+	    };
+	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
+	    
 	    // bind keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
 	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -407,23 +431,19 @@
 	    this.game.debug.text(this.game.time.fps, 5, 20);
 	    
 	    if(this.keys.left.isDown){
-	        console.log('[PHASER] KEYS left');
-	        this.player.body.x-=20;
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
 	    }
 	    if(this.keys.right.isDown){
-	        console.log('[PHASER] KEYS right');
-	        this.player.body.x+=20;
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
 	    }
 	    if(this.keys.up.isDown){
-	        console.log('[PHASER] KEYS up');
-	        this.player.body.y-=20;
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
 	    }
 	    if(this.keys.down.isDown){
-	        console.log('[PHASER] KEYS down');
-	        this.player.body.y+=20;
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'down' });
 	    }
 	    if(this.keys.space.isDown){
-	        console.log('[PHASER] KEYS space');
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
 	    }
 	    
 	    console.log('[PHASER][Play][Update]');
@@ -802,6 +822,21 @@
 	};
 	
 	module.exports = listen;
+
+/***/ },
+/* 16 */
+/*!*****************************************************!*\
+  !*** ./client/src/gamestates/play/eventemitters.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	var eventEmitters = {
+	    eventsOf: {
+	        keys: new Phaser.Signal()
+	    }
+	};
+	
+	module.exports = eventEmitters;
 
 /***/ }
 /******/ ]);

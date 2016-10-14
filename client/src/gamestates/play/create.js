@@ -40,6 +40,24 @@ var create = function(){
     );
     this.game.camera.follow(this.player);
     
+    this.player.onEvents = function(event){
+        switch (event.key) {
+            case 'left':
+                this.body.velocity.x -= this.props.acceleration;
+                break;
+            case 'right':
+                this.body.velocity.x += this.props.acceleration;
+                break;
+            case 'up':
+                this.body.velocity.y -= this.props.acceleration;
+                break;
+            case 'down':
+                this.body.velocity.y += this.props.acceleration;
+                break;
+        }
+    };
+    this.player.listen(this.eventsOf.keys, this.player.onEvents);
+    
     // bind keys
     this.keys = this.game.input.keyboard.createCursorKeys();
     this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

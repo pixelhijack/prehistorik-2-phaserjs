@@ -3,6 +3,7 @@ var init = require('./init.js');
 var preload = require('./preload.js');
 var create = require('./create.js');
 var update = require('./update.js');
+var eventEmitters = require('./eventemitters.js');
 
 /*
     @Play
@@ -32,5 +33,10 @@ Play.prototype = {
     create: create,
     update: update
 };
+
+/*
+    @extend
+*/
+Play.prototype = Object.assign(Play.prototype, eventEmitters);
 
 module.exports = Play;
