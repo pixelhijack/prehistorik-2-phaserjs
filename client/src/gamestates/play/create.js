@@ -44,6 +44,7 @@ var create = function(){
     
     this.player.onEvents = reactions;
     this.player.listen(this.eventsOf.keys, this.player.onEvents);
+    this.player.listen(this.eventsOf.level, this.player.onEvents);
     
     // bind keys
     this.keys = this.game.input.keyboard.createCursorKeys();

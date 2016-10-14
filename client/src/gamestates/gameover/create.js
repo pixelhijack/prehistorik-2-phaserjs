@@ -7,7 +7,7 @@ var create = function(){
     var text = this.game.add.text(
         this.game.world.centerX, 
         this.game.world.centerY, 
-        "Press key 1 to continue", 
+        "Game Over\nPress a key to continue", 
         { font: "48px Helvetica", fill: "#ffffff", align: "center" }
     );
 
@@ -15,16 +15,10 @@ var create = function(){
     
     // load next game state by fetching level configs
     this.game.input.keyboard.onDownCallback = function(event){
-        fetch('/level/' + event.key, {
-        	method: 'get'
-        }).then(function(response) {
-            return response.json();
-        }).then(function(json) {
-            this.game.state.start('Play', true, true, json);
-        }.bind(this));
+        this.game.state.start('Menu', true, true);
     };
     
-    console.log('[PHASER][Menu][Create]');
+    console.log('[PHASER][GameOver][Create]');
 };
 
 module.exports = create;

@@ -1,6 +1,7 @@
 var eventEmitters = {
     eventsOf: {
-        keys: new Phaser.Signal()
+        keys: new Phaser.Signal(),
+        level: new Phaser.Signal()
     }
 };
 

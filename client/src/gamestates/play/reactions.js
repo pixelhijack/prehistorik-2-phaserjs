@@ -3,6 +3,9 @@ var reactions = function(event){
         case 'MOVE': 
             onMove.call(this, event);
             break;
+        case 'DIE': 
+            onDie.call(this, event);
+            break;
     }
 };
 
@@ -23,6 +26,10 @@ function onMove(event){
             this.stop();
             break;
     }   
+}
+
+function onDie(event){
+    this.game.state.start('GameOver', true, false, { levelNumber: 1 });
 }
 
 module.exports = reactions;

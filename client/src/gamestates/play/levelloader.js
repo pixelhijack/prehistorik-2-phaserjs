@@ -15,6 +15,7 @@ var levelLoader = {
         this.level.tilemap = this.game.add.tilemap(tilemapKey);
         this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
         this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.collisionLayer.key);
+        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.deathLayer.key);
     }
 };
 

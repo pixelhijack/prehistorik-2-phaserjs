@@ -50,6 +50,7 @@
 	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
+	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 22);
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
@@ -62,6 +63,7 @@
 	// register gamestates (will be instantiated w/ this.game as 1st param, pass globalConfig as 2nd)
 	PRE2.state.add('Menu', Menu.bind(null, globalConfig));
 	PRE2.state.add('Play', Play.bind(null, globalConfig));
+	PRE2.state.add('GameOver', GameOver.bind(null, globalConfig));
 	
 	// kick off first gamestate: Menu
 	PRE2.state.start('Menu', true, true, { 
@@ -173,10 +175,6 @@
 	    );
 	
 	    text.anchor.set(0.5);
-	    
-	    // set keys
-	    this.keys = this.game.input.keyboard.createCursorKeys();
-	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	    
 	    // load next game state by fetching level configs
 	    this.game.input.keyboard.onDownCallback = function(event){
@@ -361,6 +359,7 @@
 	    
 	    this.player.onEvents = reactions;
 	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
+	    this.player.listen(this.eventsOf.level, this.player.onEvents);
 	    
 	    // bind keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
@@ -399,6 +398,7 @@
 	        this.level.tilemap = this.game.add.tilemap(tilemapKey);
 	        this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
 	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.collisionLayer.key);
+	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.deathLayer.key);
 	    }
 	};
 	
@@ -418,6 +418,10 @@
 	    
 	    // [COLLISIONS]
 	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
+	    
+	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
+	        this.eventsOf.level.dispatch({ type: 'DIE' });
+	    }.bind(this));
 	    
 	    // [KEYPRESS] event dispatch
 	    if(this.keys.left.isDown){
@@ -818,7 +822,8 @@
 
 	var eventEmitters = {
 	    eventsOf: {
-	        keys: new Phaser.Signal()
+	        keys: new Phaser.Signal(),
+	        level: new Phaser.Signal()
 	    }
 	};
 	
@@ -835,6 +840,9 @@
 	    switch(event.type){
 	        case 'MOVE': 
 	            onMove.call(this, event);
+	            break;
+	        case 'DIE': 
+	            onDie.call(this, event);
 	            break;
 	    }
 	};
@@ -856,6 +864,10 @@
 	            this.stop();
 	            break;
 	    }   
+	}
+	
+	function onDie(event){
+	    this.game.state.start('GameOver', true, false, { levelNumber: 1 });
 	}
 	
 	module.exports = reactions;
@@ -934,6 +946,87 @@
 	};
 	
 	module.exports = stopBehaviour;
+
+/***/ },
+/* 22 */
+/*!****************************************************!*\
+  !*** ./client/src/gamestates/gameover/gameover.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
+	var create = __webpack_require__(/*! ./create.js */ 23);
+	var update = __webpack_require__(/*! ./update.js */ 24);
+	
+	/*
+	    @GameOver
+	    inherits from GameState component
+	*/
+	function GameOver(){
+	    GameState.call(this);
+	}
+	GameOver.prototype = Object.create(GameState.prototype);
+	GameOver.prototype.constructor = GameOver;
+	
+	/*
+	    @override 
+	*/
+	GameOver.prototype = {
+	    create: create,
+	    update: update
+	};
+	
+	module.exports = GameOver;
+
+
+/***/ },
+/* 23 */
+/*!**************************************************!*\
+  !*** ./client/src/gamestates/gameover/create.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	var create = function(){
+	    
+	    // fps debugging
+	    this.game.time.advancedTiming = true;
+	
+	    // CTA text
+	    var text = this.game.add.text(
+	        this.game.world.centerX, 
+	        this.game.world.centerY, 
+	        "Game Over\nPress a key to continue", 
+	        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
+	    );
+	
+	    text.anchor.set(0.5);
+	    
+	    // load next game state by fetching level configs
+	    this.game.input.keyboard.onDownCallback = function(event){
+	        this.game.state.start('Menu', true, true);
+	    };
+	    
+	    console.log('[PHASER][GameOver][Create]');
+	};
+	
+	module.exports = create;
+
+/***/ },
+/* 24 */
+/*!**************************************************!*\
+  !*** ./client/src/gamestates/gameover/update.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	var update = function(){
+	    
+	    // fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	    
+	    console.log('[PHASER][GameOver][Update]');
+	};
+	
+	module.exports = update;
 
 /***/ }
 /******/ ]);
