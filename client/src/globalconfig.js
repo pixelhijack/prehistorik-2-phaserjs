@@ -1,6 +1,7 @@
 var globalConfig = {
     width: 546,
     height: 368,
+    blocks: 3,
     domElement: 'app',
     backgroundPath: 'backgrounds/',
     tilesetPath: 'tilesets/',

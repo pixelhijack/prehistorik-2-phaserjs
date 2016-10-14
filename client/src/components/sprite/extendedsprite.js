@@ -9,7 +9,14 @@ function ExtendedSprite(game, x, y, sprite, props){
     Phaser.Sprite.call(this, game, x, y, sprite);
     
     this.props.animations.forEach(function(animation){
-        this.animations.add(animation.name, animation.frames, animation.fps, animation.loop);
+        this.animations.add(
+            animation.name, 
+            animation.frames.map(function(frame){ 
+                return frame.toString(); 
+            }), 
+            animation.fps, 
+            animation.loop
+        );
     }.bind(this));
     
     this.game.add.existing(this);

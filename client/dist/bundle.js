@@ -78,6 +78,7 @@
 	var globalConfig = {
 	    width: 546,
 	    height: 368,
+	    blocks: 3,
 	    domElement: 'app',
 	    backgroundPath: 'backgrounds/',
 	    tilesetPath: 'tilesets/',
@@ -311,7 +312,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 10);
-	var ExtendedSprite = __webpack_require__(/*! ../../components/sprite/extendedsprite.js */ 12);
+	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 14);
 	
 	var create = function(){
 	    
@@ -319,12 +320,23 @@
 	    this.game.time.advancedTiming = true;
 	    
 	    // [SET LEVEL] set dimensions, start physic system
-	    this.game.world.setBounds(0, 0, 546 * 3, 368);
+	    this.game.world.setBounds(
+	        0, 
+	        0, 
+	        this.globalConfig.width * this.globalConfig.blocks, 
+	        this.globalConfig.height
+	    );
+	    
 	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    
 	    // [SET LEVEL] load level background, tiles, layers
 	    levelLoader.createBackground.call(this, 'backgroundLayer');
-	    levelLoader.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
+	    levelLoader.createTiles.call(
+	        this, 
+	        this.levelConfig.tilemap, 
+	        this.levelConfig.tileset, 
+	        this.levelConfig.tilesetImage
+	    );
 	    levelLoader.createLayers.call(this, this.levelConfig.layers);
 	    
 	    // [SET LEVEL] fix background, resize
@@ -332,7 +344,7 @@
 	    this.level.groundLayer.resizeWorld();
 	    
 	    // [PLAYER]
-	    this.player = new ExtendedSprite(
+	    this.player = new Hero(
 	        this.game,
 	        this.levelConfig.entryPoint.x, 
 	        this.levelConfig.entryPoint.y, 
@@ -437,7 +449,14 @@
 	    Phaser.Sprite.call(this, game, x, y, sprite);
 	    
 	    this.props.animations.forEach(function(animation){
-	        this.animations.add(animation.name, animation.frames, animation.fps, animation.loop);
+	        this.animations.add(
+	            animation.name, 
+	            animation.frames.map(function(frame){ 
+	                return frame.toString(); 
+	            }), 
+	            animation.fps, 
+	            animation.loop
+	        );
 	    }.bind(this));
 	    
 	    this.game.add.existing(this);
@@ -741,6 +760,48 @@
 	}
 	
 	module.exports = creatureConfigs;
+
+/***/ },
+/* 14 */
+/*!**********************************************!*\
+  !*** ./client/src/components/sprite/hero.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 12);
+	var listenMixin = __webpack_require__(/*! ./mixins/listen.js */ 15);
+	
+	/*
+	    @Hero
+	*/
+	function Hero(game, x, y, sprite, props){
+	    ExtendedSprite.call(this, game, x, y, sprite, props);
+	}
+	
+	Hero.prototype = Object.create(ExtendedSprite.prototype);
+	Hero.prototype.constructor = Hero;
+	
+	Hero.prototype = Object.assign(Hero.prototype, listenMixin);
+	
+	module.exports = Hero;
+
+/***/ },
+/* 15 */
+/*!*******************************************************!*\
+  !*** ./client/src/components/sprite/mixins/listen.js ***!
+  \*******************************************************/
+/***/ function(module, exports) {
+
+	var listen = {
+	    listen: function(eventSource, callback){
+	        eventSource.add(callback, this);
+	    },
+	    onEvents: function(event){
+	        console.log('[%s]: ', this.constructor.name, event);
+	    }
+	};
+	
+	module.exports = listen;
 
 /***/ }
 /******/ ]);

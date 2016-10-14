@@ -1,5 +1,5 @@
 var levelLoader = require('./levelloader.js');
-var ExtendedSprite = require('../../components/sprite/extendedsprite.js');
+var Hero = require('../../components/sprite/hero.js');
 
 var create = function(){
     
@@ -7,12 +7,23 @@ var create = function(){
     this.game.time.advancedTiming = true;
     
     // [SET LEVEL] set dimensions, start physic system
-    this.game.world.setBounds(0, 0, 546 * 3, 368);
+    this.game.world.setBounds(
+        0, 
+        0, 
+        this.globalConfig.width * this.globalConfig.blocks, 
+        this.globalConfig.height
+    );
+    
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     // [SET LEVEL] load level background, tiles, layers
     levelLoader.createBackground.call(this, 'backgroundLayer');
-    levelLoader.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
+    levelLoader.createTiles.call(
+        this, 
+        this.levelConfig.tilemap, 
+        this.levelConfig.tileset, 
+        this.levelConfig.tilesetImage
+    );
     levelLoader.createLayers.call(this, this.levelConfig.layers);
     
     // [SET LEVEL] fix background, resize
@@ -20,7 +31,7 @@ var create = function(){
     this.level.groundLayer.resizeWorld();
     
     // [PLAYER]
-    this.player = new ExtendedSprite(
+    this.player = new Hero(
         this.game,
         this.levelConfig.entryPoint.x, 
         this.levelConfig.entryPoint.y, 
