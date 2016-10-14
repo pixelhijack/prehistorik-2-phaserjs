@@ -1,4 +1,4 @@
-var listen = {
+var listenBehaviour = {
     listen: function(eventSource, callback){
         eventSource.add(callback, this);
     },
@@ -7,4 +7,4 @@ var listen = {
     }
 };
 
-module.exports = listen;
+module.exports = listenBehaviour;

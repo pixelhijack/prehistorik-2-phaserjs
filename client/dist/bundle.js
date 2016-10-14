@@ -316,6 +316,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 10);
+	var reactions = __webpack_require__(/*! ./reactions.js */ 17);
 	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 14);
 	
 	var create = function(){
@@ -358,22 +359,7 @@
 	    
 	    this.game.camera.follow(this.player);
 	    
-	    this.player.onEvents = function(event){
-	        switch (event.key) {
-	            case 'left':
-	                this.body.velocity.x -= this.props.acceleration;
-	                break;
-	            case 'right':
-	                this.body.velocity.x += this.props.acceleration;
-	                break;
-	            case 'up':
-	                this.body.velocity.y -= this.props.acceleration;
-	                break;
-	            case 'down':
-	                this.body.velocity.y += this.props.acceleration;
-	                break;
-	        }
-	    };
+	    this.player.onEvents = reactions;
 	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
 	    
 	    // bind keys
@@ -797,7 +783,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 12);
-	var listenMixin = __webpack_require__(/*! ./mixins/listen.js */ 15);
+	var listenBehaviour = __webpack_require__(/*! ./behaviours/listen.js */ 18);
+	var jumpBehaviour = __webpack_require__(/*! ./behaviours/jump.js */ 19);
 	
 	/*
 	    @Hero
@@ -809,29 +796,16 @@
 	Hero.prototype = Object.create(ExtendedSprite.prototype);
 	Hero.prototype.constructor = Hero;
 	
-	Hero.prototype = Object.assign(Hero.prototype, listenMixin);
+	Hero.prototype = Object.assign(
+	    Hero.prototype, 
+	    listenBehaviour, 
+	    jumpBehaviour
+	);
 	
 	module.exports = Hero;
 
 /***/ },
-/* 15 */
-/*!*******************************************************!*\
-  !*** ./client/src/components/sprite/mixins/listen.js ***!
-  \*******************************************************/
-/***/ function(module, exports) {
-
-	var listen = {
-	    listen: function(eventSource, callback){
-	        eventSource.add(callback, this);
-	    },
-	    onEvents: function(event){
-	        console.log('[%s]: ', this.constructor.name, event);
-	    }
-	};
-	
-	module.exports = listen;
-
-/***/ },
+/* 15 */,
 /* 16 */
 /*!*****************************************************!*\
   !*** ./client/src/gamestates/play/eventemitters.js ***!
@@ -845,6 +819,74 @@
 	};
 	
 	module.exports = eventEmitters;
+
+/***/ },
+/* 17 */
+/*!*************************************************!*\
+  !*** ./client/src/gamestates/play/reactions.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	var reactions = function(event){
+	    switch(event.type){
+	        case 'MOVE': 
+	            onMove.call(this, event);
+	            break;
+	    }
+	};
+	
+	function onMove(event){
+	    switch(event.key){
+	        case 'left':
+	            this.body.velocity.x -= this.props.acceleration;
+	            break;
+	        case 'right':
+	            this.body.velocity.x += this.props.acceleration;
+	            break;
+	        case 'up':
+	            this.jump();
+	            break;
+	        case 'down':
+	            break;
+	    }   
+	}
+	
+	module.exports = reactions;
+
+/***/ },
+/* 18 */
+/*!***********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/listen.js ***!
+  \***********************************************************/
+/***/ function(module, exports) {
+
+	var listenBehaviour = {
+	    listen: function(eventSource, callback){
+	        eventSource.add(callback, this);
+	    },
+	    onEvents: function(event){
+	        console.log('[%s]: ', this.constructor.name, event);
+	    }
+	};
+	
+	module.exports = listenBehaviour;
+
+/***/ },
+/* 19 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/jump.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var jumpBehaviour = {
+	    jump: function(){
+	        if(this.body.touching.down || this.body.blocked.down){
+	            this.body.velocity.y -= this.props.jumping;
+	        }
+	    }
+	};
+	
+	module.exports = jumpBehaviour;
 
 /***/ }
 /******/ ]);
