@@ -21,7 +21,11 @@ function ExtendedSprite(game, x, y, sprite, props){
     
     this.game.add.existing(this);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.body.gravity.y = this.props.gravity;
     this.anchor.setTo(0.5, 0.5);
+    this.body.collideWorldBounds = true;
+    this.checkWorldBounds = true;
+    this.outOfBoundsKill = true;
 }
 
 ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);

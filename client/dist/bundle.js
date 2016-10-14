@@ -163,15 +163,13 @@
 	    
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
-	    
-	    // CTA text
-	    var style = { font: "48px Helvetica", fill: "#ffffff", align: "center" };
 	
+	    // CTA text
 	    var text = this.game.add.text(
 	        this.game.world.centerX, 
 	        this.game.world.centerY, 
 	        "Press key 1 to continue", 
-	        style
+	        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
 	    );
 	
 	    text.anchor.set(0.5);
@@ -357,6 +355,7 @@
 	        'pre2atlas',
 	        this.creatureConfig.man 
 	    );
+	    
 	    this.game.camera.follow(this.player);
 	    
 	    this.player.onEvents = function(event){
@@ -413,6 +412,7 @@
 	    createTiles: function(tilemapKey, tilesetKey, tilesetImage){
 	        this.level.tilemap = this.game.add.tilemap(tilemapKey);
 	        this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
+	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.collisionLayer.key);
 	    }
 	};
 	
@@ -430,6 +430,10 @@
 	    // fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
 	    
+	    // [COLLISIONS]
+	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
+	    
+	    // [KEYPRESS] event dispatch
 	    if(this.keys.left.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
 	    }
@@ -481,7 +485,11 @@
 	    
 	    this.game.add.existing(this);
 	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.body.gravity.y = this.props.gravity;
 	    this.anchor.setTo(0.5, 0.5);
+	    this.body.collideWorldBounds = true;
+	    this.checkWorldBounds = true;
+	    this.outOfBoundsKill = true;
 	}
 	
 	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);

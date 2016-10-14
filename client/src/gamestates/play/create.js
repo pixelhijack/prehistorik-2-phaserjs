@@ -38,6 +38,7 @@ var create = function(){
         'pre2atlas',
         this.creatureConfig.man 
     );
+    
     this.game.camera.follow(this.player);
     
     this.player.onEvents = function(event){

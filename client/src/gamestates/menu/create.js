@@ -2,15 +2,13 @@ var create = function(){
     
     // fps debugging
     this.game.time.advancedTiming = true;
-    
-    // CTA text
-    var style = { font: "48px Helvetica", fill: "#ffffff", align: "center" };
 
+    // CTA text
     var text = this.game.add.text(
         this.game.world.centerX, 
         this.game.world.centerY, 
         "Press key 1 to continue", 
-        style
+        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
     );
 
     text.anchor.set(0.5);
