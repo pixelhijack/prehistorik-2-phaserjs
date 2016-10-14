@@ -9,10 +9,10 @@ var reactions = function(event){
 function onMove(event){
     switch(event.key){
         case 'left':
-            this.body.velocity.x -= this.props.acceleration;
+            this.runLeft();
             break;
         case 'right':
-            this.body.velocity.x += this.props.acceleration;
+            this.runRight();
             break;
         case 'up':
             this.jump();

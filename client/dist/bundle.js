@@ -783,8 +783,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 12);
-	var listenBehaviour = __webpack_require__(/*! ./behaviours/listen.js */ 18);
-	var jumpBehaviour = __webpack_require__(/*! ./behaviours/jump.js */ 19);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 18);
+	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 19);
+	var run = __webpack_require__(/*! ./behaviours/run.js */ 20);
 	
 	/*
 	    @Hero
@@ -798,8 +799,9 @@
 	
 	Hero.prototype = Object.assign(
 	    Hero.prototype, 
-	    listenBehaviour, 
-	    jumpBehaviour
+	    listen, 
+	    jump,
+	    run
 	);
 	
 	module.exports = Hero;
@@ -838,10 +840,10 @@
 	function onMove(event){
 	    switch(event.key){
 	        case 'left':
-	            this.body.velocity.x -= this.props.acceleration;
+	            this.runLeft();
 	            break;
 	        case 'right':
-	            this.body.velocity.x += this.props.acceleration;
+	            this.runRight();
 	            break;
 	        case 'up':
 	            this.jump();
@@ -887,6 +889,30 @@
 	};
 	
 	module.exports = jumpBehaviour;
+
+/***/ },
+/* 20 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/run.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	var runBehaviour = {
+	    runLeft: function(){
+	        this.scale.x = -1;
+	        if(this.body.velocity.x > -this.props.maxSpeed){
+	            this.body.velocity.x -= this.props.acceleration;
+	        }
+	    },
+	    runRight: function(){
+	        this.scale.x = 1;
+	        if(this.body.velocity.x < this.props.maxSpeed){
+	            this.body.velocity.x += this.props.acceleration;
+	        }
+	    }
+	};
+	
+	module.exports = runBehaviour;
 
 /***/ }
 /******/ ]);
