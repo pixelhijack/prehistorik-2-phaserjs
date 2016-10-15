@@ -29,6 +29,9 @@ function onMove(event){
 }
 
 function onDie(event){
+    // removing event listeners on state shutdown otherwise causing memory leak and GC fails
+    this.game.state.states.Play.eventsOf.keys.remove(this.onEvents, this);
+    this.game.state.states.Play.eventsOf.level.remove(this.onEvents, this);
     this.game.state.start('GameOver', true, false, { levelNumber: 1 });
 }
 

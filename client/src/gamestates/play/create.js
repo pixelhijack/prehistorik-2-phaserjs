@@ -52,7 +52,6 @@ var create = function(){
     
     // Phaser preserves binding through game states so it needs to be deleted
     // http://www.html5gamedevs.com/topic/5631-preserve-input-bindings/
-    this.game.input.keyboard.onDownCallback = null;
     
     console.log('[PHASER][Play][Create]');
 };

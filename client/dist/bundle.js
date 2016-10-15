@@ -235,6 +235,8 @@
 	    this.globalConfig = globalConfig;
 	    
 	    // extend Phaser gamestate with: 
+	    this.keys = undefined;
+	    this.player = undefined;
 	    this.levelConfig = undefined;
 	    this.level = {
 	        backgroundLayer: undefined,
@@ -658,7 +660,6 @@
 	    
 	    // Phaser preserves binding through game states so it needs to be deleted
 	    // http://www.html5gamedevs.com/topic/5631-preserve-input-bindings/
-	    this.game.input.keyboard.onDownCallback = null;
 	    
 	    console.log('[PHASER][Play][Create]');
 	};
@@ -733,6 +734,9 @@
 	}
 	
 	function onDie(event){
+	    // removing event listeners on state shutdown otherwise causing memory leak and GC fails
+	    this.game.state.states.Play.eventsOf.keys.remove(this.onEvents, this);
+	    this.game.state.states.Play.eventsOf.level.remove(this.onEvents, this);
 	    this.game.state.start('GameOver', true, false, { levelNumber: 1 });
 	}
 	

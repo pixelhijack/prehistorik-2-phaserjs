@@ -14,6 +14,8 @@ function Play(globalConfig){
     this.globalConfig = globalConfig;
     
     // extend Phaser gamestate with: 
+    this.keys = undefined;
+    this.player = undefined;
     this.levelConfig = undefined;
     this.level = {
         backgroundLayer: undefined,
