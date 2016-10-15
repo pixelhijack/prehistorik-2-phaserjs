@@ -50,7 +50,7 @@
 	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
-	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 22);
+	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 21);
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
@@ -167,18 +167,21 @@
 	    this.game.time.advancedTiming = true;
 	
 	    // CTA text
-	    var text = this.game.add.text(
+	    var startLabel = this.game.add.text(
 	        this.game.world.centerX, 
 	        this.game.world.centerY, 
-	        "Press key 1 to continue", 
+	        "Press space to continue", 
 	        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
 	    );
-	
-	    text.anchor.set(0.5);
 	    
+	    startLabel.anchor.set(0.5);
+	    
+	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    spaceKey.onDown.addOnce(fetchLevel, this);
+	
 	    // load next game state by fetching level configs
-	    this.game.input.keyboard.onDownCallback = function(event){
-	        fetch('/level/' + event.key, {
+	    function fetchLevel(event){
+	        fetch('/level/1', {
 	        	method: 'get'
 	        }).then(function(response) {
 	            return response.json();
@@ -218,10 +221,10 @@
 
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
 	var init = __webpack_require__(/*! ./init.js */ 7);
-	var preload = __webpack_require__(/*! ./preload.js */ 8);
-	var create = __webpack_require__(/*! ./create.js */ 9);
-	var update = __webpack_require__(/*! ./update.js */ 11);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 16);
+	var preload = __webpack_require__(/*! ./preload.js */ 9);
+	var create = __webpack_require__(/*! ./create.js */ 10);
+	var update = __webpack_require__(/*! ./update.js */ 19);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 20);
 	
 	/*
 	    @Play
@@ -267,7 +270,7 @@
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var creatureConfig = __webpack_require__(/*! ./creatureconfig.js */ 13);
+	var creatureConfig = __webpack_require__(/*! ./creatureconfig.js */ 8);
 	
 	var init = function(levelConfig){
 	    
@@ -281,218 +284,6 @@
 
 /***/ },
 /* 8 */
-/*!***********************************************!*\
-  !*** ./client/src/gamestates/play/preload.js ***!
-  \***********************************************/
-/***/ function(module, exports) {
-
-	var preload = function(){
-	    console.log('[PHASER][Play][Preload]');
-	    
-	    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	    this.game.scale.pageAlignHorizontally = true;
-	    this.game.scale.pageAlignVertically = true;
-	    
-	    this.game.load.atlas('pre2atlas', 'spritesheets/pre2atlas.png', 'spritesheets/pre2atlas.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-	    
-	    // load background
-	    this.game.load.image(this.levelConfig.backgroundKey, this.globalConfig.backgroundPath + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
-	    // load tileset
-	    this.game.load.image(this.levelConfig.tileset, this.globalConfig.tilesetPath + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
-	    // load tilemap
-	    this.game.load.tilemap(this.levelConfig.tilemap, this.globalConfig.levelPath + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
-	    
-	};
-	
-	module.exports = preload;
-
-/***/ },
-/* 9 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/play/create.js ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 10);
-	var reactions = __webpack_require__(/*! ./reactions.js */ 17);
-	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 14);
-	
-	var create = function(){
-	    
-	    // fps debugging
-	    this.game.time.advancedTiming = true;
-	    
-	    // [SET LEVEL] set dimensions, start physic system
-	    this.game.world.setBounds(
-	        0, 
-	        0, 
-	        this.globalConfig.width * this.globalConfig.blocks, 
-	        this.globalConfig.height
-	    );
-	    
-	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-	    
-	    // [SET LEVEL] load level background, tiles, layers
-	    levelLoader.createBackground.call(this, 'backgroundLayer');
-	    levelLoader.createTiles.call(
-	        this, 
-	        this.levelConfig.tilemap, 
-	        this.levelConfig.tileset, 
-	        this.levelConfig.tilesetImage
-	    );
-	    levelLoader.createLayers.call(this, this.levelConfig.layers);
-	    
-	    // [SET LEVEL] fix background, resize
-	    this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
-	    this.level.groundLayer.resizeWorld();
-	    
-	    // [PLAYER]
-	    this.player = new Hero(
-	        this.game,
-	        this.levelConfig.entryPoint.x, 
-	        this.levelConfig.entryPoint.y, 
-	        'pre2atlas',
-	        this.creatureConfig.man 
-	    );
-	    
-	    this.game.camera.follow(this.player);
-	    
-	    this.player.onEvents = reactions;
-	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
-	    this.player.listen(this.eventsOf.level, this.player.onEvents);
-	    
-	    // bind keys
-	    this.keys = this.game.input.keyboard.createCursorKeys();
-	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    
-	    // Phaser preserves binding through game states so it needs to be deleted
-	    // http://www.html5gamedevs.com/topic/5631-preserve-input-bindings/
-	    this.game.input.keyboard.onDownCallback = null;
-	    
-	    console.log('[PHASER][Play][Create]');
-	};
-	
-	module.exports = create;
-
-/***/ },
-/* 10 */
-/*!***************************************************!*\
-  !*** ./client/src/gamestates/play/levelloader.js ***!
-  \***************************************************/
-/***/ function(module, exports) {
-
-	var levelLoader = {
-	    createBackground: function(layerName){
-	        this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundKey);
-	    },
-	    createLayer: function(layer){
-	        this.level[layer] = this.level.tilemap.createLayer(this.levelConfig[layer]);
-	    },
-	    createLayers: function(layers){
-	        for(var layer in layers){
-	            this.level[layer] = this.level.tilemap.createLayer(this.levelConfig.layers[layer].key);
-	            this.level[layer].visible = this.levelConfig.layers[layer].visible;
-	        }
-	    },
-	    createTiles: function(tilemapKey, tilesetKey, tilesetImage){
-	        this.level.tilemap = this.game.add.tilemap(tilemapKey);
-	        this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
-	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.collisionLayer.key);
-	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.deathLayer.key);
-	    }
-	};
-	
-	module.exports = levelLoader;
-
-/***/ },
-/* 11 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/play/update.js ***!
-  \**********************************************/
-/***/ function(module, exports) {
-
-	var update = function(){
-	    
-	    // fps 
-	    this.game.debug.text(this.game.time.fps, 5, 20);
-	    
-	    // [COLLISIONS]
-	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
-	    
-	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
-	        this.eventsOf.level.dispatch({ type: 'DIE' });
-	    }.bind(this));
-	    
-	    // [KEYPRESS] event dispatch
-	    if(this.keys.left.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
-	    } else if(this.keys.right.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
-	    } else {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
-	    }
-	    
-	    if(this.keys.up.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
-	    }
-	    
-	    if(this.keys.space.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
-	    }
-	    
-	    console.log('[PHASER][Play][Update]');
-	};
-	
-	module.exports = update;
-
-/***/ },
-/* 12 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/extendedsprite.js ***!
-  \********************************************************/
-/***/ function(module, exports) {
-
-	/*
-	    @ExtendedSprite
-	*/
-	function ExtendedSprite(game, x, y, sprite, props){
-	    
-	    this.game = game;
-	    this.props = props || { animations: [] };
-	    
-	    Phaser.Sprite.call(this, game, x, y, sprite);
-	    
-	    this.props.animations.forEach(function(animation){
-	        this.animations.add(
-	            animation.name, 
-	            animation.frames.map(function(frame){ 
-	                return frame.toString(); 
-	            }), 
-	            animation.fps, 
-	            animation.loop
-	        );
-	    }.bind(this));
-	    
-	    this.game.add.existing(this);
-	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
-	    this.body.gravity.y = this.props.gravity;
-	    this.anchor.setTo(0.5, 0.5);
-	    this.body.collideWorldBounds = true;
-	    this.checkWorldBounds = true;
-	    this.outOfBoundsKill = true;
-	}
-	
-	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
-	ExtendedSprite.prototype.constructor = ExtendedSprite;
-	
-	ExtendedSprite.prototype.update = function(){
-	    this.animations.play('idle');
-	};
-	
-	module.exports = ExtendedSprite;
-
-/***/ },
-/* 13 */
 /*!******************************************************!*\
   !*** ./client/src/gamestates/play/creatureconfig.js ***!
   \******************************************************/
@@ -780,57 +571,132 @@
 	module.exports = creatureConfigs;
 
 /***/ },
-/* 14 */
+/* 9 */
+/*!***********************************************!*\
+  !*** ./client/src/gamestates/play/preload.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	var preload = function(){
+	    console.log('[PHASER][Play][Preload]');
+	    
+	    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	    this.game.scale.pageAlignHorizontally = true;
+	    this.game.scale.pageAlignVertically = true;
+	    
+	    this.game.load.atlas('pre2atlas', 'spritesheets/pre2atlas.png', 'spritesheets/pre2atlas.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+	    
+	    // load background
+	    this.game.load.image(this.levelConfig.backgroundKey, this.globalConfig.backgroundPath + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
+	    // load tileset
+	    this.game.load.image(this.levelConfig.tileset, this.globalConfig.tilesetPath + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
+	    // load tilemap
+	    this.game.load.tilemap(this.levelConfig.tilemap, this.globalConfig.levelPath + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
+	    
+	};
+	
+	module.exports = preload;
+
+/***/ },
+/* 10 */
 /*!**********************************************!*\
-  !*** ./client/src/components/sprite/hero.js ***!
+  !*** ./client/src/gamestates/play/create.js ***!
   \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 12);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 18);
-	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 19);
-	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 21);
-	var run = __webpack_require__(/*! ./behaviours/run.js */ 20);
+	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
+	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
+	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 13);
 	
-	/*
-	    @Hero
-	*/
-	function Hero(game, x, y, sprite, props){
-	    ExtendedSprite.call(this, game, x, y, sprite, props);
-	}
+	var create = function(){
+	    
+	    // fps debugging
+	    this.game.time.advancedTiming = true;
+	    
+	    // [SET LEVEL] set dimensions, start physic system
+	    this.game.world.setBounds(
+	        0, 
+	        0, 
+	        this.globalConfig.width * this.globalConfig.blocks, 
+	        this.globalConfig.height
+	    );
+	    
+	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	    
+	    // [SET LEVEL] load level background, tiles, layers
+	    levelLoader.createBackground.call(this, 'backgroundLayer');
+	    levelLoader.createTiles.call(
+	        this, 
+	        this.levelConfig.tilemap, 
+	        this.levelConfig.tileset, 
+	        this.levelConfig.tilesetImage
+	    );
+	    levelLoader.createLayers.call(this, this.levelConfig.layers);
+	    
+	    // [SET LEVEL] fix background, resize
+	    this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
+	    this.level.groundLayer.resizeWorld();
+	    
+	    // [PLAYER]
+	    this.player = new Hero(
+	        this.game,
+	        this.levelConfig.entryPoint.x, 
+	        this.levelConfig.entryPoint.y, 
+	        'pre2atlas',
+	        this.creatureConfig.man 
+	    );
+	    
+	    this.game.camera.follow(this.player);
+	    
+	    this.player.onEvents = reactions;
+	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
+	    this.player.listen(this.eventsOf.level, this.player.onEvents);
+	    
+	    // bind keys
+	    this.keys = this.game.input.keyboard.createCursorKeys();
+	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    
+	    // Phaser preserves binding through game states so it needs to be deleted
+	    // http://www.html5gamedevs.com/topic/5631-preserve-input-bindings/
+	    this.game.input.keyboard.onDownCallback = null;
+	    
+	    console.log('[PHASER][Play][Create]');
+	};
 	
-	Hero.prototype = Object.create(ExtendedSprite.prototype);
-	Hero.prototype.constructor = Hero;
-	
-	Hero.prototype = Object.assign(
-	    Hero.prototype, 
-	    listen, 
-	    jump,
-	    stop,
-	    run
-	);
-	
-	module.exports = Hero;
+	module.exports = create;
 
 /***/ },
-/* 15 */,
-/* 16 */
-/*!*****************************************************!*\
-  !*** ./client/src/gamestates/play/eventemitters.js ***!
-  \*****************************************************/
+/* 11 */
+/*!***************************************************!*\
+  !*** ./client/src/gamestates/play/levelloader.js ***!
+  \***************************************************/
 /***/ function(module, exports) {
 
-	var eventEmitters = {
-	    eventsOf: {
-	        keys: new Phaser.Signal(),
-	        level: new Phaser.Signal()
+	var levelLoader = {
+	    createBackground: function(layerName){
+	        this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundKey);
+	    },
+	    createLayer: function(layer){
+	        this.level[layer] = this.level.tilemap.createLayer(this.levelConfig[layer]);
+	    },
+	    createLayers: function(layers){
+	        for(var layer in layers){
+	            this.level[layer] = this.level.tilemap.createLayer(this.levelConfig.layers[layer].key);
+	            this.level[layer].visible = this.levelConfig.layers[layer].visible;
+	        }
+	    },
+	    createTiles: function(tilemapKey, tilesetKey, tilesetImage){
+	        this.level.tilemap = this.game.add.tilemap(tilemapKey);
+	        this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
+	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.collisionLayer.key);
+	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.deathLayer.key);
 	    }
 	};
 	
-	module.exports = eventEmitters;
+	module.exports = levelLoader;
 
 /***/ },
-/* 17 */
+/* 12 */
 /*!*************************************************!*\
   !*** ./client/src/gamestates/play/reactions.js ***!
   \*************************************************/
@@ -873,7 +739,86 @@
 	module.exports = reactions;
 
 /***/ },
-/* 18 */
+/* 13 */
+/*!**********************************************!*\
+  !*** ./client/src/components/sprite/hero.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 14);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 15);
+	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 16);
+	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 17);
+	var run = __webpack_require__(/*! ./behaviours/run.js */ 18);
+	
+	/*
+	    @Hero
+	*/
+	function Hero(game, x, y, sprite, props){
+	    ExtendedSprite.call(this, game, x, y, sprite, props);
+	}
+	
+	Hero.prototype = Object.create(ExtendedSprite.prototype);
+	Hero.prototype.constructor = Hero;
+	
+	Hero.prototype = Object.assign(
+	    Hero.prototype, 
+	    listen, 
+	    jump,
+	    stop,
+	    run
+	);
+	
+	module.exports = Hero;
+
+/***/ },
+/* 14 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/extendedsprite.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	/*
+	    @ExtendedSprite
+	*/
+	function ExtendedSprite(game, x, y, sprite, props){
+	    
+	    this.game = game;
+	    this.props = props || { animations: [] };
+	    
+	    Phaser.Sprite.call(this, game, x, y, sprite);
+	    
+	    this.props.animations.forEach(function(animation){
+	        this.animations.add(
+	            animation.name, 
+	            animation.frames.map(function(frame){ 
+	                return frame.toString(); 
+	            }), 
+	            animation.fps, 
+	            animation.loop
+	        );
+	    }.bind(this));
+	    
+	    this.game.add.existing(this);
+	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.body.gravity.y = this.props.gravity;
+	    this.anchor.setTo(0.5, 0.5);
+	    this.body.collideWorldBounds = true;
+	    this.checkWorldBounds = true;
+	    this.outOfBoundsKill = true;
+	}
+	
+	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
+	ExtendedSprite.prototype.constructor = ExtendedSprite;
+	
+	ExtendedSprite.prototype.update = function(){
+	    this.animations.play('idle');
+	};
+	
+	module.exports = ExtendedSprite;
+
+/***/ },
+/* 15 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/listen.js ***!
   \***********************************************************/
@@ -891,7 +836,7 @@
 	module.exports = listenBehaviour;
 
 /***/ },
-/* 19 */
+/* 16 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/jump.js ***!
   \*********************************************************/
@@ -908,7 +853,23 @@
 	module.exports = jumpBehaviour;
 
 /***/ },
-/* 20 */
+/* 17 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/stop.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var stopBehaviour = {
+	    stop: function(){
+	        // slippery rate: 1.1, should go later to levelConfig
+	        this.body.velocity.x /= 1.1;
+	    }
+	};
+	
+	module.exports = stopBehaviour;
+
+/***/ },
+/* 18 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/run.js ***!
   \********************************************************/
@@ -932,31 +893,72 @@
 	module.exports = runBehaviour;
 
 /***/ },
-/* 21 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/stop.js ***!
-  \*********************************************************/
+/* 19 */
+/*!**********************************************!*\
+  !*** ./client/src/gamestates/play/update.js ***!
+  \**********************************************/
 /***/ function(module, exports) {
 
-	var stopBehaviour = {
-	    stop: function(){
-	        // slippery rate: 1.1, should go later to levelConfig
-	        this.body.velocity.x /= 1.1;
+	var update = function(){
+	    
+	    // fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	    
+	    // [COLLISIONS]
+	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
+	    
+	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
+	        this.eventsOf.level.dispatch({ type: 'DIE' });
+	    }.bind(this));
+	    
+	    // [KEYPRESS] event dispatch
+	    if(this.keys.left.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
+	    } else if(this.keys.right.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
+	    } else {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
+	    }
+	    
+	    if(this.keys.up.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
+	    }
+	    
+	    if(this.keys.space.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
+	    }
+	    
+	    console.log('[PHASER][Play][Update]');
+	};
+	
+	module.exports = update;
+
+/***/ },
+/* 20 */
+/*!*****************************************************!*\
+  !*** ./client/src/gamestates/play/eventemitters.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	var eventEmitters = {
+	    eventsOf: {
+	        keys: new Phaser.Signal(),
+	        level: new Phaser.Signal()
 	    }
 	};
 	
-	module.exports = stopBehaviour;
+	module.exports = eventEmitters;
 
 /***/ },
-/* 22 */
+/* 21 */
 /*!****************************************************!*\
   !*** ./client/src/gamestates/gameover/gameover.js ***!
   \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 23);
-	var update = __webpack_require__(/*! ./update.js */ 24);
+	var create = __webpack_require__(/*! ./create.js */ 22);
+	var update = __webpack_require__(/*! ./update.js */ 23);
 	
 	/*
 	    @GameOver
@@ -980,7 +982,7 @@
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/create.js ***!
   \**************************************************/
@@ -1012,7 +1014,7 @@
 	module.exports = create;
 
 /***/ },
-/* 24 */
+/* 23 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/update.js ***!
   \**************************************************/

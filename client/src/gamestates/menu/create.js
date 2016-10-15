@@ -4,18 +4,21 @@ var create = function(){
     this.game.time.advancedTiming = true;
 
     // CTA text
-    var text = this.game.add.text(
+    var startLabel = this.game.add.text(
         this.game.world.centerX, 
         this.game.world.centerY, 
-        "Press key 1 to continue", 
+        "Press space to continue", 
         { font: "48px Helvetica", fill: "#ffffff", align: "center" }
     );
-
-    text.anchor.set(0.5);
     
+    startLabel.anchor.set(0.5);
+    
+    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.addOnce(fetchLevel, this);
+
     // load next game state by fetching level configs
-    this.game.input.keyboard.onDownCallback = function(event){
-        fetch('/level/' + event.key, {
+    function fetchLevel(event){
+        fetch('/level/1', {
         	method: 'get'
         }).then(function(response) {
             return response.json();
