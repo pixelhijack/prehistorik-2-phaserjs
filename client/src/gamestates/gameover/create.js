@@ -7,8 +7,8 @@ var create = function(){
     var text = this.game.add.text(
         this.globalConfig.width / 2, 
         this.globalConfig.height / 2, 
-        "Game Over\nPress space to continue", 
-        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
+        "Game Over\nPress space \nto continue", 
+        { font: "48px Courier", fill: "#ffffff", align: "center" }
     );
 
     text.anchor.set(0.5);

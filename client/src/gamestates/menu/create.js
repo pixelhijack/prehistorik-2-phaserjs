@@ -7,8 +7,8 @@ var create = function(){
     var text = this.game.add.text(
         this.globalConfig.width / 2, 
         this.globalConfig.height / 2,
-        "Menu screen\nPress space to start!", 
-        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
+        "Menu screen\nPress space \nto start!", 
+        { font: "48px Courier", fill: "#ffffff", align: "center" }
     );
     
     text.anchor.set(0.5);
