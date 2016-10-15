@@ -22,6 +22,7 @@ function Play(globalConfig){
         groundLayer: undefined,
         tilemap: undefined
     };
+    this.enemies = undefined;
 }
 Play.prototype = Object.create(GameState.prototype);
 Play.prototype.constructor = Play;

@@ -1,5 +1,6 @@
 var levelLoader = require('./levelloader.js');
 var reactions = require('./reactions.js');
+var creatureFactory = require('./creaturefactory.js');
 var Hero = require('../../components/sprite/hero.js');
 
 var create = function(){
@@ -36,7 +37,7 @@ var create = function(){
         this.game,
         this.levelConfig.entryPoint.x, 
         this.levelConfig.entryPoint.y, 
-        'pre2atlas',
+        this.globalConfig.textureAtlasName,
         this.creatureConfig.man 
     );
     
@@ -45,6 +46,10 @@ var create = function(){
     this.player.onEvents = reactions;
     this.player.listen(this.eventsOf.keys, this.player.onEvents);
     this.player.listen(this.eventsOf.level, this.player.onEvents);
+    
+    // [CREATURES] spawn enemies
+    creatureFactory.createEnemyGroup.call(this);
+    this.levelConfig.enemies.forEach(creatureFactory.create.bind(this));
     
     // bind keys
     this.keys = this.game.input.keyboard.createCursorKeys();

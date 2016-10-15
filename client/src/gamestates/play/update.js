@@ -6,6 +6,8 @@ var update = function(){
     // [COLLISIONS]
     this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
     
+    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
+    
     this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
         this.eventsOf.level.dispatch({ type: 'DIE' });
     }.bind(this));

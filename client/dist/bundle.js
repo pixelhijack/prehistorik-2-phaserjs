@@ -86,6 +86,7 @@
 	    tilesetPath: 'tilesets/',
 	    levelPath: 'levels/',
 	    textureAtlasPath: 'spritesheets/',
+	    textureAtlasName: 'pre2atlas',
 	    textureAtlasImage: 'pre2atlas.png',
 	    textureAtlasJson: 'pre2atlas.json'
 	};
@@ -246,6 +247,7 @@
 	        groundLayer: undefined,
 	        tilemap: undefined
 	    };
+	    this.enemies = undefined;
 	}
 	Play.prototype = Object.create(GameState.prototype);
 	Play.prototype.constructor = Play;
@@ -611,6 +613,7 @@
 
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
 	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
+	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 25);
 	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 13);
 	
 	var create = function(){
@@ -647,7 +650,7 @@
 	        this.game,
 	        this.levelConfig.entryPoint.x, 
 	        this.levelConfig.entryPoint.y, 
-	        'pre2atlas',
+	        this.globalConfig.textureAtlasName,
 	        this.creatureConfig.man 
 	    );
 	    
@@ -656,6 +659,10 @@
 	    this.player.onEvents = reactions;
 	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
 	    this.player.listen(this.eventsOf.level, this.player.onEvents);
+	    
+	    // [CREATURES] spawn enemies
+	    creatureFactory.createEnemyGroup.call(this);
+	    this.levelConfig.enemies.forEach(creatureFactory.create.bind(this));
 	    
 	    // bind keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
@@ -914,6 +921,8 @@
 	    // [COLLISIONS]
 	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
 	    
+	    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
+	    
 	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
 	        this.eventsOf.level.dispatch({ type: 'DIE' });
 	    }.bind(this));
@@ -1037,6 +1046,35 @@
 	};
 	
 	module.exports = update;
+
+/***/ },
+/* 24 */,
+/* 25 */
+/*!*******************************************************!*\
+  !*** ./client/src/gamestates/play/creaturefactory.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ExtendedSprite = __webpack_require__(/*! ../../components/sprite/extendedsprite.js */ 14);
+	
+	var creatureFactory = {
+	    createEnemyGroup: function(){
+	        this.enemies = new Phaser.Group(this.game);
+	    },
+	    create: function(creature){
+	        var enemy = new ExtendedSprite(
+	            this.game, 
+	            creature.origin.x, 
+	            creature.origin.y, 
+	            this.globalConfig.textureAtlasName,
+	            this.creatureConfig[creature.type]
+	        );
+	        
+	        this.enemies.add(enemy);
+	    }
+	};
+	
+	module.exports = creatureFactory;
 
 /***/ }
 /******/ ]);

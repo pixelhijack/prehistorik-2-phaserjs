@@ -7,6 +7,7 @@ var globalConfig = {
     tilesetPath: 'tilesets/',
     levelPath: 'levels/',
     textureAtlasPath: 'spritesheets/',
+    textureAtlasName: 'pre2atlas',
     textureAtlasImage: 'pre2atlas.png',
     textureAtlasJson: 'pre2atlas.json'
 };
