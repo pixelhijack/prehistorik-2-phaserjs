@@ -6,8 +6,9 @@ var update = require('./update.js');
     @GameOver
     inherits from GameState component
 */
-function GameOver(){
+function GameOver(globalConfig){
     GameState.call(this);
+    this.globalConfig = globalConfig;
 }
 GameOver.prototype = Object.create(GameState.prototype);
 GameOver.prototype.constructor = GameOver;

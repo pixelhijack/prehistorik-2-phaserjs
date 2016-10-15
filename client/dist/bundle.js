@@ -167,14 +167,14 @@
 	    this.game.time.advancedTiming = true;
 	
 	    // CTA text
-	    var startLabel = this.game.add.text(
-	        this.game.world.centerX, 
-	        this.game.world.centerY, 
-	        "Press space to continue", 
+	    var text = this.game.add.text(
+	        this.globalConfig.width / 2, 
+	        this.globalConfig.height / 2,
+	        "Menu screen\nPress space to start!", 
 	        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
 	    );
 	    
-	    startLabel.anchor.set(0.5);
+	    text.anchor.set(0.5);
 	    
 	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	    spaceKey.onDown.addOnce(fetchLevel, this);
@@ -188,7 +188,7 @@
 	        }).then(function(json) {
 	            this.game.state.start('Play', true, true, json);
 	        }.bind(this));
-	    };
+	    }
 	    
 	    console.log('[PHASER][Menu][Create]');
 	};
@@ -964,8 +964,9 @@
 	    @GameOver
 	    inherits from GameState component
 	*/
-	function GameOver(){
+	function GameOver(globalConfig){
 	    GameState.call(this);
+	    this.globalConfig = globalConfig;
 	}
 	GameOver.prototype = Object.create(GameState.prototype);
 	GameOver.prototype.constructor = GameOver;
@@ -995,18 +996,18 @@
 	
 	    // CTA text
 	    var text = this.game.add.text(
-	        this.game.world.centerX, 
-	        this.game.world.centerY, 
-	        "Game Over\nPress a key to continue", 
+	        this.globalConfig.width / 2, 
+	        this.globalConfig.height / 2, 
+	        "Game Over\nPress space to continue", 
 	        { font: "48px Helvetica", fill: "#ffffff", align: "center" }
 	    );
 	
 	    text.anchor.set(0.5);
 	    
-	    // load next game state by fetching level configs
-	    this.game.input.keyboard.onDownCallback = function(event){
+	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    spaceKey.onDown.addOnce(function(){
 	        this.game.state.start('Menu', true, true);
-	    };
+	    }, this);
 	    
 	    console.log('[PHASER][GameOver][Create]');
 	};

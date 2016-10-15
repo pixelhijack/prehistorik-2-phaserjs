@@ -4,14 +4,14 @@ var create = function(){
     this.game.time.advancedTiming = true;
 
     // CTA text
-    var startLabel = this.game.add.text(
-        this.game.world.centerX, 
-        this.game.world.centerY, 
-        "Press space to continue", 
+    var text = this.game.add.text(
+        this.globalConfig.width / 2, 
+        this.globalConfig.height / 2,
+        "Menu screen\nPress space to start!", 
         { font: "48px Helvetica", fill: "#ffffff", align: "center" }
     );
     
-    startLabel.anchor.set(0.5);
+    text.anchor.set(0.5);
     
     var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.addOnce(fetchLevel, this);
@@ -25,7 +25,7 @@ var create = function(){
         }).then(function(json) {
             this.game.state.start('Play', true, true, json);
         }.bind(this));
-    };
+    }
     
     console.log('[PHASER][Menu][Create]');
 };

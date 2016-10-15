@@ -5,18 +5,18 @@ var create = function(){
 
     // CTA text
     var text = this.game.add.text(
-        this.game.world.centerX, 
-        this.game.world.centerY, 
-        "Game Over\nPress a key to continue", 
+        this.globalConfig.width / 2, 
+        this.globalConfig.height / 2, 
+        "Game Over\nPress space to continue", 
         { font: "48px Helvetica", fill: "#ffffff", align: "center" }
     );
 
     text.anchor.set(0.5);
     
-    // load next game state by fetching level configs
-    this.game.input.keyboard.onDownCallback = function(event){
+    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.addOnce(function(){
         this.game.state.start('Menu', true, true);
-    };
+    }, this);
     
     console.log('[PHASER][GameOver][Create]');
 };
