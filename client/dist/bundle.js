@@ -181,6 +181,9 @@
 	
 	    // load next game state by fetching level configs
 	    function fetchLevel(event){
+	        
+	        text.setText('Loading...');
+	        
 	        fetch('/level/1', {
 	        	method: 'get'
 	        }).then(function(response) {
