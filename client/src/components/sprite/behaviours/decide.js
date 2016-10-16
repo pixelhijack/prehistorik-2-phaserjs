@@ -1,8 +1,9 @@
-var decide = {
+var decideBehaviour = {
     update: function(){
         this.animations.play('move');
+        this.turn();
         this.move();
     }
 };
 
-module.exports = decide;
+module.exports = decideBehaviour;

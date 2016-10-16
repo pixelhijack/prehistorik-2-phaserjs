@@ -824,6 +824,7 @@
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
 	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 17);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 42);
+	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 43);
 	
 	/*
 	    @Hero
@@ -838,7 +839,8 @@
 	AI.prototype = Object.assign(
 	    AI.prototype, 
 	    decide,
-	    move
+	    move,
+	    turn
 	);
 	
 	module.exports = AI;
@@ -896,14 +898,15 @@
   \***********************************************************/
 /***/ function(module, exports) {
 
-	var decide = {
+	var decideBehaviour = {
 	    update: function(){
 	        this.animations.play('move');
+	        this.turn();
 	        this.move();
 	    }
 	};
 	
-	module.exports = decide;
+	module.exports = decideBehaviour;
 
 /***/ },
 /* 18 */
@@ -1414,6 +1417,23 @@
 	};
 	
 	module.exports = moveBehaviour;
+
+/***/ },
+/* 43 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/turn.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var turnBehaviour = {
+	    turn: function(){
+	        if(this.body.blocked.left || this.body.blocked.right){
+	            this.scale.x *= -1;
+	        }
+	    }
+	};
+	
+	module.exports = turnBehaviour;
 
 /***/ }
 /******/ ]);
