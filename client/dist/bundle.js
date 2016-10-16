@@ -1065,12 +1065,12 @@
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 40);
 	
 	function Spider(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Spider.prototype = Object.create(ExtendedSprite.prototype);
+	Spider.prototype = Object.create(AI.prototype);
 	Spider.prototype.constructor = Spider;
 	
 	module.exports = Spider;
