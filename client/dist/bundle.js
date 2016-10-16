@@ -50,7 +50,7 @@
 	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
-	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 37);
+	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 39);
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
@@ -227,8 +227,8 @@
 	var init = __webpack_require__(/*! ./init.js */ 7);
 	var preload = __webpack_require__(/*! ./preload.js */ 9);
 	var create = __webpack_require__(/*! ./create.js */ 10);
-	var update = __webpack_require__(/*! ./update.js */ 35);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 36);
+	var update = __webpack_require__(/*! ./update.js */ 37);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 38);
 	
 	/*
 	    @Play
@@ -614,7 +614,7 @@
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
 	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
 	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
-	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 30);
+	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 32);
 	
 	var create = function(){
 	    
@@ -761,20 +761,20 @@
 
 	var Creature = {
 	    bat: __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 14),
-	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 16),
-	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 17),
-	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 18),
-	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 19),
-	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 20),
-	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 21),
-	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 22),
-	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 23),
-	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 24),
-	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 25),
-	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 26),
-	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 27),
-	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 28),
-	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 29)
+	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 18),
+	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 19),
+	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 20),
+	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 21),
+	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 22),
+	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 23),
+	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 24),
+	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 25),
+	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 26),
+	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 27),
+	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 28),
+	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 29),
+	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 30),
+	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 31)
 	};
 	
 	var creatureFactory = {
@@ -803,12 +803,12 @@
   \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Bat(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Bat.prototype = Object.create(ExtendedSprite.prototype);
+	Bat.prototype = Object.create(AI.prototype);
 	Bat.prototype.constructor = Bat;
 	
 	module.exports = Bat;
@@ -816,6 +816,33 @@
 
 /***/ },
 /* 15 */
+/*!********************************************!*\
+  !*** ./client/src/components/sprite/ai.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 17);
+	
+	/*
+	    @Hero
+	*/
+	function AI(game, x, y, sprite, props){
+	    ExtendedSprite.call(this, game, x, y, sprite, props);
+	}
+	
+	AI.prototype = Object.create(ExtendedSprite.prototype);
+	AI.prototype.constructor = AI;
+	
+	AI.prototype = Object.assign(
+	    AI.prototype, 
+	    decide
+	);
+	
+	module.exports = AI;
+
+/***/ },
+/* 16 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/extendedsprite.js ***!
   \********************************************************/
@@ -861,13 +888,28 @@
 	module.exports = ExtendedSprite;
 
 /***/ },
-/* 16 */
+/* 17 */
+/*!***********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/decide.js ***!
+  \***********************************************************/
+/***/ function(module, exports) {
+
+	var decide = {
+	    update: function(){
+	        this.animations.play('move');
+	    }
+	};
+	
+	module.exports = decide;
+
+/***/ },
+/* 18 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/bear.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var AI = __webpack_require__(/*! ../ai.js */ 40);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Bear(game, x, y, sprite, props){
 		AI.call(this, game, x, y, sprite, props);
@@ -879,193 +921,193 @@
 
 
 /***/ },
-/* 17 */
+/* 19 */
 /*!*******************************************************!*\
   !*** ./client/src/components/sprite/creatures/bug.js ***!
   \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Bug(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Bug.prototype = Object.create(ExtendedSprite.prototype);
+	Bug.prototype = Object.create(AI.prototype);
 	Bug.prototype.constructor = Bug;
 	
 	module.exports = Bug;
 
 
 /***/ },
-/* 18 */
+/* 20 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/dino.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Dino(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Dino.prototype = Object.create(ExtendedSprite.prototype);
+	Dino.prototype = Object.create(AI.prototype);
 	Dino.prototype.constructor = Dino;
 	
 	module.exports = Dino;
 
 
 /***/ },
-/* 19 */
+/* 21 */
 /*!*************************************************************!*\
   !*** ./client/src/components/sprite/creatures/dragonfly.js ***!
   \*************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Dragonfly(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Dragonfly.prototype = Object.create(ExtendedSprite.prototype);
+	Dragonfly.prototype = Object.create(AI.prototype);
 	Dragonfly.prototype.constructor = Dragonfly;
 	
 	module.exports = Dragonfly;
 
 
 /***/ },
-/* 20 */
+/* 22 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/frog.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Frog(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Frog.prototype = Object.create(ExtendedSprite.prototype);
+	Frog.prototype = Object.create(AI.prototype);
 	Frog.prototype.constructor = Frog;
 	
 	module.exports = Frog;
 
 
 /***/ },
-/* 21 */
+/* 23 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/creatures/gorilla.js ***!
   \***********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Gorilla(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Gorilla.prototype = Object.create(ExtendedSprite.prototype);
+	Gorilla.prototype = Object.create(AI.prototype);
 	Gorilla.prototype.constructor = Gorilla;
 	
 	module.exports = Gorilla;
 
 
 /***/ },
-/* 22 */
+/* 24 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/insect.js ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Insect(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Insect.prototype = Object.create(ExtendedSprite.prototype);
+	Insect.prototype = Object.create(AI.prototype);
 	Insect.prototype.constructor = Insect;
 	
 	module.exports = Insect;
 
 
 /***/ },
-/* 23 */
+/* 25 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/jelly.js ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Jelly(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Jelly.prototype = Object.create(ExtendedSprite.prototype);
+	Jelly.prototype = Object.create(AI.prototype);
 	Jelly.prototype.constructor = Jelly;
 	
 	module.exports = Jelly;
 
 
 /***/ },
-/* 24 */
+/* 26 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/native.js ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Native(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Native.prototype = Object.create(ExtendedSprite.prototype);
+	Native.prototype = Object.create(AI.prototype);
 	Native.prototype.constructor = Native;
 	
 	module.exports = Native;
 
 
 /***/ },
-/* 25 */
+/* 27 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/parrot.js ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Parrot(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Parrot.prototype = Object.create(ExtendedSprite.prototype);
+	Parrot.prototype = Object.create(AI.prototype);
 	Parrot.prototype.constructor = Parrot;
 	
 	module.exports = Parrot;
 
 
 /***/ },
-/* 26 */
+/* 28 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/ptero.js ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Ptero(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Ptero.prototype = Object.create(ExtendedSprite.prototype);
+	Ptero.prototype = Object.create(AI.prototype);
 	Ptero.prototype.constructor = Ptero;
 	
 	module.exports = Ptero;
 
 
 /***/ },
-/* 27 */
+/* 29 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/spider.js ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var AI = __webpack_require__(/*! ../ai.js */ 40);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Spider(game, x, y, sprite, props){
 		AI.call(this, game, x, y, sprite, props);
@@ -1077,36 +1119,36 @@
 
 
 /***/ },
-/* 28 */
+/* 30 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/tiger.js ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Tiger(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Tiger.prototype = Object.create(ExtendedSprite.prototype);
+	Tiger.prototype = Object.create(AI.prototype);
 	Tiger.prototype.constructor = Tiger;
 	
 	module.exports = Tiger;
 
 
 /***/ },
-/* 29 */
+/* 31 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/turtle.js ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
 	function Turtle(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Turtle.prototype = Object.create(ExtendedSprite.prototype);
+	Turtle.prototype = Object.create(AI.prototype);
 	Turtle.prototype.constructor = Turtle;
 	
 	module.exports = Turtle;
@@ -1114,17 +1156,17 @@
 
 
 /***/ },
-/* 30 */
+/* 32 */
 /*!**********************************************!*\
   !*** ./client/src/components/sprite/hero.js ***!
   \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 15);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 31);
-	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 32);
-	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 33);
-	var run = __webpack_require__(/*! ./behaviours/run.js */ 34);
+	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 33);
+	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 34);
+	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 35);
+	var run = __webpack_require__(/*! ./behaviours/run.js */ 36);
 	
 	/*
 	    @Hero
@@ -1147,7 +1189,7 @@
 	module.exports = Hero;
 
 /***/ },
-/* 31 */
+/* 33 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/listen.js ***!
   \***********************************************************/
@@ -1165,7 +1207,7 @@
 	module.exports = listenBehaviour;
 
 /***/ },
-/* 32 */
+/* 34 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/jump.js ***!
   \*********************************************************/
@@ -1182,7 +1224,7 @@
 	module.exports = jumpBehaviour;
 
 /***/ },
-/* 33 */
+/* 35 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/stop.js ***!
   \*********************************************************/
@@ -1198,7 +1240,7 @@
 	module.exports = stopBehaviour;
 
 /***/ },
-/* 34 */
+/* 36 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/run.js ***!
   \********************************************************/
@@ -1222,7 +1264,7 @@
 	module.exports = runBehaviour;
 
 /***/ },
-/* 35 */
+/* 37 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/update.js ***!
   \**********************************************/
@@ -1265,7 +1307,7 @@
 	module.exports = update;
 
 /***/ },
-/* 36 */
+/* 38 */
 /*!*****************************************************!*\
   !*** ./client/src/gamestates/play/eventemitters.js ***!
   \*****************************************************/
@@ -1281,15 +1323,15 @@
 	module.exports = eventEmitters;
 
 /***/ },
-/* 37 */
+/* 39 */
 /*!****************************************************!*\
   !*** ./client/src/gamestates/gameover/gameover.js ***!
   \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 38);
-	var update = __webpack_require__(/*! ./update.js */ 39);
+	var create = __webpack_require__(/*! ./create.js */ 40);
+	var update = __webpack_require__(/*! ./update.js */ 41);
 	
 	/*
 	    @GameOver
@@ -1314,7 +1356,7 @@
 
 
 /***/ },
-/* 38 */
+/* 40 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/create.js ***!
   \**************************************************/
@@ -1346,7 +1388,7 @@
 	module.exports = create;
 
 /***/ },
-/* 39 */
+/* 41 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/update.js ***!
   \**************************************************/
@@ -1361,48 +1403,6 @@
 	};
 	
 	module.exports = update;
-
-/***/ },
-/* 40 */
-/*!********************************************!*\
-  !*** ./client/src/components/sprite/ai.js ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 15);
-	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 41);
-	
-	/*
-	    @Hero
-	*/
-	function AI(game, x, y, sprite, props){
-	    ExtendedSprite.call(this, game, x, y, sprite, props);
-	}
-	
-	AI.prototype = Object.create(ExtendedSprite.prototype);
-	AI.prototype.constructor = AI;
-	
-	AI.prototype = Object.assign(
-	    AI.prototype, 
-	    decide
-	);
-	
-	module.exports = AI;
-
-/***/ },
-/* 41 */
-/*!***********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/decide.js ***!
-  \***********************************************************/
-/***/ function(module, exports) {
-
-	var decide = {
-	    update: function(){
-	        this.animations.play('move');
-	    }
-	};
-	
-	module.exports = decide;
 
 /***/ }
 /******/ ]);

@@ -1,9 +1,9 @@
-var ExtendedSprite = require('../extendedsprite.js');
+var AI = require('../ai.js');
 
 function Turtle(game, x, y, sprite, props){
-	ExtendedSprite.call(this, game, x, y, sprite, props);
+	AI.call(this, game, x, y, sprite, props);
 }
-Turtle.prototype = Object.create(ExtendedSprite.prototype);
+Turtle.prototype = Object.create(AI.prototype);
 Turtle.prototype.constructor = Turtle;
 
 module.exports = Turtle;

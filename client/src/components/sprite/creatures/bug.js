@@ -1,9 +1,9 @@
-var ExtendedSprite = require('../extendedsprite.js');
+var AI = require('../ai.js');
 
 function Bug(game, x, y, sprite, props){
-	ExtendedSprite.call(this, game, x, y, sprite, props);
+	AI.call(this, game, x, y, sprite, props);
 }
-Bug.prototype = Object.create(ExtendedSprite.prototype);
+Bug.prototype = Object.create(AI.prototype);
 Bug.prototype.constructor = Bug;
 
 module.exports = Bug;
