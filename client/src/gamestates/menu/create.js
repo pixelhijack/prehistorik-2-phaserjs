@@ -21,7 +21,7 @@ var create = function(){
         
         text.setText('Loading...');
         
-        fetch('/level/' + Math.ceil(Math.random() * 5, {
+        fetch('/level/' + Math.ceil(Math.random() * 6, {
         	method: 'get'
         }).then(function(response) {
             return response.json();
