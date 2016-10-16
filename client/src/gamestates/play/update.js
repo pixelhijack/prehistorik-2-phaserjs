@@ -12,6 +12,10 @@ var update = function(){
         this.eventsOf.level.dispatch({ type: 'DIE' });
     }.bind(this));
     
+    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
+        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
+    }.bind(this));
+    
     // [KEYPRESS] event dispatch
     if(this.keys.left.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
