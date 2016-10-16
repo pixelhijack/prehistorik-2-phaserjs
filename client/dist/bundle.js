@@ -101,7 +101,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 4);
+	var create = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./create.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	var update = __webpack_require__(/*! ./update.js */ 5);
 	
 	/*
@@ -156,50 +156,7 @@
 	module.exports = GameState;
 
 /***/ },
-/* 4 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/menu/create.js ***!
-  \**********************************************/
-/***/ function(module, exports) {
-
-	var create = function(){
-	    
-	    // fps debugging
-	    this.game.time.advancedTiming = true;
-	
-	    // CTA text
-	    var text = this.game.add.text(
-	        this.globalConfig.width / 2, 
-	        this.globalConfig.height / 2,
-	        "Menu screen\nPress space \nto start!", 
-	        { font: "48px Courier", fill: "#ffffff", align: "center" }
-	    );
-	    
-	    text.anchor.set(0.5);
-	    
-	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    spaceKey.onDown.addOnce(fetchLevel, this);
-	
-	    // load next game state by fetching level configs
-	    function fetchLevel(event){
-	        
-	        text.setText('Loading...');
-	        
-	        fetch('/level/' + Math.ceil(Math.random() * 4), {
-	        	method: 'get'
-	        }).then(function(response) {
-	            return response.json();
-	        }).then(function(json) {
-	            this.game.state.start('Play', true, true, json);
-	        }.bind(this));
-	    }
-	    
-	    console.log('[PHASER][Menu][Create]');
-	};
-	
-	module.exports = create;
-
-/***/ },
+/* 4 */,
 /* 5 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/menu/update.js ***!
