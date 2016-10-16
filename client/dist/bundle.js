@@ -727,10 +727,10 @@
 	function onMove(event){
 	    switch(event.key){
 	        case 'left':
-	            this.runLeft();
+	            this.moveLeft();
 	            break;
 	        case 'right':
-	            this.runRight();
+	            this.moveRight();
 	            break;
 	        case 'up':
 	            this.jump();
@@ -823,6 +823,7 @@
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
 	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 17);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 42);
 	
 	/*
 	    @Hero
@@ -836,7 +837,8 @@
 	
 	AI.prototype = Object.assign(
 	    AI.prototype, 
-	    decide
+	    decide,
+	    move
 	);
 	
 	module.exports = AI;
@@ -897,6 +899,7 @@
 	var decide = {
 	    update: function(){
 	        this.animations.play('move');
+	        this.move();
 	    }
 	};
 	
@@ -1166,7 +1169,7 @@
 	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 33);
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 34);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 35);
-	var run = __webpack_require__(/*! ./behaviours/run.js */ 36);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 42);
 	
 	/*
 	    @Hero
@@ -1183,7 +1186,7 @@
 	    listen, 
 	    jump,
 	    stop,
-	    run
+	    move
 	);
 	
 	module.exports = Hero;
@@ -1240,30 +1243,7 @@
 	module.exports = stopBehaviour;
 
 /***/ },
-/* 36 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/run.js ***!
-  \********************************************************/
-/***/ function(module, exports) {
-
-	var runBehaviour = {
-	    runLeft: function(){
-	        this.scale.x = -1;
-	        if(this.body.velocity.x > -this.props.maxSpeed){
-	            this.body.velocity.x -= this.props.acceleration;
-	        }
-	    },
-	    runRight: function(){
-	        this.scale.x = 1;
-	        if(this.body.velocity.x < this.props.maxSpeed){
-	            this.body.velocity.x += this.props.acceleration;
-	        }
-	    }
-	};
-	
-	module.exports = runBehaviour;
-
-/***/ },
+/* 36 */,
 /* 37 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/update.js ***!
@@ -1403,6 +1383,37 @@
 	};
 	
 	module.exports = update;
+
+/***/ },
+/* 42 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/move.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var moveBehaviour = {
+	    moveLeft: function(){
+	        this.scale.x = -1;
+	        if(this.body.velocity.x > -this.props.maxSpeed){
+	            this.body.velocity.x -= this.props.acceleration;
+	        }
+	    },
+	    moveRight: function(){
+	        this.scale.x = 1;
+	        if(this.body.velocity.x < this.props.maxSpeed){
+	            this.body.velocity.x += this.props.acceleration;
+	        }
+	    }, 
+	    move: function(){
+	        if(this.scale.x === 1){
+	            this.moveRight();
+	        } else {
+	            this.moveLeft();
+	        }
+	    }
+	};
+	
+	module.exports = moveBehaviour;
 
 /***/ }
 /******/ ]);

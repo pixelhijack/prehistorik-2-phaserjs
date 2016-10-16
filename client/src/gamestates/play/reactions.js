@@ -12,10 +12,10 @@ var reactions = function(event){
 function onMove(event){
     switch(event.key){
         case 'left':
-            this.runLeft();
+            this.moveLeft();
             break;
         case 'right':
-            this.runRight();
+            this.moveRight();
             break;
         case 'up':
             this.jump();
