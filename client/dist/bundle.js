@@ -867,12 +867,12 @@
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var ExtendedSprite = __webpack_require__(/*! ../extendedsprite.js */ 15);
+	var AI = __webpack_require__(/*! ../ai.js */ 40);
 	
 	function Bear(game, x, y, sprite, props){
-		ExtendedSprite.call(this, game, x, y, sprite, props);
+		AI.call(this, game, x, y, sprite, props);
 	}
-	Bear.prototype = Object.create(ExtendedSprite.prototype);
+	Bear.prototype = Object.create(AI.prototype);
 	Bear.prototype.constructor = Bear;
 	
 	module.exports = Bear;
@@ -1361,6 +1361,48 @@
 	};
 	
 	module.exports = update;
+
+/***/ },
+/* 40 */
+/*!********************************************!*\
+  !*** ./client/src/components/sprite/ai.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 15);
+	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 41);
+	
+	/*
+	    @Hero
+	*/
+	function AI(game, x, y, sprite, props){
+	    ExtendedSprite.call(this, game, x, y, sprite, props);
+	}
+	
+	AI.prototype = Object.create(ExtendedSprite.prototype);
+	AI.prototype.constructor = AI;
+	
+	AI.prototype = Object.assign(
+	    AI.prototype, 
+	    decide
+	);
+	
+	module.exports = AI;
+
+/***/ },
+/* 41 */
+/*!***********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/decide.js ***!
+  \***********************************************************/
+/***/ function(module, exports) {
+
+	var stopBehaviour = {
+	    update: function(){
+	        this.animations.play('move');
+	    }
+	};
+	
+	module.exports = stopBehaviour;
 
 /***/ }
 /******/ ]);
