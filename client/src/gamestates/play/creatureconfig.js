@@ -25,6 +25,11 @@ var creatureConfigs = {
     maxSpeed: 200,
     lives: 8, 
     lifespan: Infinity,
+    timeOf: {
+      'move': 200,
+      'hit': 100,
+      'hurt': 500
+    },
     animations: [
       { name: 'move', frames: [11,'03','05',14,20], fps: 10, loop: false }, 
       { name: 'hit', frames: [22,24,28,31,34,22,24,28,31,34], fps: 10, loop: true }, 

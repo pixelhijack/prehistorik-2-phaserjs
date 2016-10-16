@@ -323,6 +323,11 @@
 	    maxSpeed: 200,
 	    lives: 8, 
 	    lifespan: Infinity,
+	    timeOf: {
+	      'move': 200,
+	      'hit': 100,
+	      'hurt': 500
+	    },
 	    animations: [
 	      { name: 'move', frames: [11,'03','05',14,20], fps: 10, loop: false }, 
 	      { name: 'hit', frames: [22,24,28,31,34,22,24,28,31,34], fps: 10, loop: true }, 
@@ -718,6 +723,9 @@
 	        case 'MOVE': 
 	            onMove.call(this, event);
 	            break;
+	        case 'HURT': 
+	            onHurt.call(this, event);
+	            break;
 	        case 'DIE': 
 	            onDie.call(this, event);
 	            break;
@@ -728,9 +736,11 @@
 	    switch(event.key){
 	        case 'left':
 	            this.moveLeft();
+	            this.setState('move', this.props.timeOf.move);
 	            break;
 	        case 'right':
 	            this.moveRight();
+	            this.setState('move', this.props.timeOf.move);
 	            break;
 	        case 'up':
 	            this.jump();
@@ -740,7 +750,14 @@
 	        case 'stop':
 	            this.stop();
 	            break;
+	        case 'hit':
+	            this.setState('hit', this.props.timeOf.hit);
+	            break;
 	    }   
+	}
+	
+	function onHurt(event){
+	    
 	}
 	
 	function onDie(event){
@@ -1173,6 +1190,7 @@
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 34);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 35);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 42);
+	var state = __webpack_require__(/*! ./behaviours/state.js */ 44);
 	
 	/*
 	    @Hero
@@ -1189,8 +1207,13 @@
 	    listen, 
 	    jump,
 	    stop,
-	    move
+	    move,
+	    state
 	);
+	
+	ExtendedSprite.prototype.update = function(){
+	    this.animations.play(this.getState());
+	};
 	
 	module.exports = Hero;
 
@@ -1269,6 +1292,7 @@
 	    
 	    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
 	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
+	        this.eventsOf.level.dispatch({ type: 'HURT' });
 	    }.bind(this));
 	    
 	    // [KEYPRESS] event dispatch
@@ -1438,6 +1462,60 @@
 	};
 	
 	module.exports = turnBehaviour;
+
+/***/ },
+/* 44 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/state.js ***!
+  \**********************************************************/
+/***/ function(module, exports) {
+
+	var statefulCreature = {
+	    /*
+	        @state: expiry date timestamps
+	        state order: interruption priority
+	    */
+	    state: {
+	        'die': 0,
+	        'hurt': 0,
+	        'hit': 0,
+	        'move': 0,
+	        'idle': Infinity
+	    }, 
+	    /*
+	        @setState: set timestamp
+	    */
+	    setState: function(type, time){
+	        if(this.state[type] !== undefined){
+	            // + 200: realistic animation time
+	            // + 0: not animating at all as it is already expired while the execution context get there
+	            // + 10: minimal 
+	            // + 500: too much delayed reaction
+	            this.state[type] = this.game.time.now + (time || 200);
+	        }
+	    },
+	    /*
+	        @getState
+	        @return first state in the priority order which has not yet expired
+	    */
+	    getState: function(){
+	        for(var type in this.state){
+	            if(this.game.time.now < this.state[type]){
+	                return type;
+	            }
+	        }
+	        return 'DEFAULT';
+	    },
+	    /*
+	        @hasState
+	        @return true if state still valid, false if expired, undefined if not found
+	    */
+	    hasState: function(type){
+	        return this.state[type] !== undefined ? this.state[type] >= this.game.time.now : undefined;
+	    }
+	};
+	
+	module.exports = statefulCreature;
 
 /***/ }
 /******/ ]);

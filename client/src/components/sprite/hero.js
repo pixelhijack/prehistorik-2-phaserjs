@@ -3,6 +3,7 @@ var listen = require('./behaviours/listen.js');
 var jump = require('./behaviours/jump.js');
 var stop = require('./behaviours/stop.js');
 var move = require('./behaviours/move.js');
+var state = require('./behaviours/state.js');
 
 /*
     @Hero
@@ -19,7 +20,12 @@ Hero.prototype = Object.assign(
     listen, 
     jump,
     stop,
-    move
+    move,
+    state
 );
+
+ExtendedSprite.prototype.update = function(){
+    this.animations.play(this.getState());
+};
 
 module.exports = Hero;

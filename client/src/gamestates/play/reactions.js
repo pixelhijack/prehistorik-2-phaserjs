@@ -3,6 +3,9 @@ var reactions = function(event){
         case 'MOVE': 
             onMove.call(this, event);
             break;
+        case 'HURT': 
+            onHurt.call(this, event);
+            break;
         case 'DIE': 
             onDie.call(this, event);
             break;
@@ -13,9 +16,11 @@ function onMove(event){
     switch(event.key){
         case 'left':
             this.moveLeft();
+            this.setState('move', this.props.timeOf.move);
             break;
         case 'right':
             this.moveRight();
+            this.setState('move', this.props.timeOf.move);
             break;
         case 'up':
             this.jump();
@@ -25,7 +30,14 @@ function onMove(event){
         case 'stop':
             this.stop();
             break;
+        case 'hit':
+            this.setState('hit', this.props.timeOf.hit);
+            break;
     }   
+}
+
+function onHurt(event){
+    
 }
 
 function onDie(event){

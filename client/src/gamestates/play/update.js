@@ -14,6 +14,7 @@ var update = function(){
     
     this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
         this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
+        this.eventsOf.level.dispatch({ type: 'HURT' });
     }.bind(this));
     
     // [KEYPRESS] event dispatch
