@@ -21,7 +21,7 @@ var create = function(){
         
         text.setText('Loading...');
         
-        fetch('/level/1', {
+        fetch('/level/2', {
         	method: 'get'
         }).then(function(response) {
             return response.json();
