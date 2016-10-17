@@ -50,7 +50,7 @@
 	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
-	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 39);
+	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 41);
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
@@ -178,6 +178,9 @@
 	    text.anchor.set(0.5);
 	    
 	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    this.game.input.addPointer();
+	    
+	    this.game.input.onDown.addOnce(fetchLevel, this);
 	    spaceKey.onDown.addOnce(fetchLevel, this);
 	
 	    // load next game state by fetching level configs
@@ -227,8 +230,8 @@
 	var init = __webpack_require__(/*! ./init.js */ 7);
 	var preload = __webpack_require__(/*! ./preload.js */ 9);
 	var create = __webpack_require__(/*! ./create.js */ 10);
-	var update = __webpack_require__(/*! ./update.js */ 37);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 38);
+	var update = __webpack_require__(/*! ./update.js */ 39);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 40);
 	
 	/*
 	    @Play
@@ -619,7 +622,7 @@
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
 	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
 	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
-	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 32);
+	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 34);
 	
 	var create = function(){
 	    
@@ -778,20 +781,20 @@
 
 	var Creature = {
 	    bat: __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 14),
-	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 18),
-	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 19),
-	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 20),
-	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 21),
-	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 22),
-	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 23),
-	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 24),
-	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 25),
-	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 26),
-	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 27),
-	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 28),
-	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 29),
-	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 30),
-	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 31)
+	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 20),
+	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 21),
+	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 22),
+	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 23),
+	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 24),
+	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 25),
+	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 26),
+	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 27),
+	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 28),
+	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 29),
+	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 30),
+	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 31),
+	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 32),
+	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 33)
 	};
 	
 	var creatureFactory = {
@@ -840,8 +843,8 @@
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
 	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 17);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 42);
-	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 43);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 18);
+	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 19);
 	
 	/*
 	    @Hero
@@ -927,496 +930,6 @@
 
 /***/ },
 /* 18 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/bear.js ***!
-  \********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Bear(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Bear.prototype = Object.create(AI.prototype);
-	Bear.prototype.constructor = Bear;
-	
-	module.exports = Bear;
-
-
-/***/ },
-/* 19 */
-/*!*******************************************************!*\
-  !*** ./client/src/components/sprite/creatures/bug.js ***!
-  \*******************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Bug(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Bug.prototype = Object.create(AI.prototype);
-	Bug.prototype.constructor = Bug;
-	
-	module.exports = Bug;
-
-
-/***/ },
-/* 20 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/dino.js ***!
-  \********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Dino(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Dino.prototype = Object.create(AI.prototype);
-	Dino.prototype.constructor = Dino;
-	
-	module.exports = Dino;
-
-
-/***/ },
-/* 21 */
-/*!*************************************************************!*\
-  !*** ./client/src/components/sprite/creatures/dragonfly.js ***!
-  \*************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Dragonfly(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Dragonfly.prototype = Object.create(AI.prototype);
-	Dragonfly.prototype.constructor = Dragonfly;
-	
-	module.exports = Dragonfly;
-
-
-/***/ },
-/* 22 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/frog.js ***!
-  \********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Frog(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Frog.prototype = Object.create(AI.prototype);
-	Frog.prototype.constructor = Frog;
-	
-	module.exports = Frog;
-
-
-/***/ },
-/* 23 */
-/*!***********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/gorilla.js ***!
-  \***********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Gorilla(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Gorilla.prototype = Object.create(AI.prototype);
-	Gorilla.prototype.constructor = Gorilla;
-	
-	module.exports = Gorilla;
-
-
-/***/ },
-/* 24 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/insect.js ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Insect(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Insect.prototype = Object.create(AI.prototype);
-	Insect.prototype.constructor = Insect;
-	
-	module.exports = Insect;
-
-
-/***/ },
-/* 25 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/jelly.js ***!
-  \*********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Jelly(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Jelly.prototype = Object.create(AI.prototype);
-	Jelly.prototype.constructor = Jelly;
-	
-	module.exports = Jelly;
-
-
-/***/ },
-/* 26 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/native.js ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Native(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Native.prototype = Object.create(AI.prototype);
-	Native.prototype.constructor = Native;
-	
-	module.exports = Native;
-
-
-/***/ },
-/* 27 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/parrot.js ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Parrot(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Parrot.prototype = Object.create(AI.prototype);
-	Parrot.prototype.constructor = Parrot;
-	
-	module.exports = Parrot;
-
-
-/***/ },
-/* 28 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/ptero.js ***!
-  \*********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Ptero(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Ptero.prototype = Object.create(AI.prototype);
-	Ptero.prototype.constructor = Ptero;
-	
-	module.exports = Ptero;
-
-
-/***/ },
-/* 29 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/spider.js ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Spider(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Spider.prototype = Object.create(AI.prototype);
-	Spider.prototype.constructor = Spider;
-	
-	module.exports = Spider;
-
-
-/***/ },
-/* 30 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/tiger.js ***!
-  \*********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Tiger(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Tiger.prototype = Object.create(AI.prototype);
-	Tiger.prototype.constructor = Tiger;
-	
-	module.exports = Tiger;
-
-
-/***/ },
-/* 31 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/turtle.js ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
-	
-	function Turtle(game, x, y, sprite, props){
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Turtle.prototype = Object.create(AI.prototype);
-	Turtle.prototype.constructor = Turtle;
-	
-	module.exports = Turtle;
-	
-
-
-/***/ },
-/* 32 */
-/*!**********************************************!*\
-  !*** ./client/src/components/sprite/hero.js ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 33);
-	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 34);
-	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 35);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 42);
-	var state = __webpack_require__(/*! ./behaviours/state.js */ 44);
-	
-	/*
-	    @Hero
-	*/
-	function Hero(game, x, y, sprite, props){
-	    ExtendedSprite.call(this, game, x, y, sprite, props);
-	}
-	
-	Hero.prototype = Object.create(ExtendedSprite.prototype);
-	Hero.prototype.constructor = Hero;
-	
-	Hero.prototype = Object.assign(
-	    Hero.prototype, 
-	    listen, 
-	    jump,
-	    stop,
-	    move,
-	    state
-	);
-	
-	ExtendedSprite.prototype.update = function(){
-	    this.animations.play(this.getState());
-	};
-	
-	module.exports = Hero;
-
-/***/ },
-/* 33 */
-/*!***********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/listen.js ***!
-  \***********************************************************/
-/***/ function(module, exports) {
-
-	var listenBehaviour = {
-	    listen: function(eventSource, callback){
-	        eventSource.add(callback, this);
-	    },
-	    onEvents: function(event){
-	        console.log('[%s]: ', this.constructor.name, event);
-	    }
-	};
-	
-	module.exports = listenBehaviour;
-
-/***/ },
-/* 34 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/jump.js ***!
-  \*********************************************************/
-/***/ function(module, exports) {
-
-	var jumpBehaviour = {
-	    jump: function(){
-	        if(this.body.touching.down || this.body.blocked.down){
-	            this.body.velocity.y -= this.props.jumping;
-	        }
-	    }
-	};
-	
-	module.exports = jumpBehaviour;
-
-/***/ },
-/* 35 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/stop.js ***!
-  \*********************************************************/
-/***/ function(module, exports) {
-
-	var stopBehaviour = {
-	    stop: function(){
-	        // slippery rate: 1.1, should go later to levelConfig
-	        this.body.velocity.x /= 1.1;
-	    }
-	};
-	
-	module.exports = stopBehaviour;
-
-/***/ },
-/* 36 */,
-/* 37 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/play/update.js ***!
-  \**********************************************/
-/***/ function(module, exports) {
-
-	var update = function(){
-	    
-	    // fps 
-	    this.game.debug.text(this.game.time.fps, 5, 20);
-	    
-	    // [COLLISIONS]
-	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
-	    
-	    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
-	    
-	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
-	        this.eventsOf.level.dispatch({ type: 'DIE' });
-	    }.bind(this));
-	    
-	    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
-	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
-	        this.eventsOf.level.dispatch({ type: 'HURT' });
-	    }.bind(this));
-	    
-	    // [KEYPRESS] event dispatch
-	    if(this.keys.left.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
-	    } else if(this.keys.right.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
-	    } else {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
-	    }
-	    
-	    if(this.keys.up.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
-	    }
-	    
-	    if(this.keys.space.isDown){
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
-	    }
-	    
-	    console.log('[PHASER][Play][Update]');
-	};
-	
-	module.exports = update;
-
-/***/ },
-/* 38 */
-/*!*****************************************************!*\
-  !*** ./client/src/gamestates/play/eventemitters.js ***!
-  \*****************************************************/
-/***/ function(module, exports) {
-
-	var eventEmitters = {
-	    eventsOf: {
-	        keys: new Phaser.Signal(),
-	        level: new Phaser.Signal()
-	    }
-	};
-	
-	module.exports = eventEmitters;
-
-/***/ },
-/* 39 */
-/*!****************************************************!*\
-  !*** ./client/src/gamestates/gameover/gameover.js ***!
-  \****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 40);
-	var update = __webpack_require__(/*! ./update.js */ 41);
-	
-	/*
-	    @GameOver
-	    inherits from GameState component
-	*/
-	function GameOver(globalConfig){
-	    GameState.call(this);
-	    this.globalConfig = globalConfig;
-	}
-	GameOver.prototype = Object.create(GameState.prototype);
-	GameOver.prototype.constructor = GameOver;
-	
-	/*
-	    @override 
-	*/
-	GameOver.prototype = {
-	    create: create,
-	    update: update
-	};
-	
-	module.exports = GameOver;
-
-
-/***/ },
-/* 40 */
-/*!**************************************************!*\
-  !*** ./client/src/gamestates/gameover/create.js ***!
-  \**************************************************/
-/***/ function(module, exports) {
-
-	var create = function(){
-	    
-	    // fps debugging
-	    this.game.time.advancedTiming = true;
-	
-	    // CTA text
-	    var text = this.game.add.text(
-	        this.globalConfig.width / 2, 
-	        this.globalConfig.height / 2, 
-	        "Game Over\nPress space \nto continue", 
-	        { font: "48px Courier", fill: "#ffffff", align: "center" }
-	    );
-	
-	    text.anchor.set(0.5);
-	    
-	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    spaceKey.onDown.addOnce(function(){
-	        this.game.state.start('Menu', true, true);
-	    }, this);
-	    
-	    console.log('[PHASER][GameOver][Create]');
-	};
-	
-	module.exports = create;
-
-/***/ },
-/* 41 */
-/*!**************************************************!*\
-  !*** ./client/src/gamestates/gameover/update.js ***!
-  \**************************************************/
-/***/ function(module, exports) {
-
-	var update = function(){
-	    
-	    // fps 
-	    this.game.debug.text(this.game.time.fps, 5, 20);
-	    
-	    console.log('[PHASER][GameOver][Update]');
-	};
-	
-	module.exports = update;
-
-/***/ },
-/* 42 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/move.js ***!
   \*********************************************************/
@@ -1447,7 +960,7 @@
 	module.exports = moveBehaviour;
 
 /***/ },
-/* 43 */
+/* 19 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/turn.js ***!
   \*********************************************************/
@@ -1464,7 +977,350 @@
 	module.exports = turnBehaviour;
 
 /***/ },
-/* 44 */
+/* 20 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/bear.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Bear(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Bear.prototype = Object.create(AI.prototype);
+	Bear.prototype.constructor = Bear;
+	
+	module.exports = Bear;
+
+
+/***/ },
+/* 21 */
+/*!*******************************************************!*\
+  !*** ./client/src/components/sprite/creatures/bug.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Bug(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Bug.prototype = Object.create(AI.prototype);
+	Bug.prototype.constructor = Bug;
+	
+	module.exports = Bug;
+
+
+/***/ },
+/* 22 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/dino.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Dino(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Dino.prototype = Object.create(AI.prototype);
+	Dino.prototype.constructor = Dino;
+	
+	module.exports = Dino;
+
+
+/***/ },
+/* 23 */
+/*!*************************************************************!*\
+  !*** ./client/src/components/sprite/creatures/dragonfly.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Dragonfly(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Dragonfly.prototype = Object.create(AI.prototype);
+	Dragonfly.prototype.constructor = Dragonfly;
+	
+	module.exports = Dragonfly;
+
+
+/***/ },
+/* 24 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/frog.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Frog(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Frog.prototype = Object.create(AI.prototype);
+	Frog.prototype.constructor = Frog;
+	
+	module.exports = Frog;
+
+
+/***/ },
+/* 25 */
+/*!***********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/gorilla.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Gorilla(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Gorilla.prototype = Object.create(AI.prototype);
+	Gorilla.prototype.constructor = Gorilla;
+	
+	module.exports = Gorilla;
+
+
+/***/ },
+/* 26 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/insect.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Insect(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Insect.prototype = Object.create(AI.prototype);
+	Insect.prototype.constructor = Insect;
+	
+	module.exports = Insect;
+
+
+/***/ },
+/* 27 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/jelly.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Jelly(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Jelly.prototype = Object.create(AI.prototype);
+	Jelly.prototype.constructor = Jelly;
+	
+	module.exports = Jelly;
+
+
+/***/ },
+/* 28 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/native.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Native(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Native.prototype = Object.create(AI.prototype);
+	Native.prototype.constructor = Native;
+	
+	module.exports = Native;
+
+
+/***/ },
+/* 29 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/parrot.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Parrot(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Parrot.prototype = Object.create(AI.prototype);
+	Parrot.prototype.constructor = Parrot;
+	
+	module.exports = Parrot;
+
+
+/***/ },
+/* 30 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/ptero.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Ptero(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Ptero.prototype = Object.create(AI.prototype);
+	Ptero.prototype.constructor = Ptero;
+	
+	module.exports = Ptero;
+
+
+/***/ },
+/* 31 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/spider.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Spider(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Spider.prototype = Object.create(AI.prototype);
+	Spider.prototype.constructor = Spider;
+	
+	module.exports = Spider;
+
+
+/***/ },
+/* 32 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/tiger.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Tiger(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Tiger.prototype = Object.create(AI.prototype);
+	Tiger.prototype.constructor = Tiger;
+	
+	module.exports = Tiger;
+
+
+/***/ },
+/* 33 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/creatures/turtle.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	
+	function Turtle(game, x, y, sprite, props){
+		AI.call(this, game, x, y, sprite, props);
+	}
+	Turtle.prototype = Object.create(AI.prototype);
+	Turtle.prototype.constructor = Turtle;
+	
+	module.exports = Turtle;
+	
+
+
+/***/ },
+/* 34 */
+/*!**********************************************!*\
+  !*** ./client/src/components/sprite/hero.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 35);
+	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 36);
+	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 37);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 18);
+	var state = __webpack_require__(/*! ./behaviours/state.js */ 38);
+	
+	/*
+	    @Hero
+	*/
+	function Hero(game, x, y, sprite, props){
+	    ExtendedSprite.call(this, game, x, y, sprite, props);
+	}
+	
+	Hero.prototype = Object.create(ExtendedSprite.prototype);
+	Hero.prototype.constructor = Hero;
+	
+	Hero.prototype = Object.assign(
+	    Hero.prototype, 
+	    listen, 
+	    jump,
+	    stop,
+	    move,
+	    state
+	);
+	
+	ExtendedSprite.prototype.update = function(){
+	    this.animations.play(this.getState());
+	};
+	
+	module.exports = Hero;
+
+/***/ },
+/* 35 */
+/*!***********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/listen.js ***!
+  \***********************************************************/
+/***/ function(module, exports) {
+
+	var listenBehaviour = {
+	    listen: function(eventSource, callback){
+	        eventSource.add(callback, this);
+	    },
+	    onEvents: function(event){
+	        console.log('[%s]: ', this.constructor.name, event);
+	    }
+	};
+	
+	module.exports = listenBehaviour;
+
+/***/ },
+/* 36 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/jump.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var jumpBehaviour = {
+	    jump: function(){
+	        if(this.body.touching.down || this.body.blocked.down){
+	            this.body.velocity.y -= this.props.jumping;
+	        }
+	    }
+	};
+	
+	module.exports = jumpBehaviour;
+
+/***/ },
+/* 37 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/stop.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var stopBehaviour = {
+	    stop: function(){
+	        // slippery rate: 1.1, should go later to levelConfig
+	        this.body.velocity.x /= 1.1;
+	    }
+	};
+	
+	module.exports = stopBehaviour;
+
+/***/ },
+/* 38 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/state.js ***!
   \**********************************************************/
@@ -1516,6 +1372,152 @@
 	};
 	
 	module.exports = statefulCreature;
+
+/***/ },
+/* 39 */
+/*!**********************************************!*\
+  !*** ./client/src/gamestates/play/update.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	var update = function(){
+	    
+	    // fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	    
+	    // [COLLISIONS]
+	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
+	    
+	    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
+	    
+	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
+	        this.eventsOf.level.dispatch({ type: 'DIE' });
+	    }.bind(this));
+	    
+	    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
+	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
+	        this.eventsOf.level.dispatch({ type: 'HURT' });
+	    }.bind(this));
+	    
+	    // [KEYPRESS] event dispatch
+	    if(this.keys.left.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
+	    } else if(this.keys.right.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
+	    } else {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
+	    }
+	    
+	    if(this.keys.up.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
+	    }
+	    
+	    if(this.keys.space.isDown){
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
+	    }
+	    
+	    console.log('[PHASER][Play][Update]');
+	};
+	
+	module.exports = update;
+
+/***/ },
+/* 40 */
+/*!*****************************************************!*\
+  !*** ./client/src/gamestates/play/eventemitters.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	var eventEmitters = {
+	    eventsOf: {
+	        keys: new Phaser.Signal(),
+	        level: new Phaser.Signal()
+	    }
+	};
+	
+	module.exports = eventEmitters;
+
+/***/ },
+/* 41 */
+/*!****************************************************!*\
+  !*** ./client/src/gamestates/gameover/gameover.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
+	var create = __webpack_require__(/*! ./create.js */ 42);
+	var update = __webpack_require__(/*! ./update.js */ 43);
+	
+	/*
+	    @GameOver
+	    inherits from GameState component
+	*/
+	function GameOver(globalConfig){
+	    GameState.call(this);
+	    this.globalConfig = globalConfig;
+	}
+	GameOver.prototype = Object.create(GameState.prototype);
+	GameOver.prototype.constructor = GameOver;
+	
+	/*
+	    @override 
+	*/
+	GameOver.prototype = {
+	    create: create,
+	    update: update
+	};
+	
+	module.exports = GameOver;
+
+
+/***/ },
+/* 42 */
+/*!**************************************************!*\
+  !*** ./client/src/gamestates/gameover/create.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	var create = function(){
+	    
+	    // fps debugging
+	    this.game.time.advancedTiming = true;
+	
+	    // CTA text
+	    var text = this.game.add.text(
+	        this.globalConfig.width / 2, 
+	        this.globalConfig.height / 2, 
+	        "Game Over\nPress space \nto continue", 
+	        { font: "48px Courier", fill: "#ffffff", align: "center" }
+	    );
+	
+	    text.anchor.set(0.5);
+	    
+	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    spaceKey.onDown.addOnce(function(){
+	        this.game.state.start('Menu', true, true);
+	    }, this);
+	    
+	    console.log('[PHASER][GameOver][Create]');
+	};
+	
+	module.exports = create;
+
+/***/ },
+/* 43 */
+/*!**************************************************!*\
+  !*** ./client/src/gamestates/gameover/update.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	var update = function(){
+	    
+	    // fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	    
+	    console.log('[PHASER][GameOver][Update]');
+	};
+	
+	module.exports = update;
 
 /***/ }
 /******/ ]);

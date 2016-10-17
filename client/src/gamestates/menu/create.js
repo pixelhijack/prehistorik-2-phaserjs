@@ -14,6 +14,9 @@ var create = function(){
     text.anchor.set(0.5);
     
     var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.game.input.addPointer();
+    
+    this.game.input.onDown.addOnce(fetchLevel, this);
     spaceKey.onDown.addOnce(fetchLevel, this);
 
     // load next game state by fetching level configs
