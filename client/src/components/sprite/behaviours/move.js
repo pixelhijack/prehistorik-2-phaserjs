@@ -12,6 +12,7 @@ var moveBehaviour = {
         }
     }, 
     move: function(){
+        this.setState('move', this.props.timeOf.move);
         if(this.scale.x === 1){
             this.moveRight();
         } else {

@@ -313,6 +313,11 @@
 	    lifespan: Infinity,
 	    sense: 150,
 	    animations: [], 
+	    timeOf: {
+	      'move': 200,
+	      'hit': 100,
+	      'hurt': 500
+	    },
 	    boundTo : {
 	      x1: 1000,
 	      x2: 1200
@@ -326,11 +331,6 @@
 	    maxSpeed: 200,
 	    lives: 8, 
 	    lifespan: Infinity,
-	    timeOf: {
-	      'move': 200,
-	      'hit': 100,
-	      'hurt': 500
-	    },
 	    animations: [
 	      { name: 'move', frames: [11,'03','05',14,20], fps: 10, loop: false }, 
 	      { name: 'hit', frames: [22,24,28,31,34,22,24,28,31,34], fps: 10, loop: true }, 
@@ -956,6 +956,7 @@
 	        }
 	    }, 
 	    move: function(){
+	        this.setState('move', this.props.timeOf.move);
 	        if(this.scale.x === 1){
 	            this.moveRight();
 	        } else {
