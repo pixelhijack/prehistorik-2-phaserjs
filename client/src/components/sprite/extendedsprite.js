@@ -1,3 +1,5 @@
+var state = require('./behaviours/state.js');
+
 /*
     @ExtendedSprite
 */
@@ -31,8 +33,13 @@ function ExtendedSprite(game, x, y, sprite, props){
 ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
 ExtendedSprite.prototype.constructor = ExtendedSprite;
 
+ExtendedSprite.prototype = Object.assign(
+    ExtendedSprite.prototype, 
+    state
+);
+
 ExtendedSprite.prototype.update = function(){
-    this.animations.play('idle');
+    this.animations.play(this.getState());
 };
 
 module.exports = ExtendedSprite;

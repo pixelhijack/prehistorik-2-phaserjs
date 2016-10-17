@@ -1,6 +1,6 @@
 var decideBehaviour = {
     update: function(){
-        this.animations.play('move');
+        this.animations.play(this.getState());
         this.turn();
         this.move();
     }

@@ -870,8 +870,10 @@
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/extendedsprite.js ***!
   \********************************************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var state = __webpack_require__(/*! ./behaviours/state.js */ 38);
+	
 	/*
 	    @ExtendedSprite
 	*/
@@ -905,8 +907,13 @@
 	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
 	ExtendedSprite.prototype.constructor = ExtendedSprite;
 	
+	ExtendedSprite.prototype = Object.assign(
+	    ExtendedSprite.prototype, 
+	    state
+	);
+	
 	ExtendedSprite.prototype.update = function(){
-	    this.animations.play('idle');
+	    this.animations.play(this.getState());
 	};
 	
 	module.exports = ExtendedSprite;
@@ -920,7 +927,7 @@
 
 	var decideBehaviour = {
 	    update: function(){
-	        this.animations.play('move');
+	        this.animations.play(this.getState());
 	        this.turn();
 	        this.move();
 	    }
@@ -1241,7 +1248,6 @@
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 36);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 37);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 18);
-	var state = __webpack_require__(/*! ./behaviours/state.js */ 38);
 	
 	/*
 	    @Hero
@@ -1258,13 +1264,8 @@
 	    listen, 
 	    jump,
 	    stop,
-	    move,
-	    state
+	    move
 	);
-	
-	ExtendedSprite.prototype.update = function(){
-	    this.animations.play(this.getState());
-	};
 	
 	module.exports = Hero;
 
