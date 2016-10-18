@@ -1,4 +1,4 @@
-var state = require('./behaviours/state.js');
+var modifyState = require('./behaviours/state.js');
 
 /*
     @ExtendedSprite
@@ -21,6 +21,14 @@ function ExtendedSprite(game, x, y, sprite, props){
         );
     }.bind(this));
     
+    this.state = {
+        'die': 0,
+        'hurt': 0,
+        'hit': 0,
+        'move': 0,
+        'idle': Infinity
+    };
+    
     this.game.add.existing(this);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.gravity.y = this.props.gravity;
@@ -35,7 +43,7 @@ ExtendedSprite.prototype.constructor = ExtendedSprite;
 
 ExtendedSprite.prototype = Object.assign(
     ExtendedSprite.prototype, 
-    state
+    modifyState
 );
 
 ExtendedSprite.prototype.update = function(){

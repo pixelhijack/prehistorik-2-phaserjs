@@ -316,7 +316,9 @@
 	    timeOf: {
 	      'move': 200,
 	      'hit': 100,
-	      'hurt': 500
+	      'hurt': 500,
+	      'stop': 200,
+	      'idle': 10
 	    },
 	    boundTo : {
 	      x1: 1000,
@@ -622,7 +624,7 @@
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
 	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
 	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
-	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 34);
+	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 35);
 	
 	var create = function(){
 	    
@@ -739,11 +741,9 @@
 	    switch(event.key){
 	        case 'left':
 	            this.moveLeft();
-	            this.setState('move', this.props.timeOf.move);
 	            break;
 	        case 'right':
 	            this.moveRight();
-	            this.setState('move', this.props.timeOf.move);
 	            break;
 	        case 'up':
 	            this.jump();
@@ -781,20 +781,20 @@
 
 	var Creature = {
 	    bat: __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 14),
-	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 20),
-	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 21),
-	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 22),
-	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 23),
-	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 24),
-	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 25),
-	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 26),
-	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 27),
-	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 28),
-	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 29),
-	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 30),
-	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 31),
-	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 32),
-	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 33)
+	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 21),
+	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 22),
+	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 23),
+	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 24),
+	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 25),
+	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 26),
+	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 27),
+	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 28),
+	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 29),
+	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 30),
+	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 31),
+	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 32),
+	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 33),
+	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 34)
 	};
 	
 	var creatureFactory = {
@@ -842,9 +842,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 17);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 18);
-	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 19);
+	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 18);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
+	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 20);
 	
 	/*
 	    @Hero
@@ -872,7 +872,7 @@
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var state = __webpack_require__(/*! ./behaviours/state.js */ 38);
+	var modifyState = __webpack_require__(/*! ./behaviours/state.js */ 17);
 	
 	/*
 	    @ExtendedSprite
@@ -895,6 +895,14 @@
 	        );
 	    }.bind(this));
 	    
+	    this.state = {
+	        'die': 0,
+	        'hurt': 0,
+	        'hit': 0,
+	        'move': 0,
+	        'idle': Infinity
+	    };
+	    
 	    this.game.add.existing(this);
 	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	    this.body.gravity.y = this.props.gravity;
@@ -909,7 +917,7 @@
 	
 	ExtendedSprite.prototype = Object.assign(
 	    ExtendedSprite.prototype, 
-	    state
+	    modifyState
 	);
 	
 	ExtendedSprite.prototype.update = function(){
@@ -920,6 +928,49 @@
 
 /***/ },
 /* 17 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/state.js ***!
+  \**********************************************************/
+/***/ function(module, exports) {
+
+	var statefulCreature = {
+	    /*
+	        @setState: set timestamp
+	    */
+	    setState: function(type, time){
+	        if(this.state[type] !== undefined){
+	            // + 200: realistic animation time
+	            // + 0: not animating at all as it is already expired while the execution context get there
+	            // + 10: minimal 
+	            // + 500: too much delayed reaction
+	            this.state[type] = this.game.time.now + (time || 200);
+	        }
+	    },
+	    /*
+	        @getState
+	        @return first state in the priority order which has not yet expired
+	    */
+	    getState: function(){
+	        for(var type in this.state){
+	            if(this.game.time.now < this.state[type]){
+	                return type;
+	            }
+	        }
+	        return 'idle';
+	    },
+	    /*
+	        @hasState
+	        @return true if state still valid, false if expired, undefined if not found
+	    */
+	    hasState: function(type){
+	        return this.state[type] !== undefined ? this.state[type] >= this.game.time.now : undefined;
+	    }
+	};
+	
+	module.exports = statefulCreature;
+
+/***/ },
+/* 18 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/decide.js ***!
   \***********************************************************/
@@ -936,7 +987,7 @@
 	module.exports = decideBehaviour;
 
 /***/ },
-/* 18 */
+/* 19 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/move.js ***!
   \*********************************************************/
@@ -968,7 +1019,7 @@
 	module.exports = moveBehaviour;
 
 /***/ },
-/* 19 */
+/* 20 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/turn.js ***!
   \*********************************************************/
@@ -985,7 +1036,7 @@
 	module.exports = turnBehaviour;
 
 /***/ },
-/* 20 */
+/* 21 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/bear.js ***!
   \********************************************************/
@@ -1003,7 +1054,7 @@
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /*!*******************************************************!*\
   !*** ./client/src/components/sprite/creatures/bug.js ***!
   \*******************************************************/
@@ -1021,7 +1072,7 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/dino.js ***!
   \********************************************************/
@@ -1039,7 +1090,7 @@
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /*!*************************************************************!*\
   !*** ./client/src/components/sprite/creatures/dragonfly.js ***!
   \*************************************************************/
@@ -1057,7 +1108,7 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/frog.js ***!
   \********************************************************/
@@ -1075,7 +1126,7 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/creatures/gorilla.js ***!
   \***********************************************************/
@@ -1093,7 +1144,7 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/insect.js ***!
   \**********************************************************/
@@ -1111,7 +1162,7 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/jelly.js ***!
   \*********************************************************/
@@ -1129,7 +1180,7 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/native.js ***!
   \**********************************************************/
@@ -1147,7 +1198,7 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/parrot.js ***!
   \**********************************************************/
@@ -1165,7 +1216,7 @@
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/ptero.js ***!
   \*********************************************************/
@@ -1183,7 +1234,7 @@
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/spider.js ***!
   \**********************************************************/
@@ -1201,7 +1252,7 @@
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/tiger.js ***!
   \*********************************************************/
@@ -1219,7 +1270,7 @@
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/turtle.js ***!
   \**********************************************************/
@@ -1238,17 +1289,17 @@
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /*!**********************************************!*\
   !*** ./client/src/components/sprite/hero.js ***!
   \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 35);
-	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 36);
-	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 37);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 18);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 36);
+	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 37);
+	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 38);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
 	
 	/*
 	    @Hero
@@ -1271,7 +1322,7 @@
 	module.exports = Hero;
 
 /***/ },
-/* 35 */
+/* 36 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/listen.js ***!
   \***********************************************************/
@@ -1289,7 +1340,7 @@
 	module.exports = listenBehaviour;
 
 /***/ },
-/* 36 */
+/* 37 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/jump.js ***!
   \*********************************************************/
@@ -1306,7 +1357,7 @@
 	module.exports = jumpBehaviour;
 
 /***/ },
-/* 37 */
+/* 38 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/stop.js ***!
   \*********************************************************/
@@ -1316,64 +1367,11 @@
 	    stop: function(){
 	        // slippery rate: 1.1, should go later to levelConfig
 	        this.body.velocity.x /= 1.1;
+	        this.setState('stop', this.props.timeOf.stop);
 	    }
 	};
 	
 	module.exports = stopBehaviour;
-
-/***/ },
-/* 38 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/state.js ***!
-  \**********************************************************/
-/***/ function(module, exports) {
-
-	var statefulCreature = {
-	    /*
-	        @state: expiry date timestamps
-	        state order: interruption priority
-	    */
-	    state: {
-	        'die': 0,
-	        'hurt': 0,
-	        'hit': 0,
-	        'move': 0,
-	        'idle': Infinity
-	    }, 
-	    /*
-	        @setState: set timestamp
-	    */
-	    setState: function(type, time){
-	        if(this.state[type] !== undefined){
-	            // + 200: realistic animation time
-	            // + 0: not animating at all as it is already expired while the execution context get there
-	            // + 10: minimal 
-	            // + 500: too much delayed reaction
-	            this.state[type] = this.game.time.now + (time || 200);
-	        }
-	    },
-	    /*
-	        @getState
-	        @return first state in the priority order which has not yet expired
-	    */
-	    getState: function(){
-	        for(var type in this.state){
-	            if(this.game.time.now < this.state[type]){
-	                return type;
-	            }
-	        }
-	        return 'DEFAULT';
-	    },
-	    /*
-	        @hasState
-	        @return true if state still valid, false if expired, undefined if not found
-	    */
-	    hasState: function(type){
-	        return this.state[type] !== undefined ? this.state[type] >= this.game.time.now : undefined;
-	    }
-	};
-	
-	module.exports = statefulCreature;
 
 /***/ },
 /* 39 */

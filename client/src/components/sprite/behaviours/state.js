@@ -1,16 +1,5 @@
 var statefulCreature = {
     /*
-        @state: expiry date timestamps
-        state order: interruption priority
-    */
-    state: {
-        'die': 0,
-        'hurt': 0,
-        'hit': 0,
-        'move': 0,
-        'idle': Infinity
-    }, 
-    /*
         @setState: set timestamp
     */
     setState: function(type, time){
@@ -32,7 +21,7 @@ var statefulCreature = {
                 return type;
             }
         }
-        return 'DEFAULT';
+        return 'idle';
     },
     /*
         @hasState

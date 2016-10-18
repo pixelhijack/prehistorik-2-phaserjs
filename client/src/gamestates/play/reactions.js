@@ -16,11 +16,9 @@ function onMove(event){
     switch(event.key){
         case 'left':
             this.moveLeft();
-            this.setState('move', this.props.timeOf.move);
             break;
         case 'right':
             this.moveRight();
-            this.setState('move', this.props.timeOf.move);
             break;
         case 'up':
             this.jump();

@@ -15,7 +15,9 @@ var creatureConfigs = {
     timeOf: {
       'move': 200,
       'hit': 100,
-      'hurt': 500
+      'hurt': 500,
+      'stop': 200,
+      'idle': 10
     },
     boundTo : {
       x1: 1000,
