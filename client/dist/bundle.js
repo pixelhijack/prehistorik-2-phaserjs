@@ -754,7 +754,7 @@
 	            this.stop();
 	            break;
 	        case 'hit':
-	            this.setState('hit');
+	            this.hit();
 	            break;
 	    }   
 	}
@@ -1301,6 +1301,7 @@
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 37);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 38);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
+	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 44);
 	
 	/*
 	    @Hero
@@ -1317,7 +1318,8 @@
 	    listen, 
 	    jump,
 	    stop,
-	    move
+	    move,
+	    hit
 	);
 	
 	module.exports = Hero;
@@ -1519,6 +1521,21 @@
 	};
 	
 	module.exports = update;
+
+/***/ },
+/* 44 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/hit.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	var hitBehaviour = {
+	    hit: function(){
+	        this.setState('hit');
+	    }
+	};
+	
+	module.exports = hitBehaviour;
 
 /***/ }
 /******/ ]);

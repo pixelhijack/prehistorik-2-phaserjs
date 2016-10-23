@@ -29,7 +29,7 @@ function onMove(event){
             this.stop();
             break;
         case 'hit':
-            this.setState('hit');
+            this.hit();
             break;
     }   
 }

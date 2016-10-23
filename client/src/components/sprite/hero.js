@@ -3,6 +3,7 @@ var listen = require('./behaviours/listen.js');
 var jump = require('./behaviours/jump.js');
 var stop = require('./behaviours/stop.js');
 var move = require('./behaviours/move.js');
+var hit = require('./behaviours/hit.js');
 
 /*
     @Hero
@@ -19,7 +20,8 @@ Hero.prototype = Object.assign(
     listen, 
     jump,
     stop,
-    move
+    move,
+    hit
 );
 
 module.exports = Hero;
