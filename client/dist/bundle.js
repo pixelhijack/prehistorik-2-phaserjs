@@ -754,7 +754,7 @@
 	            this.stop();
 	            break;
 	        case 'hit':
-	            this.setState('hit', this.props.timeOf.hit);
+	            this.setState('hit');
 	            break;
 	    }   
 	}
@@ -943,7 +943,7 @@
 	            // + 0: not animating at all as it is already expired while the execution context get there
 	            // + 10: minimal 
 	            // + 500: too much delayed reaction
-	            this.state[type] = this.game.time.now + (time || 200);
+	            this.state[type] = this.game.time.now + (time || this.props.timeOf[type] || 200);
 	        }
 	    },
 	    /*
@@ -996,18 +996,19 @@
 	var moveBehaviour = {
 	    moveLeft: function(){
 	        this.scale.x = -1;
+	        this.setState('move');
 	        if(this.body.velocity.x > -this.props.maxSpeed){
 	            this.body.velocity.x -= this.props.acceleration;
 	        }
 	    },
 	    moveRight: function(){
 	        this.scale.x = 1;
+	        this.setState('move');
 	        if(this.body.velocity.x < this.props.maxSpeed){
 	            this.body.velocity.x += this.props.acceleration;
 	        }
 	    }, 
 	    move: function(){
-	        this.setState('move', this.props.timeOf.move);
 	        if(this.scale.x === 1){
 	            this.moveRight();
 	        } else {
@@ -1367,7 +1368,7 @@
 	    stop: function(){
 	        // slippery rate: 1.1, should go later to levelConfig
 	        this.body.velocity.x /= 1.1;
-	        this.setState('stop', this.props.timeOf.stop);
+	        this.setState('stop');
 	    }
 	};
 	

@@ -29,7 +29,7 @@ function onMove(event){
             this.stop();
             break;
         case 'hit':
-            this.setState('hit', this.props.timeOf.hit);
+            this.setState('hit');
             break;
     }   
 }

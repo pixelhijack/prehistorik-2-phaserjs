@@ -8,7 +8,7 @@ var statefulCreature = {
             // + 0: not animating at all as it is already expired while the execution context get there
             // + 10: minimal 
             // + 500: too much delayed reaction
-            this.state[type] = this.game.time.now + (time || 200);
+            this.state[type] = this.game.time.now + (time || this.props.timeOf[type] || 200);
         }
     },
     /*
