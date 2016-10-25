@@ -6,9 +6,9 @@
 
 Revival experiment of the original Titus 1993 DOS game in the browser with PhaserJS game engine.
 
-- Version 1.0 / first repo: Canvas-based, full native implementation effort with vanilla physics engine written from scratch (doomed!)
-- Version 2.0 / second repo: PhaserJS + naive, make it work, spaghetti solution
-- Version 3.0 / current repo: PhaserJS + better separation + mixin behavioural patterns + events + soon: ES6, streams
+- Version 1.0 / first repo: Canvas-based, full native implementation effort with vanilla physics engine written from scratch (doomed!) 
+- Version 2.0 / second repo: PhaserJS + naive, make it work, spaghetti solution http://pixelhijack.github.io/
+- Version 3.0 / current repo: PhaserJS + better separation + mixin behavioural patterns + events + soon: ES6, streams http://pixelhijack.herokuapp.com/
 
 ### Architectural considerations, plans, roadmap
 - Object composition via Object.assign versus classical OOP
