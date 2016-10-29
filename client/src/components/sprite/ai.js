@@ -2,6 +2,7 @@ var ExtendedSprite = require('./extendedsprite.js');
 var decide = require('./behaviours/decide.js');
 var move = require('./behaviours/move.js');
 var turn = require('./behaviours/turn.js');
+var bounds = require('./behaviours/boundto.js');
 
 /*
     @Hero
@@ -17,7 +18,8 @@ AI.prototype = Object.assign(
     AI.prototype, 
     decide,
     move,
-    turn
+    turn,
+    bounds
 );
 
 module.exports = AI;

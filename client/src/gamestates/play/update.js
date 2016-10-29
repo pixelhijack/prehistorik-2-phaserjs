@@ -3,6 +3,10 @@ var update = function(){
     // fps 
     this.game.debug.text(this.game.time.fps, 5, 20);
     
+    this.enemies.forEachAlive(function(creature){
+        //creature.debug(creature.id);
+    });
+    
     // [COLLISIONS]
     this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
     
