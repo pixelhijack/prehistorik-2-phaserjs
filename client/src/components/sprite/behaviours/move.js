@@ -5,6 +5,7 @@ var moveBehaviour = {
         if(this.body.velocity.x > -this.props.maxSpeed){
             this.body.velocity.x -= this.props.acceleration;
         }
+        return this;
     },
     moveRight: function(){
         this.scale.x = 1;
@@ -12,6 +13,7 @@ var moveBehaviour = {
         if(this.body.velocity.x < this.props.maxSpeed){
             this.body.velocity.x += this.props.acceleration;
         }
+        return this;
     }, 
     move: function(){
         if(this.scale.x === 1){

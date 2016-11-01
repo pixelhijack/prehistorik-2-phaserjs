@@ -1,6 +1,7 @@
 var hitBehaviour = {
     hit: function(){
         this.setState('hit');
+        return this;
     }
 };
 

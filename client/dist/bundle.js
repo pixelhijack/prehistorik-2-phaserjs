@@ -50,7 +50,7 @@
 	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
-	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 41);
+	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 42);
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
@@ -230,8 +230,8 @@
 	var init = __webpack_require__(/*! ./init.js */ 7);
 	var preload = __webpack_require__(/*! ./preload.js */ 9);
 	var create = __webpack_require__(/*! ./create.js */ 10);
-	var update = __webpack_require__(/*! ./update.js */ 39);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 40);
+	var update = __webpack_require__(/*! ./update.js */ 40);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 41);
 	
 	/*
 	    @Play
@@ -1000,6 +1000,7 @@
 	        if(this.body.velocity.x > -this.props.maxSpeed){
 	            this.body.velocity.x -= this.props.acceleration;
 	        }
+	        return this;
 	    },
 	    moveRight: function(){
 	        this.scale.x = 1;
@@ -1007,6 +1008,7 @@
 	        if(this.body.velocity.x < this.props.maxSpeed){
 	            this.body.velocity.x += this.props.acceleration;
 	        }
+	        return this;
 	    }, 
 	    move: function(){
 	        if(this.scale.x === 1){
@@ -1031,6 +1033,7 @@
 	        if(this.body.blocked.left || this.body.blocked.right){
 	            this.scale.x *= -1;
 	        }
+	        return this;
 	    }
 	};
 	
@@ -1301,7 +1304,7 @@
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 37);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 38);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
-	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 44);
+	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 39);
 	
 	/*
 	    @Hero
@@ -1354,6 +1357,7 @@
 	        if(this.body.touching.down || this.body.blocked.down){
 	            this.body.velocity.y -= this.props.jumping;
 	        }
+	        return this;
 	    }
 	};
 	
@@ -1371,6 +1375,7 @@
 	        // slippery rate: 1.1, should go later to levelConfig
 	        this.body.velocity.x /= 1.1;
 	        this.setState('stop');
+	        return this;
 	    }
 	};
 	
@@ -1378,6 +1383,22 @@
 
 /***/ },
 /* 39 */
+/*!********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/hit.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	var hitBehaviour = {
+	    hit: function(){
+	        this.setState('hit');
+	        return this;
+	    }
+	};
+	
+	module.exports = hitBehaviour;
+
+/***/ },
+/* 40 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/update.js ***!
   \**********************************************/
@@ -1425,7 +1446,7 @@
 	module.exports = update;
 
 /***/ },
-/* 40 */
+/* 41 */
 /*!*****************************************************!*\
   !*** ./client/src/gamestates/play/eventemitters.js ***!
   \*****************************************************/
@@ -1441,15 +1462,15 @@
 	module.exports = eventEmitters;
 
 /***/ },
-/* 41 */
+/* 42 */
 /*!****************************************************!*\
   !*** ./client/src/gamestates/gameover/gameover.js ***!
   \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 42);
-	var update = __webpack_require__(/*! ./update.js */ 43);
+	var create = __webpack_require__(/*! ./create.js */ 43);
+	var update = __webpack_require__(/*! ./update.js */ 44);
 	
 	/*
 	    @GameOver
@@ -1474,7 +1495,7 @@
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/create.js ***!
   \**************************************************/
@@ -1506,7 +1527,7 @@
 	module.exports = create;
 
 /***/ },
-/* 43 */
+/* 44 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/update.js ***!
   \**************************************************/
@@ -1521,21 +1542,6 @@
 	};
 	
 	module.exports = update;
-
-/***/ },
-/* 44 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/hit.js ***!
-  \********************************************************/
-/***/ function(module, exports) {
-
-	var hitBehaviour = {
-	    hit: function(){
-	        this.setState('hit');
-	    }
-	};
-	
-	module.exports = hitBehaviour;
 
 /***/ }
 /******/ ]);
