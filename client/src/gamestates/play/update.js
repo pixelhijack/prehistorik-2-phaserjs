@@ -32,6 +32,10 @@ var update = function(){
         }
     }.bind(this));
     
+    debugEnemies.call(this, function(){
+        return this.facingRight;
+    });
+    
     // [KEYPRESS] event dispatch
     handleKeypress.call(this);
 };
@@ -55,6 +59,12 @@ function handleKeypress(){
     if(this.keys.space.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
     }
+}
+
+function debugEnemies(debugCallback){
+    this.enemies.forEachAlive(function(enemy){
+        enemy.debug(debugCallback.call(enemy));
+    });
 }
 
 module.exports = update;

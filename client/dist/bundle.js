@@ -879,6 +879,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var modifyState = __webpack_require__(/*! ./behaviours/state.js */ 17);
+	var debug = __webpack_require__(/*! ./behaviours/debug.js */ 47);
 	
 	/*
 	    @ExtendedSprite
@@ -916,6 +917,8 @@
 	    this.body.collideWorldBounds = true;
 	    this.checkWorldBounds = true;
 	    this.outOfBoundsKill = true;
+	    this._debugText = this.addChild(this.game.add.text(20, -20, 'debug', { font: "12px Courier", fill: "#ffffff" }));
+	    this._debugText.visible = false;
 	}
 	
 	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
@@ -923,7 +926,8 @@
 	
 	ExtendedSprite.prototype = Object.assign(
 	    ExtendedSprite.prototype, 
-	    modifyState
+	    modifyState,
+	    debug
 	);
 	
 	/*
@@ -945,7 +949,7 @@
 	ExtendedSprite.prototype.update = function(){
 	    this.animations.play(this.getState());
 	};
-	
+	 
 	module.exports = ExtendedSprite;
 
 /***/ },
@@ -1465,6 +1469,10 @@
 	        }
 	    }.bind(this));
 	    
+	    debugEnemies.call(this, function(){
+	        return this.facingRight;
+	    });
+	    
 	    // [KEYPRESS] event dispatch
 	    handleKeypress.call(this);
 	};
@@ -1488,6 +1496,12 @@
 	    if(this.keys.space.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
 	    }
+	}
+	
+	function debugEnemies(debugCallback){
+	    this.enemies.forEachAlive(function(enemy){
+	        enemy.debug(debugCallback.call(enemy));
+	    });
 	}
 	
 	module.exports = update;
@@ -1615,6 +1629,24 @@
 	};
 	
 	module.exports = hurtBehaviour;
+
+/***/ },
+/* 47 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/debug.js ***!
+  \**********************************************************/
+/***/ function(module, exports) {
+
+	var debugBehaviour = {
+	    debug: function(toDebug){
+	       this._debugText.visible = true;
+	       this._debugText.scale.x = this.scale.x;
+	       this._debugText.setText(toDebug.toString() || '');
+	       return this;
+	    }
+	};
+	
+	module.exports = debugBehaviour;
 
 /***/ }
 /******/ ]);

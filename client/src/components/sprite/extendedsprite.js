@@ -1,4 +1,5 @@
 var modifyState = require('./behaviours/state.js');
+var debug = require('./behaviours/debug.js');
 
 /*
     @ExtendedSprite
@@ -36,6 +37,8 @@ function ExtendedSprite(game, x, y, sprite, props){
     this.body.collideWorldBounds = true;
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
+    this._debugText = this.addChild(this.game.add.text(20, -20, 'debug', { font: "12px Courier", fill: "#ffffff" }));
+    this._debugText.visible = false;
 }
 
 ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,7 +46,8 @@ ExtendedSprite.prototype.constructor = ExtendedSprite;
 
 ExtendedSprite.prototype = Object.assign(
     ExtendedSprite.prototype, 
-    modifyState
+    modifyState,
+    debug
 );
 
 /*
@@ -65,5 +69,5 @@ Object.defineProperty(ExtendedSprite.prototype, 'facingLeft', {
 ExtendedSprite.prototype.update = function(){
     this.animations.play(this.getState());
 };
-
+ 
 module.exports = ExtendedSprite;
