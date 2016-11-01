@@ -812,6 +812,8 @@
 	            this.creatureConfig[creature.type]
 	        );
 	        
+	        enemy.setBounds(creature.boundTo);
+	        
 	        this.enemies.add(enemy);
 	    }
 	};
@@ -848,6 +850,7 @@
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
 	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 20);
 	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 46);
+	var boundTo = __webpack_require__(/*! ./behaviours/boundto.js */ 48);
 	
 	/*
 	    @Hero
@@ -866,7 +869,8 @@
 	    decide,
 	    move,
 	    turn,
-	    hurt
+	    hurt,
+	    boundTo
 	);
 	
 	module.exports = AI;
@@ -1647,6 +1651,29 @@
 	};
 	
 	module.exports = debugBehaviour;
+
+/***/ },
+/* 48 */
+/*!************************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/boundto.js ***!
+  \************************************************************/
+/***/ function(module, exports) {
+
+	var boundToBehaviour = {
+	    setBounds: function(bounds){
+	       if(!bounds){ 
+	           return this;
+	       }
+	       
+	       return this;
+	    },
+	    checkBounds: function(){
+	       
+	       return this;
+	    }
+	};
+	
+	module.exports = boundToBehaviour;
 
 /***/ }
 /******/ ]);

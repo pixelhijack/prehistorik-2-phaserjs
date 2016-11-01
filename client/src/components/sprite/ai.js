@@ -3,6 +3,7 @@ var decide = require('./behaviours/decide.js');
 var move = require('./behaviours/move.js');
 var turn = require('./behaviours/turn.js');
 var hurt = require('./behaviours/hurt.js');
+var boundTo = require('./behaviours/boundto.js');
 
 /*
     @Hero
@@ -21,7 +22,8 @@ AI.prototype = Object.assign(
     decide,
     move,
     turn,
-    hurt
+    hurt,
+    boundTo
 );
 
 module.exports = AI;

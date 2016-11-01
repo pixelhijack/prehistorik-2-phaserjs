@@ -29,6 +29,8 @@ var creatureFactory = {
             this.creatureConfig[creature.type]
         );
         
+        enemy.setBounds(creature.boundTo);
+        
         this.enemies.add(enemy);
     }
 };
