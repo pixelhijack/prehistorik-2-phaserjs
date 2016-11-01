@@ -926,6 +926,22 @@
 	    modifyState
 	);
 	
+	/*
+	    facing right: this.scale.x = 1
+	    facing left: this.scale.x = -1
+	*/
+	Object.defineProperty(ExtendedSprite.prototype, 'facingRight', {
+	    get: function() { 
+	        return this.scale.x > 0; 
+	    }
+	});
+	
+	Object.defineProperty(ExtendedSprite.prototype, 'facingLeft', {
+	    get: function() { 
+	        return this.scale.x < 0; 
+	    }
+	});
+	
 	ExtendedSprite.prototype.update = function(){
 	    this.animations.play(this.getState());
 	};
