@@ -1409,7 +1409,7 @@
 
 	var update = function(){
 	    
-	    console.log('[PHASER][Play][Update]');
+	    // console.log('[PHASER][Play][Update]');
 	    
 	    // [DEBUG] fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
