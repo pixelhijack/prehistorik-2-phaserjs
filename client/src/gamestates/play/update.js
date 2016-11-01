@@ -32,9 +32,11 @@ var update = function(){
         }
     }.bind(this));
     
+    /*
     debugEnemies.call(this, function(){
         return this.facingRight;
     });
+    */
     
     // [KEYPRESS] event dispatch
     handleKeypress.call(this);

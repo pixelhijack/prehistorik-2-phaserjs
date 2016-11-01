@@ -188,7 +188,7 @@
 	        
 	        text.setText('Loading...');
 	        
-	        fetch('/level/' + Math.ceil(Math.random() * 6), {
+	        fetch('/level/4', {
 	        	method: 'get'
 	        }).then(function(response) {
 	            return response.json();
@@ -858,11 +858,19 @@
 	function AI(game, x, y, sprite, props){
 	    ExtendedSprite.call(this, game, x, y, sprite, props);
 	    
-	    this.id = this.constructor.name + '-' + x + '-' + y + '-' + this.game.time.now;
+	    this.id = this.constructor.name + '-' + x + '-' + y;
 	}
 	
 	AI.prototype = Object.create(ExtendedSprite.prototype);
 	AI.prototype.constructor = AI;
+	
+	// hacky... :(
+	Object.defineProperty(AI.prototype, 'boundTo', {
+	    get: function() { return this._boundTo; }, 
+	    set: function(bounds) {
+	        this._boundTo = bounds;
+	    }
+	});
 	
 	AI.prototype = Object.assign(
 	    AI.prototype, 
@@ -1009,7 +1017,8 @@
 	var decideBehaviour = {
 	    update: function(){
 	        this.animations.play('move');
-	        this.turnIfBlocked();
+	        //this.turnIfBlocked();
+	        this.checkBounds();
 	        this.move();
 	    }
 	};
@@ -1473,9 +1482,11 @@
 	        }
 	    }.bind(this));
 	    
+	    /*
 	    debugEnemies.call(this, function(){
 	        return this.facingRight;
 	    });
+	    */
 	    
 	    // [KEYPRESS] event dispatch
 	    handleKeypress.call(this);
@@ -1661,15 +1672,31 @@
 
 	var boundToBehaviour = {
 	    setBounds: function(bounds){
-	       if(!bounds){ 
+	       if(!bounds || !Object.keys(bounds).length){ 
 	           return this;
 	       }
 	       
-	       return this;
+	       // @Rectangle { x1, x2 }
+	        if(bounds.hasOwnProperty('x1') && 
+	            bounds.hasOwnProperty('x2') &&
+	            !bounds.hasOwnProperty('y1') &&
+	            !bounds.hasOwnProperty('y2')){
+	                this.boundTo = new Phaser.Rectangle(bounds.x1, 0, bounds.x2 - bounds.x1, this.game.height);
+	        }
+	        
+	        return this;
 	    },
 	    checkBounds: function(){
 	       
-	       return this;
+	        // boundTo @Rectangle {x1, x2} or {x1, y1, x2, y2}
+	        if(this.boundTo &&
+	            this.boundTo.hasOwnProperty('width') && 
+	            (this.x < this.boundTo.x && this.facingLeft || 
+	            this.x > this.boundTo.x + this.boundTo.width && this.facingRight)){
+	                this.turn();
+	        }
+	        
+	        return this;
 	    }
 	};
 	

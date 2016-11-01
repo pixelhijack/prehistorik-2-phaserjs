@@ -1,7 +1,8 @@
 var decideBehaviour = {
     update: function(){
         this.animations.play('move');
-        this.turnIfBlocked();
+        //this.turnIfBlocked();
+        this.checkBounds();
         this.move();
     }
 };
