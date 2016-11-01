@@ -3,6 +3,7 @@ var listen = require('./behaviours/listen.js');
 var jump = require('./behaviours/jump.js');
 var stop = require('./behaviours/stop.js');
 var move = require('./behaviours/move.js');
+var hurt = require('./behaviours/hurt.js');
 var hit = require('./behaviours/hit.js');
 
 /*
@@ -21,6 +22,7 @@ Hero.prototype = Object.assign(
     jump,
     stop,
     move,
+    hurt,
     hit
 );
 

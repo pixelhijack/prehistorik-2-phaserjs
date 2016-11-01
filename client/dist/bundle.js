@@ -761,7 +761,7 @@
 	
 	function onHurt(event){
 	    if(this === event.subject){
-	        this.setState('hurt');
+	        this.hurt(event.direction);
 	    }
 	}
 	
@@ -847,6 +847,7 @@
 	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 18);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
 	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 20);
+	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 46);
 	
 	/*
 	    @Hero
@@ -864,7 +865,8 @@
 	    AI.prototype, 
 	    decide,
 	    move,
-	    turn
+	    turn,
+	    hurt
 	);
 	
 	module.exports = AI;
@@ -1308,6 +1310,7 @@
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 37);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 38);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
+	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 46);
 	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 39);
 	
 	/*
@@ -1326,6 +1329,7 @@
 	    jump,
 	    stop,
 	    move,
+	    hurt,
 	    hit
 	);
 	
@@ -1424,11 +1428,20 @@
 	    }.bind(this));
 	    
 	    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
+	        
 	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
 	        if(this.player.hasState('hit')){
-	            this.eventsOf.level.dispatch({ type: 'HURT', subject: enemy.id });
+	            this.eventsOf.level.dispatch({ 
+	                type: 'HURT', 
+	                subject: enemy.id,
+	                direction: enemy.body.touching 
+	            });
 	        } else {
-	            this.eventsOf.level.dispatch({ type: 'HURT', subject: this.player });
+	            this.eventsOf.level.dispatch({ 
+	                type: 'HURT', 
+	                subject: this.player, 
+	                direction: this.player.body.touching 
+	            });
 	        }
 	    }.bind(this));
 	    
@@ -1556,6 +1569,32 @@
 	};
 	
 	module.exports = update;
+
+/***/ },
+/* 45 */,
+/* 46 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/hurt.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var hurtBehaviour = {
+	    hurt: function(direction){
+	        
+	        this.setState('hurt');
+	        
+	        this.body.velocity.y -= 100;
+	        if(direction && direction.left){
+	            this.body.velocity.x += 50;
+	        }
+	        if(direction && direction.right){
+	            this.body.velocity.x -= 50;
+	        }
+	        return this;
+	    }
+	};
+	
+	module.exports = hurtBehaviour;
 
 /***/ }
 /******/ ]);

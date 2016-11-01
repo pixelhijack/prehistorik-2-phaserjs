@@ -15,11 +15,20 @@ var update = function(){
     }.bind(this));
     
     this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
+        
         this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
         if(this.player.hasState('hit')){
-            this.eventsOf.level.dispatch({ type: 'HURT', subject: enemy.id });
+            this.eventsOf.level.dispatch({ 
+                type: 'HURT', 
+                subject: enemy.id,
+                direction: enemy.body.touching 
+            });
         } else {
-            this.eventsOf.level.dispatch({ type: 'HURT', subject: this.player });
+            this.eventsOf.level.dispatch({ 
+                type: 'HURT', 
+                subject: this.player, 
+                direction: this.player.body.touching 
+            });
         }
     }.bind(this));
     

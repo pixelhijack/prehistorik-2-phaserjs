@@ -36,7 +36,7 @@ function onMove(event){
 
 function onHurt(event){
     if(this === event.subject){
-        this.setState('hurt');
+        this.hurt(event.direction);
     }
 }
 
