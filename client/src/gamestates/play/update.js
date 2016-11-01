@@ -1,6 +1,8 @@
 var update = function(){
     
-    // fps 
+    console.log('[PHASER][Play][Update]');
+    
+    // [DEBUG] fps 
     this.game.debug.text(this.game.time.fps, 5, 20);
     
     // [COLLISIONS]
@@ -14,10 +16,21 @@ var update = function(){
     
     this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
         this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
-        this.eventsOf.level.dispatch({ type: 'HURT' });
+        if(this.player.hasState('hit')){
+            this.eventsOf.level.dispatch({ type: 'HURT', subject: enemy.id });
+        } else {
+            this.eventsOf.level.dispatch({ type: 'HURT', subject: this.player });
+        }
     }.bind(this));
     
     // [KEYPRESS] event dispatch
+    handleKeypress.call(this);
+};
+
+function handleKeypress(){
+    if(this.player.hasState('hurt')){
+        return;
+    }
     if(this.keys.left.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
     } else if(this.keys.right.isDown){
@@ -33,8 +46,6 @@ var update = function(){
     if(this.keys.space.isDown){
         this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
     }
-    
-    console.log('[PHASER][Play][Update]');
-};
+}
 
 module.exports = update;

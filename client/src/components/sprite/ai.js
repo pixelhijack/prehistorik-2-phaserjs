@@ -8,6 +8,8 @@ var turn = require('./behaviours/turn.js');
 */
 function AI(game, x, y, sprite, props){
     ExtendedSprite.call(this, game, x, y, sprite, props);
+    
+    this.id = this.constructor.name + '-' + x + '-' + y + '-' + this.game.time.now;
 }
 
 AI.prototype = Object.create(ExtendedSprite.prototype);

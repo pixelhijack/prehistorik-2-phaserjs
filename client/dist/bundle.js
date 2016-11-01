@@ -760,7 +760,9 @@
 	}
 	
 	function onHurt(event){
-	    
+	    if(this === event.subject){
+	        this.setState('hurt');
+	    }
 	}
 	
 	function onDie(event){
@@ -851,6 +853,8 @@
 	*/
 	function AI(game, x, y, sprite, props){
 	    ExtendedSprite.call(this, game, x, y, sprite, props);
+	    
+	    this.id = this.constructor.name + '-' + x + '-' + y + '-' + this.game.time.now;
 	}
 	
 	AI.prototype = Object.create(ExtendedSprite.prototype);
@@ -1391,7 +1395,6 @@
 	var hitBehaviour = {
 	    hit: function(){
 	        this.setState('hit');
-	        return this;
 	    }
 	};
 	
@@ -1406,7 +1409,9 @@
 
 	var update = function(){
 	    
-	    // fps 
+	    console.log('[PHASER][Play][Update]');
+	    
+	    // [DEBUG] fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
 	    
 	    // [COLLISIONS]
@@ -1420,10 +1425,21 @@
 	    
 	    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
 	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
-	        this.eventsOf.level.dispatch({ type: 'HURT' });
+	        if(this.player.hasState('hit')){
+	            this.eventsOf.level.dispatch({ type: 'HURT', subject: enemy.id });
+	        } else {
+	            this.eventsOf.level.dispatch({ type: 'HURT', subject: this.player });
+	        }
 	    }.bind(this));
 	    
 	    // [KEYPRESS] event dispatch
+	    handleKeypress.call(this);
+	};
+	
+	function handleKeypress(){
+	    if(this.player.hasState('hurt')){
+	        return;
+	    }
 	    if(this.keys.left.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
 	    } else if(this.keys.right.isDown){
@@ -1439,9 +1455,7 @@
 	    if(this.keys.space.isDown){
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
 	    }
-	    
-	    console.log('[PHASER][Play][Update]');
-	};
+	}
 	
 	module.exports = update;
 
