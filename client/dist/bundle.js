@@ -984,8 +984,8 @@
 
 	var decideBehaviour = {
 	    update: function(){
-	        this.animations.play(this.getState());
-	        this.turn();
+	        this.animations.play('move');
+	        this.turnIfBlocked();
 	        this.move();
 	    }
 	};
@@ -1035,10 +1035,14 @@
 /***/ function(module, exports) {
 
 	var turnBehaviour = {
-	    turn: function(){
+	    turnIfBlocked: function(){
 	        if(this.body.blocked.left || this.body.blocked.right){
 	            this.scale.x *= -1;
 	        }
+	        return this;
+	    },
+	    turn: function(){
+	        this.scale.x *= -1;
 	        return this;
 	    }
 	};
