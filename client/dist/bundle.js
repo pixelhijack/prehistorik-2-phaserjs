@@ -50,7 +50,7 @@
 	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
-	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 42);
+	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 45);
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(
@@ -230,8 +230,8 @@
 	var init = __webpack_require__(/*! ./init.js */ 7);
 	var preload = __webpack_require__(/*! ./preload.js */ 9);
 	var create = __webpack_require__(/*! ./create.js */ 10);
-	var update = __webpack_require__(/*! ./update.js */ 40);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 41);
+	var update = __webpack_require__(/*! ./update.js */ 43);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 44);
 	
 	/*
 	    @Play
@@ -624,7 +624,7 @@
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
 	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
 	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
-	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 35);
+	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 38);
 	
 	var create = function(){
 	    
@@ -783,20 +783,20 @@
 
 	var Creature = {
 	    bat: __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 14),
-	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 21),
-	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 22),
-	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 23),
-	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 24),
-	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 25),
-	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 26),
-	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 27),
-	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 28),
-	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 29),
-	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 30),
-	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 31),
-	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 32),
-	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 33),
-	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 34)
+	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 24),
+	    bug: __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 25),
+	    dino: __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 26),
+	    dragonfly: __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 27),
+	    frog: __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 28),
+	    gorilla: __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 29),
+	    insect: __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 30),
+	    jelly: __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 31),
+	    native: __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 32),
+	    parrot: __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 33),
+	    ptero: __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 34),
+	    spider: __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 35),
+	    tiger: __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 36),
+	    turtle: __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 37)
 	};
 	
 	var creatureFactory = {
@@ -846,11 +846,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 18);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
-	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 20);
-	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 46);
-	var boundTo = __webpack_require__(/*! ./behaviours/boundto.js */ 48);
+	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 19);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 20);
+	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 21);
+	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 22);
+	var boundTo = __webpack_require__(/*! ./behaviours/boundto.js */ 23);
 	
 	/*
 	    @Hero
@@ -891,7 +891,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var modifyState = __webpack_require__(/*! ./behaviours/state.js */ 17);
-	var debug = __webpack_require__(/*! ./behaviours/debug.js */ 47);
+	var debug = __webpack_require__(/*! ./behaviours/debug.js */ 18);
 	
 	/*
 	    @ExtendedSprite
@@ -1009,6 +1009,24 @@
 
 /***/ },
 /* 18 */
+/*!**********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/debug.js ***!
+  \**********************************************************/
+/***/ function(module, exports) {
+
+	var debugBehaviour = {
+	    debug: function(toDebug){
+	       this._debugText.visible = true;
+	       this._debugText.scale.x = this.scale.x;
+	       this._debugText.setText(toDebug.toString() || '');
+	       return this;
+	    }
+	};
+	
+	module.exports = debugBehaviour;
+
+/***/ },
+/* 19 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/decide.js ***!
   \***********************************************************/
@@ -1026,7 +1044,7 @@
 	module.exports = decideBehaviour;
 
 /***/ },
-/* 19 */
+/* 20 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/move.js ***!
   \*********************************************************/
@@ -1061,7 +1079,7 @@
 	module.exports = moveBehaviour;
 
 /***/ },
-/* 20 */
+/* 21 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/turn.js ***!
   \*********************************************************/
@@ -1083,7 +1101,88 @@
 	module.exports = turnBehaviour;
 
 /***/ },
-/* 21 */
+/* 22 */
+/*!*********************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/hurt.js ***!
+  \*********************************************************/
+/***/ function(module, exports) {
+
+	var hurtBehaviour = {
+	    hurt: function(direction){
+	        
+	        this.setState('hurt');
+	        
+	        this.body.velocity.y -= 100;
+	        if(direction && direction.left){
+	            this.body.velocity.x += 50;
+	        }
+	        if(direction && direction.right){
+	            this.body.velocity.x -= 50;
+	        }
+	        return this;
+	    }
+	};
+	
+	module.exports = hurtBehaviour;
+
+/***/ },
+/* 23 */
+/*!************************************************************!*\
+  !*** ./client/src/components/sprite/behaviours/boundto.js ***!
+  \************************************************************/
+/***/ function(module, exports) {
+
+	var boundToBehaviour = {
+	    setBounds: function(bounds){
+	        if(!bounds || !Object.keys(bounds).length){ 
+	           return this;
+	        }
+	       
+	        // @Point {x, y}
+	        if(bounds.hasOwnProperty('x') && 
+	            bounds.hasOwnProperty('y')){
+	                this.boundTo = new Phaser.Point(bounds.x, bounds.y);
+	        }
+	       
+	        // @Rectangle { x1, x2 }
+	        if(bounds.hasOwnProperty('x1') && 
+	            bounds.hasOwnProperty('x2') &&
+	            !bounds.hasOwnProperty('y1') &&
+	            !bounds.hasOwnProperty('y2')){
+	                this.boundTo = new Phaser.Rectangle(bounds.x1, 0, bounds.x2 - bounds.x1, this.game.height);
+	        }
+	        
+	        return this;
+	    },
+	    checkBounds: function(){
+	        if(!this.boundTo || !Object.keys(this.boundTo).length){ 
+	           return;
+	        }
+	        
+	        // @Point {x, y} 
+	        if(!this.boundTo.hasOwnProperty('width') && 
+	            !Phaser.Rectangle.containsPoint(this.getBounds(), this.boundTo) &&
+	            ((this.x < this.boundTo.x && !this.facingRight) || 
+	            (this.x > this.boundTo.x && this.facingRight))){
+	                this.turn();
+	        }
+	        
+	        // @Rectangle {x1, x2} or {x1, y1, x2, y2}
+	        if(this.boundTo &&
+	            this.boundTo.hasOwnProperty('width') && 
+	            (this.x < this.boundTo.x && this.facingLeft || 
+	            this.x > this.boundTo.x + this.boundTo.width && this.facingRight)){
+	                this.turn();
+	        }
+	        
+	        return this;
+	    }
+	};
+	
+	module.exports = boundToBehaviour;
+
+/***/ },
+/* 24 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/bear.js ***!
   \********************************************************/
@@ -1101,7 +1200,7 @@
 
 
 /***/ },
-/* 22 */
+/* 25 */
 /*!*******************************************************!*\
   !*** ./client/src/components/sprite/creatures/bug.js ***!
   \*******************************************************/
@@ -1119,7 +1218,7 @@
 
 
 /***/ },
-/* 23 */
+/* 26 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/dino.js ***!
   \********************************************************/
@@ -1137,7 +1236,7 @@
 
 
 /***/ },
-/* 24 */
+/* 27 */
 /*!*************************************************************!*\
   !*** ./client/src/components/sprite/creatures/dragonfly.js ***!
   \*************************************************************/
@@ -1155,7 +1254,7 @@
 
 
 /***/ },
-/* 25 */
+/* 28 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/creatures/frog.js ***!
   \********************************************************/
@@ -1173,7 +1272,7 @@
 
 
 /***/ },
-/* 26 */
+/* 29 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/creatures/gorilla.js ***!
   \***********************************************************/
@@ -1191,7 +1290,7 @@
 
 
 /***/ },
-/* 27 */
+/* 30 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/insect.js ***!
   \**********************************************************/
@@ -1209,7 +1308,7 @@
 
 
 /***/ },
-/* 28 */
+/* 31 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/jelly.js ***!
   \*********************************************************/
@@ -1227,7 +1326,7 @@
 
 
 /***/ },
-/* 29 */
+/* 32 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/native.js ***!
   \**********************************************************/
@@ -1245,7 +1344,7 @@
 
 
 /***/ },
-/* 30 */
+/* 33 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/parrot.js ***!
   \**********************************************************/
@@ -1263,7 +1362,7 @@
 
 
 /***/ },
-/* 31 */
+/* 34 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/ptero.js ***!
   \*********************************************************/
@@ -1281,7 +1380,7 @@
 
 
 /***/ },
-/* 32 */
+/* 35 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/spider.js ***!
   \**********************************************************/
@@ -1299,7 +1398,7 @@
 
 
 /***/ },
-/* 33 */
+/* 36 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/creatures/tiger.js ***!
   \*********************************************************/
@@ -1317,7 +1416,7 @@
 
 
 /***/ },
-/* 34 */
+/* 37 */
 /*!**********************************************************!*\
   !*** ./client/src/components/sprite/creatures/turtle.js ***!
   \**********************************************************/
@@ -1336,19 +1435,19 @@
 
 
 /***/ },
-/* 35 */
+/* 38 */
 /*!**********************************************!*\
   !*** ./client/src/components/sprite/hero.js ***!
   \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 36);
-	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 37);
-	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 38);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 19);
-	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 46);
-	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 39);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 39);
+	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 40);
+	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 41);
+	var move = __webpack_require__(/*! ./behaviours/move.js */ 20);
+	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 22);
+	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 42);
 	
 	/*
 	    @Hero
@@ -1373,7 +1472,7 @@
 	module.exports = Hero;
 
 /***/ },
-/* 36 */
+/* 39 */
 /*!***********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/listen.js ***!
   \***********************************************************/
@@ -1391,7 +1490,7 @@
 	module.exports = listenBehaviour;
 
 /***/ },
-/* 37 */
+/* 40 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/jump.js ***!
   \*********************************************************/
@@ -1409,7 +1508,7 @@
 	module.exports = jumpBehaviour;
 
 /***/ },
-/* 38 */
+/* 41 */
 /*!*********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/stop.js ***!
   \*********************************************************/
@@ -1427,7 +1526,7 @@
 	module.exports = stopBehaviour;
 
 /***/ },
-/* 39 */
+/* 42 */
 /*!********************************************************!*\
   !*** ./client/src/components/sprite/behaviours/hit.js ***!
   \********************************************************/
@@ -1442,7 +1541,7 @@
 	module.exports = hitBehaviour;
 
 /***/ },
-/* 40 */
+/* 43 */
 /*!**********************************************!*\
   !*** ./client/src/gamestates/play/update.js ***!
   \**********************************************/
@@ -1522,7 +1621,7 @@
 	module.exports = update;
 
 /***/ },
-/* 41 */
+/* 44 */
 /*!*****************************************************!*\
   !*** ./client/src/gamestates/play/eventemitters.js ***!
   \*****************************************************/
@@ -1538,15 +1637,15 @@
 	module.exports = eventEmitters;
 
 /***/ },
-/* 42 */
+/* 45 */
 /*!****************************************************!*\
   !*** ./client/src/gamestates/gameover/gameover.js ***!
   \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 43);
-	var update = __webpack_require__(/*! ./update.js */ 44);
+	var create = __webpack_require__(/*! ./create.js */ 46);
+	var update = __webpack_require__(/*! ./update.js */ 47);
 	
 	/*
 	    @GameOver
@@ -1571,7 +1670,7 @@
 
 
 /***/ },
-/* 43 */
+/* 46 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/create.js ***!
   \**************************************************/
@@ -1603,7 +1702,7 @@
 	module.exports = create;
 
 /***/ },
-/* 44 */
+/* 47 */
 /*!**************************************************!*\
   !*** ./client/src/gamestates/gameover/update.js ***!
   \**************************************************/
@@ -1618,89 +1717,6 @@
 	};
 	
 	module.exports = update;
-
-/***/ },
-/* 45 */,
-/* 46 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/hurt.js ***!
-  \*********************************************************/
-/***/ function(module, exports) {
-
-	var hurtBehaviour = {
-	    hurt: function(direction){
-	        
-	        this.setState('hurt');
-	        
-	        this.body.velocity.y -= 100;
-	        if(direction && direction.left){
-	            this.body.velocity.x += 50;
-	        }
-	        if(direction && direction.right){
-	            this.body.velocity.x -= 50;
-	        }
-	        return this;
-	    }
-	};
-	
-	module.exports = hurtBehaviour;
-
-/***/ },
-/* 47 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/debug.js ***!
-  \**********************************************************/
-/***/ function(module, exports) {
-
-	var debugBehaviour = {
-	    debug: function(toDebug){
-	       this._debugText.visible = true;
-	       this._debugText.scale.x = this.scale.x;
-	       this._debugText.setText(toDebug.toString() || '');
-	       return this;
-	    }
-	};
-	
-	module.exports = debugBehaviour;
-
-/***/ },
-/* 48 */
-/*!************************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/boundto.js ***!
-  \************************************************************/
-/***/ function(module, exports) {
-
-	var boundToBehaviour = {
-	    setBounds: function(bounds){
-	       if(!bounds || !Object.keys(bounds).length){ 
-	           return this;
-	       }
-	       
-	       // @Rectangle { x1, x2 }
-	        if(bounds.hasOwnProperty('x1') && 
-	            bounds.hasOwnProperty('x2') &&
-	            !bounds.hasOwnProperty('y1') &&
-	            !bounds.hasOwnProperty('y2')){
-	                this.boundTo = new Phaser.Rectangle(bounds.x1, 0, bounds.x2 - bounds.x1, this.game.height);
-	        }
-	        
-	        return this;
-	    },
-	    checkBounds: function(){
-	       
-	        // boundTo @Rectangle {x1, x2} or {x1, y1, x2, y2}
-	        if(this.boundTo &&
-	            this.boundTo.hasOwnProperty('width') && 
-	            (this.x < this.boundTo.x && this.facingLeft || 
-	            this.x > this.boundTo.x + this.boundTo.width && this.facingRight)){
-	                this.turn();
-	        }
-	        
-	        return this;
-	    }
-	};
-	
-	module.exports = boundToBehaviour;
 
 /***/ }
 /******/ ]);
