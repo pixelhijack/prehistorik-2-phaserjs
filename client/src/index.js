@@ -1,10 +1,10 @@
 import globalConfig from './globalconfig.js';
-var Menu = require('./gamestates/menu/menu.js');
-var Play = require('./gamestates/play/play.js');
-var GameOver = require('./gamestates/gameover/gameover.js');
+import Menu from './gamestates/menu/menu.js';
+import Play from './gamestates/play/play.js';
+import GameOver from './gamestates/gameover/gameover.js';
 
 // instantiate a Phaser.Game
-var PRE2 = new Phaser.Game(
+const PRE2 = new Phaser.Game(
     globalConfig.width, 
     globalConfig.height, 
     Phaser.AUTO, 

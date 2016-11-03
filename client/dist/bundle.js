@@ -53,19 +53,27 @@
 	
 	var _globalconfig2 = _interopRequireDefault(_globalconfig);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	
-	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
-	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
-	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 45);
+	var _menu2 = _interopRequireDefault(_menu);
+	
+	var _play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
+	
+	var _play2 = _interopRequireDefault(_play);
+	
+	var _gameover = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 45);
+	
+	var _gameover2 = _interopRequireDefault(_gameover);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// instantiate a Phaser.Game
 	var PRE2 = new Phaser.Game(_globalconfig2.default.width, _globalconfig2.default.height, Phaser.AUTO, _globalconfig2.default.domElement);
 	
 	// register gamestates (will be instantiated w/ this.game as 1st param, pass globalConfig as 2nd)
-	PRE2.state.add('Menu', Menu.bind(null, _globalconfig2.default));
-	PRE2.state.add('Play', Play.bind(null, _globalconfig2.default));
-	PRE2.state.add('GameOver', GameOver.bind(null, _globalconfig2.default));
+	PRE2.state.add('Menu', _menu2.default.bind(null, _globalconfig2.default));
+	PRE2.state.add('Play', _play2.default.bind(null, _globalconfig2.default));
+	PRE2.state.add('GameOver', _gameover2.default.bind(null, _globalconfig2.default));
 	
 	// kick off first gamestate: Menu
 	PRE2.state.start('Menu', true, true, {
