@@ -1,4 +1,4 @@
-var globalConfig = {
+const globalConfig = {
     width: 546,
     height: 368,
     blocks: 3,
@@ -12,4 +12,4 @@ var globalConfig = {
     textureAtlasJson: 'pre2atlas.json'
 };
 
-module.exports = globalConfig;
+export default globalConfig;

@@ -89,6 +89,9 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	var globalConfig = {
 	    width: 546,
 	    height: 368,
@@ -103,7 +106,7 @@
 	    textureAtlasJson: 'pre2atlas.json'
 	};
 	
-	module.exports = globalConfig;
+	exports.default = globalConfig;
 
 /***/ },
 /* 2 */
