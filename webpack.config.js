@@ -9,6 +9,14 @@ var config = {
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      { test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }
+    ]
   }
 };
 

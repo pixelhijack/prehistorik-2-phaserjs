@@ -47,26 +47,28 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var globalConfig = __webpack_require__(/*! ./globalconfig.js */ 1);
+	'use strict';
+	
+	var _globalconfig = __webpack_require__(/*! ./globalconfig.js */ 1);
+	
+	var _globalconfig2 = _interopRequireDefault(_globalconfig);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var Menu = __webpack_require__(/*! ./gamestates/menu/menu.js */ 2);
 	var Play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
 	var GameOver = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 45);
 	
 	// instantiate a Phaser.Game
-	var PRE2 = new Phaser.Game(
-	    globalConfig.width, 
-	    globalConfig.height, 
-	    Phaser.AUTO, 
-	    globalConfig.domElement
-	);
+	var PRE2 = new Phaser.Game(_globalconfig2.default.width, _globalconfig2.default.height, Phaser.AUTO, _globalconfig2.default.domElement);
 	
 	// register gamestates (will be instantiated w/ this.game as 1st param, pass globalConfig as 2nd)
-	PRE2.state.add('Menu', Menu.bind(null, globalConfig));
-	PRE2.state.add('Play', Play.bind(null, globalConfig));
-	PRE2.state.add('GameOver', GameOver.bind(null, globalConfig));
+	PRE2.state.add('Menu', Menu.bind(null, _globalconfig2.default));
+	PRE2.state.add('Play', Play.bind(null, _globalconfig2.default));
+	PRE2.state.add('GameOver', GameOver.bind(null, _globalconfig2.default));
 	
 	// kick off first gamestate: Menu
-	PRE2.state.start('Menu', true, true, { 
+	PRE2.state.start('Menu', true, true, {
 	    initialConfig: 'some initial state'
 	});
 
@@ -77,6 +79,8 @@
   \************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var globalConfig = {
 	    width: 546,
 	    height: 368,
@@ -100,6 +104,8 @@
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
 	var create = __webpack_require__(/*! ./create.js */ 4);
 	var update = __webpack_require__(/*! ./update.js */ 5);
@@ -108,7 +114,7 @@
 	    @Menu
 	    inherits from GameState component
 	*/
-	function Menu(globalConfig){
+	function Menu(globalConfig) {
 	    GameState.call(this);
 	    this.globalConfig = globalConfig;
 	}
@@ -125,7 +131,6 @@
 	
 	module.exports = Menu;
 
-
 /***/ },
 /* 3 */
 /*!******************************************************!*\
@@ -133,23 +138,25 @@
   \******************************************************/
 /***/ function(module, exports) {
 
-	function GameState(){
+	'use strict';
+	
+	function GameState() {
 	    this.keys = undefined;
 	}
 	
-	GameState.prototype.init = function(configs){
+	GameState.prototype.init = function (configs) {
 	    console.log('[PHASER][Component][Init]', configs);
 	};
 	
-	GameState.prototype.preload = function(){
+	GameState.prototype.preload = function () {
 	    console.log('[PHASER][Component][Preload]');
 	};
 	
-	GameState.prototype.create = function(){
+	GameState.prototype.create = function () {
 	    console.log('[PHASER][Component][Create]');
 	};
 	
-	GameState.prototype.update = function(){
+	GameState.prototype.update = function () {
 	    console.log('[PHASER][Component][Update]');
 	};
 	
@@ -162,41 +169,38 @@
   \**********************************************/
 /***/ function(module, exports) {
 
-	var create = function(){
-	    
+	"use strict";
+	
+	var create = function create() {
+	
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
 	
 	    // CTA text
-	    var text = this.game.add.text(
-	        this.globalConfig.width / 2, 
-	        this.globalConfig.height / 2,
-	        "Menu screen\nPress space \nto start!", 
-	        { font: "48px Courier", fill: "#ffffff", align: "center" }
-	    );
-	    
+	    var text = this.game.add.text(this.globalConfig.width / 2, this.globalConfig.height / 2, "Menu screen\nPress space \nto start!", { font: "48px Courier", fill: "#ffffff", align: "center" });
+	
 	    text.anchor.set(0.5);
-	    
+	
 	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	    this.game.input.addPointer();
-	    
+	
 	    this.game.input.onDown.addOnce(fetchLevel, this);
 	    spaceKey.onDown.addOnce(fetchLevel, this);
 	
 	    // load next game state by fetching level configs
-	    function fetchLevel(event){
-	        
+	    function fetchLevel(event) {
+	
 	        text.setText('Loading...');
-	        
+	
 	        fetch('/level/' + Math.ceil(Math.random() * 6), {
-	        	method: 'get'
-	        }).then(function(response) {
+	            method: 'get'
+	        }).then(function (response) {
 	            return response.json();
-	        }).then(function(json) {
+	        }).then(function (json) {
 	            this.game.state.start('Play', true, true, json);
 	        }.bind(this));
 	    }
-	    
+	
 	    console.log('[PHASER][Menu][Create]');
 	};
 	
@@ -209,11 +213,13 @@
   \**********************************************/
 /***/ function(module, exports) {
 
-	var update = function(){
-	    
+	'use strict';
+	
+	var update = function update() {
+	
 	    // fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
-	    
+	
 	    console.log('[PHASER][Menu][Update]');
 	};
 	
@@ -226,6 +232,8 @@
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
 	var init = __webpack_require__(/*! ./init.js */ 7);
 	var preload = __webpack_require__(/*! ./preload.js */ 9);
@@ -237,10 +245,10 @@
 	    @Play
 	    inherits from GameState component
 	*/
-	function Play(globalConfig){
+	function Play(globalConfig) {
 	    GameState.call(this);
 	    this.globalConfig = globalConfig;
-	    
+	
 	    // extend Phaser gamestate with: 
 	    this.keys = undefined;
 	    this.player = undefined;
@@ -272,7 +280,6 @@
 	
 	module.exports = Play;
 
-
 /***/ },
 /* 7 */
 /*!********************************************!*\
@@ -280,12 +287,14 @@
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var creatureConfig = __webpack_require__(/*! ./creatureconfig.js */ 8);
 	
-	var init = function(levelConfig){
-	    
+	var init = function init(levelConfig) {
+	
 	    console.log('[PHASER][Play][Init]', levelConfig);
-	    
+	
 	    this.levelConfig = levelConfig;
 	    this.creatureConfig = creatureConfig;
 	};
@@ -299,6 +308,8 @@
   \******************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var creatureConfigs = {
 	  creatureDefaults: {
 	    active: true,
@@ -309,10 +320,10 @@
 	    maxSpeed: 100,
 	    acceleration: 10,
 	    collide: true,
-	    lives: 1, 
+	    lives: 1,
 	    lifespan: Infinity,
 	    sense: 150,
-	    animations: [], 
+	    animations: [],
 	    timeOf: {
 	      'move': 200,
 	      'hit': 100,
@@ -320,7 +331,7 @@
 	      'stop': 200,
 	      'idle': 10
 	    },
-	    boundTo : {
+	    boundTo: {
 	      x1: 1000,
 	      x2: 1200
 	    },
@@ -331,19 +342,9 @@
 	  },
 	  man: {
 	    maxSpeed: 200,
-	    lives: 8, 
+	    lives: 8,
 	    lifespan: Infinity,
-	    animations: [
-	      { name: 'move', frames: [11,'03','05',14,20], fps: 10, loop: false }, 
-	      { name: 'hit', frames: [22,24,28,31,34,22,24,28,31,34], fps: 10, loop: true }, 
-	      { name: 'stop', frames: [42,45,49,52], fps: 10, loop: false }, 
-	      { name: 'jump', frames: [16,41,47,50,50,50,50,50,50,50,50,13,50,13,50,13], fps: 10, loop: false }, 
-	      { name: 'idle', frames: [25,25,25,25,25,25,25,25,27,27,27,27,25,25,25,25,25,25,25,25,30,25,25,25,25,25,25,25,25,27,30,27,30,35,36,25,25,25,25,25,25,25,25,'07','07','07','07','02','02'], fps: 5, loop: true }, 
-	      { name: 'hurt', frames: [19], fps: 10, loop: true },
-	      { name: 'stun', frames: [19], fps: 10, loop: true },
-	      { name: 'die', frames: [19], fps: 10, loop: false },
-	      { name: 'spawn', frames: [11,'03','05',14,20], fps: 10, loop: false }
-	    ],
+	    animations: [{ name: 'move', frames: [11, '03', '05', 14, 20], fps: 10, loop: false }, { name: 'hit', frames: [22, 24, 28, 31, 34, 22, 24, 28, 31, 34], fps: 10, loop: true }, { name: 'stop', frames: [42, 45, 49, 52], fps: 10, loop: false }, { name: 'jump', frames: [16, 41, 47, 50, 50, 50, 50, 50, 50, 50, 50, 13, 50, 13, 50, 13], fps: 10, loop: false }, { name: 'idle', frames: [25, 25, 25, 25, 25, 25, 25, 25, 27, 27, 27, 27, 25, 25, 25, 25, 25, 25, 25, 25, 30, 25, 25, 25, 25, 25, 25, 25, 25, 27, 30, 27, 30, 35, 36, 25, 25, 25, 25, 25, 25, 25, 25, '07', '07', '07', '07', '02', '02'], fps: 5, loop: true }, { name: 'hurt', frames: [19], fps: 10, loop: true }, { name: 'stun', frames: [19], fps: 10, loop: true }, { name: 'die', frames: [19], fps: 10, loop: false }, { name: 'spawn', frames: [11, '03', '05', 14, 20], fps: 10, loop: false }],
 	    correctedAnchor: {
 	      x: 0.5,
 	      y: 0.8
@@ -353,27 +354,15 @@
 	    mass: 1.5,
 	    jumping: 300,
 	    maxSpeed: 50,
-	    acceleration: 5, 
-	    animations: [
-	      { name: 'idle', frames: [360,360,360,360,360,360,360,367], fps: 5, loop: true },
-	      { name: 'move', frames: [360,361,364,367,369], fps: 10, loop: true },
-	      { name: 'jump', frames: [360,361,364,367,369], fps: 10, loop: true },
-	      { name: 'fall', frames: [369], fps: 10, loop: true },
-	      { name: 'die', frames: [371], fps: 10, loop: true },
-	      { name: 'spawn', frames: [360,361,364,367], fps: 10, loop: true }
-	    ]
+	    acceleration: 5,
+	    animations: [{ name: 'idle', frames: [360, 360, 360, 360, 360, 360, 360, 367], fps: 5, loop: true }, { name: 'move', frames: [360, 361, 364, 367, 369], fps: 10, loop: true }, { name: 'jump', frames: [360, 361, 364, 367, 369], fps: 10, loop: true }, { name: 'fall', frames: [369], fps: 10, loop: true }, { name: 'die', frames: [371], fps: 10, loop: true }, { name: 'spawn', frames: [360, 361, 364, 367], fps: 10, loop: true }]
 	  },
 	  bear: {
 	    mass: 1.2,
 	    maxSpeed: 75,
 	    jumping: 0,
-	    acceleration: 15, 
-	    animations: [
-	      { name: 'idle', frames: [321], fps: 10, loop: false },
-	      { name: 'move', frames: [320,321,324], fps: 10, loop: true },
-	      { name: 'spawn', frames: [366,363,358,317], fps: 10, loop: false },
-	      { name: 'die', frames: [328], fps: 10, loop: true }
-	    ] 
+	    acceleration: 15,
+	    animations: [{ name: 'idle', frames: [321], fps: 10, loop: false }, { name: 'move', frames: [320, 321, 324], fps: 10, loop: true }, { name: 'spawn', frames: [366, 363, 358, 317], fps: 10, loop: false }, { name: 'die', frames: [328], fps: 10, loop: true }]
 	  },
 	  'super-bear': {
 	    acceleration: 30,
@@ -385,15 +374,8 @@
 	    mass: 1.5,
 	    jumping: 300,
 	    maxSpeed: 50,
-	    acceleration: 20, 
-	    animations: [
-	      { name: 'idle', frames: [393,395], fps: 10, loop: true },
-	      { name: 'move', frames: [393,395], fps: 10, loop: true },
-	      { name: 'jump', frames: [399,401], fps: 10, loop: false },
-	      { name: 'fall', frames: [399], fps: 10, loop: false },
-	      { name: 'die', frames: [402], fps: 10, loop: true },
-	      { name: 'spawn', frames: [393,395], fps: 10, loop: true }
-	    ]
+	    acceleration: 20,
+	    animations: [{ name: 'idle', frames: [393, 395], fps: 10, loop: true }, { name: 'move', frames: [393, 395], fps: 10, loop: true }, { name: 'jump', frames: [399, 401], fps: 10, loop: false }, { name: 'fall', frames: [399], fps: 10, loop: false }, { name: 'die', frames: [402], fps: 10, loop: true }, { name: 'spawn', frames: [393, 395], fps: 10, loop: true }]
 	  },
 	  ptero: {
 	    mass: 0.5,
@@ -402,16 +384,9 @@
 	    jumping: 0,
 	    collide: false,
 	    maxSpeed: 10,
-	    acceleration: 10, 
-	    animations: [
-	      { name: 'idle', frames: [478,478,478,478,478,478,478,478,477,478,478,478,478,478,477,477], fps: 3, loop: true },
-	      { name: 'move', frames: [403,404,405,403,404,405,405,405,405,405,405,403,404,405,403,404,405,405,405,405,405,405,405], fps: 10, loop: true },
-	      { name: 'descend', frames: [405], fps: 15, loop: true },
-	      { name: 'ascend', frames: [403,404,405], fps: 15, loop: true },
-	      { name: 'die', frames: [471], fps: 10, loop: true },
-	      { name: 'spawn', frames: [405,403,404], fps: 15, loop: true }
-	    ]
-	  }, 
+	    acceleration: 10,
+	    animations: [{ name: 'idle', frames: [478, 478, 478, 478, 478, 478, 478, 478, 477, 478, 478, 478, 478, 478, 477, 477], fps: 3, loop: true }, { name: 'move', frames: [403, 404, 405, 403, 404, 405, 405, 405, 405, 405, 405, 403, 404, 405, 403, 404, 405, 405, 405, 405, 405, 405, 405], fps: 10, loop: true }, { name: 'descend', frames: [405], fps: 15, loop: true }, { name: 'ascend', frames: [403, 404, 405], fps: 15, loop: true }, { name: 'die', frames: [471], fps: 10, loop: true }, { name: 'spawn', frames: [405, 403, 404], fps: 15, loop: true }]
+	  },
 	  dragonfly: {
 	    mass: 0.5,
 	    gravity: 0,
@@ -419,14 +394,8 @@
 	    jumping: 0,
 	    collide: false,
 	    maxSpeed: 50,
-	    acceleration: 10, 
-	    animations: [
-	      { name: 'idle', frames: [337,338], fps: 12, loop: true },
-	      { name: 'move', frames: [337,338], fps: 12, loop: true },
-	      { name: 'turn', frames: [339,340], fps: 12, loop: true },
-	      { name: 'die', frames: [342], fps: 12, loop: true },
-	      { name: 'spawn', frames: [337,338], fps: 12, loop: true }
-	    ]
+	    acceleration: 10,
+	    animations: [{ name: 'idle', frames: [337, 338], fps: 12, loop: true }, { name: 'move', frames: [337, 338], fps: 12, loop: true }, { name: 'turn', frames: [339, 340], fps: 12, loop: true }, { name: 'die', frames: [342], fps: 12, loop: true }, { name: 'spawn', frames: [337, 338], fps: 12, loop: true }]
 	  },
 	  bat: {
 	    mass: 0.5,
@@ -435,13 +404,8 @@
 	    jumping: 0,
 	    collide: false,
 	    maxSpeed: 20,
-	    acceleration: 10, 
-	    animations: [
-	      { name: 'idle', frames: [351,352,351,351,351,351], fps: 10, loop: true },
-	      { name: 'move', frames: [357,359], fps: 10, loop: true },
-	      { name: 'die', frames: [362], fps: 10, loop: true },
-	      { name: 'spawn', frames: [357,359], fps: 10, loop: true }
-	    ]
+	    acceleration: 10,
+	    animations: [{ name: 'idle', frames: [351, 352, 351, 351, 351, 351], fps: 10, loop: true }, { name: 'move', frames: [357, 359], fps: 10, loop: true }, { name: 'die', frames: [362], fps: 10, loop: true }, { name: 'spawn', frames: [357, 359], fps: 10, loop: true }]
 	  },
 	  spider: {
 	    mass: 0.3,
@@ -450,26 +414,13 @@
 	    bounce: 0,
 	    maxSpeed: 50,
 	    acceleration: 10,
-	    animations: [
-	      { name: 'idle', frames: [335], fps: 10, loop: true },
-	      { name: 'spawn', frames: [365,368,370,372], fps: 10, loop: false },
-	      { name: 'move', frames: [299,302,305,309], fps: 10, loop: true },
-	      { name: 'turn', frames: [319], fps: 10, loop: true },
-	      { name: 'climb', frames: [341,343,345,347], fps: 10, loop: true },
-	      { name: 'wait', frames: [332,335,372], fps: 10, loop: true },
-	      { name: 'die', frames: [322], fps: 10, loop: false }
-	    ]
+	    animations: [{ name: 'idle', frames: [335], fps: 10, loop: true }, { name: 'spawn', frames: [365, 368, 370, 372], fps: 10, loop: false }, { name: 'move', frames: [299, 302, 305, 309], fps: 10, loop: true }, { name: 'turn', frames: [319], fps: 10, loop: true }, { name: 'climb', frames: [341, 343, 345, 347], fps: 10, loop: true }, { name: 'wait', frames: [332, 335, 372], fps: 10, loop: true }, { name: 'die', frames: [322], fps: 10, loop: false }]
 	  },
 	  native: {
 	    maxSpeed: 100,
 	    acceleration: 20,
 	    jumping: 0,
-	    animations: [
-	      { name: 'idle', frames: [373], fps: 10, loop: true },
-	      { name: 'move', frames: [373,376,378], fps: 10, loop: true },
-	      { name: 'die', frames: [380], fps: 10, loop: false },
-	      { name: 'spawn', frames: [373,376,378], fps: 10, loop: true }
-	    ]
+	    animations: [{ name: 'idle', frames: [373], fps: 10, loop: true }, { name: 'move', frames: [373, 376, 378], fps: 10, loop: true }, { name: 'die', frames: [380], fps: 10, loop: false }, { name: 'spawn', frames: [373, 376, 378], fps: 10, loop: true }]
 	  },
 	  parrot: {
 	    mass: 0.5,
@@ -479,12 +430,7 @@
 	    collide: false,
 	    maxSpeed: 100,
 	    acceleration: 10,
-	    animations: [
-	      { name: 'idle', frames: [394,397,398], fps: 12, loop: true },
-	      { name: 'move', frames: [394,397,398], fps: 10, loop: true },
-	      { name: 'die', frames: [400], fps: 10, loop: false },
-	      { name: 'spawn', frames: [394,397,398], fps: 10, loop: true }
-	    ]
+	    animations: [{ name: 'idle', frames: [394, 397, 398], fps: 12, loop: true }, { name: 'move', frames: [394, 397, 398], fps: 10, loop: true }, { name: 'die', frames: [400], fps: 10, loop: false }, { name: 'spawn', frames: [394, 397, 398], fps: 10, loop: true }]
 	  },
 	  insect: {
 	    mass: 1,
@@ -492,14 +438,8 @@
 	    bounce: 1.5,
 	    jumping: 300,
 	    maxSpeed: 50,
-	    acceleration: 25, 
-	    animations: [
-	      { name: 'idle', frames: [348,348,348,348,348,348,349], fps: 10, loop: true },
-	      { name: 'move', frames: [323,348,349], fps: 10, loop: true },
-	      { name: 'jump', frames: [323,348,349], fps: 10, loop: true },
-	      { name: 'die', frames: [348], fps: 10, loop: true },
-	      { name: 'spawn', frames: [323,348,349], fps: 10, loop: true }
-	    ]
+	    acceleration: 25,
+	    animations: [{ name: 'idle', frames: [348, 348, 348, 348, 348, 348, 349], fps: 10, loop: true }, { name: 'move', frames: [323, 348, 349], fps: 10, loop: true }, { name: 'jump', frames: [323, 348, 349], fps: 10, loop: true }, { name: 'die', frames: [348], fps: 10, loop: true }, { name: 'spawn', frames: [323, 348, 349], fps: 10, loop: true }]
 	  },
 	  bug: {
 	    mass: 1,
@@ -507,14 +447,8 @@
 	    bounce: 1.5,
 	    jumping: 300,
 	    maxSpeed: 50,
-	    acceleration: 25, 
-	    animations: [
-	      { name: 'idle', frames: [344,344,344,344,344,344,344,344,346], fps: 10, loop: true },
-	      { name: 'move', frames: [344,346], fps: 10, loop: true },
-	      { name: 'jump', frames: [344,346], fps: 10, loop: true },
-	      { name: 'die', frames: [344], fps: 10, loop: true },
-	      { name: 'spawn', frames: [344,346], fps: 10, loop: true }
-	    ]
+	    acceleration: 25,
+	    animations: [{ name: 'idle', frames: [344, 344, 344, 344, 344, 344, 344, 344, 346], fps: 10, loop: true }, { name: 'move', frames: [344, 346], fps: 10, loop: true }, { name: 'jump', frames: [344, 346], fps: 10, loop: true }, { name: 'die', frames: [344], fps: 10, loop: true }, { name: 'spawn', frames: [344, 346], fps: 10, loop: true }]
 	  },
 	  frog: {
 	    mass: 1,
@@ -522,14 +456,8 @@
 	    bounce: 1.5,
 	    jumping: 500,
 	    maxSpeed: 80,
-	    acceleration: 40, 
-	    animations: [
-	      { name: 'idle', frames: [325], fps: 10, loop: true },
-	      { name: 'move', frames: [325,327,331,325], fps: 10, loop: false },
-	      { name: 'jump', frames: [325,327,331,325], fps: 10, loop: false },
-	      { name: 'die', frames: [334], fps: 10, loop: true },
-	      { name: 'spawn', frames: [325,327,331,325], fps: 10, loop: false }
-	    ]
+	    acceleration: 40,
+	    animations: [{ name: 'idle', frames: [325], fps: 10, loop: true }, { name: 'move', frames: [325, 327, 331, 325], fps: 10, loop: false }, { name: 'jump', frames: [325, 327, 331, 325], fps: 10, loop: false }, { name: 'die', frames: [334], fps: 10, loop: true }, { name: 'spawn', frames: [325, 327, 331, 325], fps: 10, loop: false }]
 	  },
 	  turtle: {
 	    mass: 2,
@@ -538,12 +466,7 @@
 	    bounce: 0.3,
 	    maxSpeed: 50,
 	    acceleration: 10,
-	    animations: [
-	      { name: 'idle', frames: [390], fps: 10, loop: true },
-	      { name: 'spawn', frames: [377,381,384,385], fps: 10, loop: true },
-	      { name: 'move', frames: [387,389,390,391], fps: 10, loop: true },
-	      { name: 'die', frames: [392], fps: 10, loop: true }
-	    ]
+	    animations: [{ name: 'idle', frames: [390], fps: 10, loop: true }, { name: 'spawn', frames: [377, 381, 384, 385], fps: 10, loop: true }, { name: 'move', frames: [387, 389, 390, 391], fps: 10, loop: true }, { name: 'die', frames: [392], fps: 10, loop: true }]
 	  },
 	  jelly: {
 	    mass: 2,
@@ -552,37 +475,25 @@
 	    bounce: 1,
 	    maxSpeed: 5,
 	    acceleration: 1,
-	    animations: [
-	      { name: 'idle', frames: [420,433,434], fps: 3, loop: true },
-	      { name: 'spawn', frames: [420,433,434], fps: 3, loop: true },
-	      { name: 'move', frames: [420,433,434], fps: 3, loop: true },
-	      { name: 'die', frames: [420,433,434], fps: 3, loop: true }
-	    ]
+	    animations: [{ name: 'idle', frames: [420, 433, 434], fps: 3, loop: true }, { name: 'spawn', frames: [420, 433, 434], fps: 3, loop: true }, { name: 'move', frames: [420, 433, 434], fps: 3, loop: true }, { name: 'die', frames: [420, 433, 434], fps: 3, loop: true }]
 	  },
 	  gorilla: {
 	    mass: 5,
 	    jumping: 300,
 	    maxSpeed: 0,
-	    acceleration: 0, 
-	    animations: [
-	      { name: 'idle', frames: [411], fps: 5, loop: true },
-	      { name: 'move', frames: [411], fps: 10, loop: true },
-	      { name: 'jump', frames: [411], fps: 10, loop: true },
-	      { name: 'fall', frames: [411], fps: 10, loop: true },
-	      { name: 'die', frames: [411], fps: 10, loop: true },
-	      { name: 'spawn', frames: [411], fps: 10, loop: true }
-	    ]
+	    acceleration: 0,
+	    animations: [{ name: 'idle', frames: [411], fps: 5, loop: true }, { name: 'move', frames: [411], fps: 10, loop: true }, { name: 'jump', frames: [411], fps: 10, loop: true }, { name: 'fall', frames: [411], fps: 10, loop: true }, { name: 'die', frames: [411], fps: 10, loop: true }, { name: 'spawn', frames: [411], fps: 10, loop: true }]
 	  }
 	};
 	
-	for(var creature in creatureConfigs){
+	for (var creature in creatureConfigs) {
 	  //creatureConfigs[creature] = _.merge({}, configs.creatureDefaults, configs[creature]);  
 	  var defaults = creatureConfigs['creatureDefaults'];
-	  for(var prop in defaults){
-	    if(creatureConfigs[creature][prop] === undefined){
+	  for (var prop in defaults) {
+	    if (creatureConfigs[creature][prop] === undefined) {
 	      creatureConfigs[creature][prop] = defaults[prop];
 	    }
-	  }  
+	  }
 	}
 	
 	module.exports = creatureConfigs;
@@ -594,22 +505,23 @@
   \***********************************************/
 /***/ function(module, exports) {
 
-	var preload = function(){
+	'use strict';
+	
+	var preload = function preload() {
 	    console.log('[PHASER][Play][Preload]');
-	    
+	
 	    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	    this.game.scale.pageAlignHorizontally = true;
 	    this.game.scale.pageAlignVertically = true;
-	    
+	
 	    this.game.load.atlas('pre2atlas', 'spritesheets/pre2atlas.png', 'spritesheets/pre2atlas.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-	    
+	
 	    // load background
 	    this.game.load.image(this.levelConfig.backgroundKey, this.globalConfig.backgroundPath + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
 	    // load tileset
 	    this.game.load.image(this.levelConfig.tileset, this.globalConfig.tilesetPath + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
 	    // load tilemap
 	    this.game.load.tilemap(this.levelConfig.tilemap, this.globalConfig.levelPath + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
-	    
 	};
 	
 	module.exports = preload;
@@ -621,66 +533,52 @@
   \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
 	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
 	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
 	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 38);
 	
-	var create = function(){
-	    
+	var create = function create() {
+	
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
-	    
+	
 	    // [SET LEVEL] set dimensions, start physic system
-	    this.game.world.setBounds(
-	        0, 
-	        0, 
-	        this.globalConfig.width * this.globalConfig.blocks, 
-	        this.globalConfig.height
-	    );
-	    
+	    this.game.world.setBounds(0, 0, this.globalConfig.width * this.globalConfig.blocks, this.globalConfig.height);
+	
 	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-	    
+	
 	    // [SET LEVEL] load level background, tiles, layers
 	    levelLoader.createBackground.call(this, 'backgroundLayer');
-	    levelLoader.createTiles.call(
-	        this, 
-	        this.levelConfig.tilemap, 
-	        this.levelConfig.tileset, 
-	        this.levelConfig.tilesetImage
-	    );
+	    levelLoader.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
 	    levelLoader.createLayers.call(this, this.levelConfig.layers);
-	    
+	
 	    // [SET LEVEL] fix background, resize
 	    this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
 	    this.level.groundLayer.resizeWorld();
-	    
+	
 	    // [PLAYER]
-	    this.player = new Hero(
-	        this.game,
-	        this.levelConfig.entryPoint.x, 
-	        this.levelConfig.entryPoint.y, 
-	        this.globalConfig.textureAtlasName,
-	        this.creatureConfig.man 
-	    );
-	    
+	    this.player = new Hero(this.game, this.levelConfig.entryPoint.x, this.levelConfig.entryPoint.y, this.globalConfig.textureAtlasName, this.creatureConfig.man);
+	
 	    this.game.camera.follow(this.player);
-	    
+	
 	    this.player.onEvents = reactions;
 	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
 	    this.player.listen(this.eventsOf.level, this.player.onEvents);
-	    
+	
 	    // [CREATURES] spawn enemies
 	    creatureFactory.createEnemyGroup.call(this);
 	    this.levelConfig.enemies.forEach(creatureFactory.create.bind(this));
-	    
+	
 	    // bind keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
 	    this.keys.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    
+	
 	    // Phaser preserves binding through game states so it needs to be deleted
 	    // http://www.html5gamedevs.com/topic/5631-preserve-input-bindings/
-	    
+	
 	    console.log('[PHASER][Play][Create]');
 	};
 	
@@ -693,20 +591,22 @@
   \***************************************************/
 /***/ function(module, exports) {
 
+	"use strict";
+	
 	var levelLoader = {
-	    createBackground: function(layerName){
+	    createBackground: function createBackground(layerName) {
 	        this.level.backgroundLayer = this.game.add.tileSprite(0, 0, this.levelConfig.width, this.levelConfig.height, this.levelConfig.backgroundKey);
 	    },
-	    createLayer: function(layer){
+	    createLayer: function createLayer(layer) {
 	        this.level[layer] = this.level.tilemap.createLayer(this.levelConfig[layer]);
 	    },
-	    createLayers: function(layers){
-	        for(var layer in layers){
+	    createLayers: function createLayers(layers) {
+	        for (var layer in layers) {
 	            this.level[layer] = this.level.tilemap.createLayer(this.levelConfig.layers[layer].key);
 	            this.level[layer].visible = this.levelConfig.layers[layer].visible;
 	        }
 	    },
-	    createTiles: function(tilemapKey, tilesetKey, tilesetImage){
+	    createTiles: function createTiles(tilemapKey, tilesetKey, tilesetImage) {
 	        this.level.tilemap = this.game.add.tilemap(tilemapKey);
 	        this.level.tilemap.addTilesetImage(tilesetImage, tilesetKey);
 	        this.level.tilemap.setCollisionBetween(0, 3000, true, this.levelConfig.layers.collisionLayer.key);
@@ -723,22 +623,24 @@
   \*************************************************/
 /***/ function(module, exports) {
 
-	var reactions = function(event){
-	    switch(event.type){
-	        case 'MOVE': 
+	'use strict';
+	
+	var reactions = function reactions(event) {
+	    switch (event.type) {
+	        case 'MOVE':
 	            onMove.call(this, event);
 	            break;
-	        case 'HURT': 
+	        case 'HURT':
 	            onHurt.call(this, event);
 	            break;
-	        case 'DIE': 
+	        case 'DIE':
 	            onDie.call(this, event);
 	            break;
 	    }
 	};
 	
-	function onMove(event){
-	    switch(event.key){
+	function onMove(event) {
+	    switch (event.key) {
 	        case 'left':
 	            this.moveLeft();
 	            break;
@@ -756,16 +658,16 @@
 	        case 'hit':
 	            this.hit();
 	            break;
-	    }   
+	    }
 	}
 	
-	function onHurt(event){
-	    if(this === event.subject){
+	function onHurt(event) {
+	    if (this === event.subject) {
 	        this.hurt(event.direction);
 	    }
 	}
 	
-	function onDie(event){
+	function onDie(event) {
 	    // removing event listeners on state shutdown otherwise causing memory leak and GC fails
 	    this.game.state.states.Play.eventsOf.keys.remove(this.onEvents, this);
 	    this.game.state.states.Play.eventsOf.level.remove(this.onEvents, this);
@@ -781,6 +683,8 @@
   \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var Creature = {
 	    bat: __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 14),
 	    bear: __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 24),
@@ -800,20 +704,14 @@
 	};
 	
 	var creatureFactory = {
-	    createEnemyGroup: function(){
+	    createEnemyGroup: function createEnemyGroup() {
 	        this.enemies = new Phaser.Group(this.game);
 	    },
-	    create: function(creature){
-	        var enemy = new Creature[creature.type](
-	            this.game, 
-	            creature.origin.x, 
-	            creature.origin.y, 
-	            this.globalConfig.textureAtlasName,
-	            this.creatureConfig[creature.type]
-	        );
-	        
+	    create: function create(creature) {
+	        var enemy = new Creature[creature.type](this.game, creature.origin.x, creature.origin.y, this.globalConfig.textureAtlasName, this.creatureConfig[creature.type]);
+	
 	        enemy.setBounds(creature.boundTo);
-	        
+	
 	        this.enemies.add(enemy);
 	    }
 	};
@@ -827,16 +725,17 @@
   \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Bat(game, x, y, sprite, props){
+	function Bat(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Bat.prototype = Object.create(AI.prototype);
 	Bat.prototype.constructor = Bat;
 	
 	module.exports = Bat;
-
 
 /***/ },
 /* 15 */
@@ -845,6 +744,8 @@
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
 	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 19);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 20);
@@ -855,9 +756,9 @@
 	/*
 	    @Hero
 	*/
-	function AI(game, x, y, sprite, props){
+	function AI(game, x, y, sprite, props) {
 	    ExtendedSprite.call(this, game, x, y, sprite, props);
-	    
+	
 	    this.id = this.constructor.name + '-' + x + '-' + y;
 	}
 	
@@ -866,20 +767,15 @@
 	
 	// hacky... :(
 	Object.defineProperty(AI.prototype, 'boundTo', {
-	    get: function() { return this._boundTo; }, 
-	    set: function(bounds) {
+	    get: function get() {
+	        return this._boundTo;
+	    },
+	    set: function set(bounds) {
 	        this._boundTo = bounds;
 	    }
 	});
 	
-	AI.prototype = Object.assign(
-	    AI.prototype, 
-	    decide,
-	    move,
-	    turn,
-	    hurt,
-	    boundTo
-	);
+	AI.prototype = Object.assign(AI.prototype, decide, move, turn, hurt, boundTo);
 	
 	module.exports = AI;
 
@@ -890,30 +786,27 @@
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var modifyState = __webpack_require__(/*! ./behaviours/state.js */ 17);
 	var debug = __webpack_require__(/*! ./behaviours/debug.js */ 18);
 	
 	/*
 	    @ExtendedSprite
 	*/
-	function ExtendedSprite(game, x, y, sprite, props){
-	    
+	function ExtendedSprite(game, x, y, sprite, props) {
+	
 	    this.game = game;
 	    this.props = props || { animations: [] };
-	    
+	
 	    Phaser.Sprite.call(this, game, x, y, sprite);
-	    
-	    this.props.animations.forEach(function(animation){
-	        this.animations.add(
-	            animation.name, 
-	            animation.frames.map(function(frame){ 
-	                return frame.toString(); 
-	            }), 
-	            animation.fps, 
-	            animation.loop
-	        );
+	
+	    this.props.animations.forEach(function (animation) {
+	        this.animations.add(animation.name, animation.frames.map(function (frame) {
+	            return frame.toString();
+	        }), animation.fps, animation.loop);
 	    }.bind(this));
-	    
+	
 	    this.state = {
 	        'die': 0,
 	        'hurt': 0,
@@ -921,7 +814,7 @@
 	        'move': 0,
 	        'idle': Infinity
 	    };
-	    
+	
 	    this.game.add.existing(this);
 	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	    this.body.gravity.y = this.props.gravity;
@@ -936,32 +829,28 @@
 	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
 	ExtendedSprite.prototype.constructor = ExtendedSprite;
 	
-	ExtendedSprite.prototype = Object.assign(
-	    ExtendedSprite.prototype, 
-	    modifyState,
-	    debug
-	);
+	ExtendedSprite.prototype = Object.assign(ExtendedSprite.prototype, modifyState, debug);
 	
 	/*
 	    facing right: this.scale.x = 1
 	    facing left: this.scale.x = -1
 	*/
 	Object.defineProperty(ExtendedSprite.prototype, 'facingRight', {
-	    get: function() { 
-	        return this.scale.x > 0; 
+	    get: function get() {
+	        return this.scale.x > 0;
 	    }
 	});
 	
 	Object.defineProperty(ExtendedSprite.prototype, 'facingLeft', {
-	    get: function() { 
-	        return this.scale.x < 0; 
+	    get: function get() {
+	        return this.scale.x < 0;
 	    }
 	});
 	
-	ExtendedSprite.prototype.update = function(){
+	ExtendedSprite.prototype.update = function () {
 	    this.animations.play(this.getState());
 	};
-	 
+	
 	module.exports = ExtendedSprite;
 
 /***/ },
@@ -971,12 +860,14 @@
   \**********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var statefulCreature = {
 	    /*
 	        @setState: set timestamp
 	    */
-	    setState: function(type, time){
-	        if(this.state[type] !== undefined){
+	    setState: function setState(type, time) {
+	        if (this.state[type] !== undefined) {
 	            // + 200: realistic animation time
 	            // + 0: not animating at all as it is already expired while the execution context get there
 	            // + 10: minimal 
@@ -988,9 +879,9 @@
 	        @getState
 	        @return first state in the priority order which has not yet expired
 	    */
-	    getState: function(){
-	        for(var type in this.state){
-	            if(this.game.time.now < this.state[type]){
+	    getState: function getState() {
+	        for (var type in this.state) {
+	            if (this.game.time.now < this.state[type]) {
 	                return type;
 	            }
 	        }
@@ -1000,7 +891,7 @@
 	        @hasState
 	        @return true if state still valid, false if expired, undefined if not found
 	    */
-	    hasState: function(type){
+	    hasState: function hasState(type) {
 	        return this.state[type] !== undefined ? this.state[type] >= this.game.time.now : undefined;
 	    }
 	};
@@ -1014,13 +905,15 @@
   \**********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var debugBehaviour = {
-	    debug: function(toDebug){
-	       this._debugText.visible = true;
-	       this._debugText.scale.x = this.scale.x;
-	       this._debugText.setText(toDebug.toString() || '');
-	       return this;
-	    }
+	   debug: function debug(toDebug) {
+	      this._debugText.visible = true;
+	      this._debugText.scale.x = this.scale.x;
+	      this._debugText.setText(toDebug.toString() || '');
+	      return this;
+	   }
 	};
 	
 	module.exports = debugBehaviour;
@@ -1032,8 +925,10 @@
   \***********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var decideBehaviour = {
-	    update: function(){
+	    update: function update() {
 	        this.animations.play('move');
 	        //this.turnIfBlocked();
 	        this.checkBounds();
@@ -1050,25 +945,27 @@
   \*********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var moveBehaviour = {
-	    moveLeft: function(){
+	    moveLeft: function moveLeft() {
 	        this.scale.x = -1;
 	        this.setState('move');
-	        if(this.body.velocity.x > -this.props.maxSpeed){
+	        if (this.body.velocity.x > -this.props.maxSpeed) {
 	            this.body.velocity.x -= this.props.acceleration;
 	        }
 	        return this;
 	    },
-	    moveRight: function(){
+	    moveRight: function moveRight() {
 	        this.scale.x = 1;
 	        this.setState('move');
-	        if(this.body.velocity.x < this.props.maxSpeed){
+	        if (this.body.velocity.x < this.props.maxSpeed) {
 	            this.body.velocity.x += this.props.acceleration;
 	        }
 	        return this;
-	    }, 
-	    move: function(){
-	        if(this.scale.x === 1){
+	    },
+	    move: function move() {
+	        if (this.scale.x === 1) {
 	            this.moveRight();
 	        } else {
 	            this.moveLeft();
@@ -1085,14 +982,16 @@
   \*********************************************************/
 /***/ function(module, exports) {
 
+	"use strict";
+	
 	var turnBehaviour = {
-	    turnIfBlocked: function(){
-	        if(this.body.blocked.left || this.body.blocked.right){
+	    turnIfBlocked: function turnIfBlocked() {
+	        if (this.body.blocked.left || this.body.blocked.right) {
 	            this.scale.x *= -1;
 	        }
 	        return this;
 	    },
-	    turn: function(){
+	    turn: function turn() {
 	        this.scale.x *= -1;
 	        return this;
 	    }
@@ -1107,16 +1006,18 @@
   \*********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var hurtBehaviour = {
-	    hurt: function(direction){
-	        
+	    hurt: function hurt(direction) {
+	
 	        this.setState('hurt');
-	        
+	
 	        this.body.velocity.y -= 100;
-	        if(direction && direction.left){
+	        if (direction && direction.left) {
 	            this.body.velocity.x += 50;
 	        }
-	        if(direction && direction.right){
+	        if (direction && direction.right) {
 	            this.body.velocity.x -= 50;
 	        }
 	        return this;
@@ -1132,57 +1033,46 @@
   \************************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var boundToBehaviour = {
-	    setBounds: function(bounds){
-	        if(!bounds || !Object.keys(bounds).length){ 
-	           return this;
+	    setBounds: function setBounds(bounds) {
+	        if (!bounds || !Object.keys(bounds).length) {
+	            return this;
 	        }
-	       
+	
 	        // @Point {x, y}
-	        if(bounds.hasOwnProperty('x') && 
-	            bounds.hasOwnProperty('y')){
-	                this.boundTo = new Phaser.Point(bounds.x, bounds.y);
+	        if (bounds.hasOwnProperty('x') && bounds.hasOwnProperty('y')) {
+	            this.boundTo = new Phaser.Point(bounds.x, bounds.y);
 	        }
-	       
+	
 	        // @Rectangle { x1, x2 }
-	        if(bounds.hasOwnProperty('x1') && 
-	            bounds.hasOwnProperty('x2') &&
-	            !bounds.hasOwnProperty('y1') &&
-	            !bounds.hasOwnProperty('y2')){
-	                this.boundTo = new Phaser.Rectangle(bounds.x1, 0, bounds.x2 - bounds.x1, this.game.height);
+	        if (bounds.hasOwnProperty('x1') && bounds.hasOwnProperty('x2') && !bounds.hasOwnProperty('y1') && !bounds.hasOwnProperty('y2')) {
+	            this.boundTo = new Phaser.Rectangle(bounds.x1, 0, bounds.x2 - bounds.x1, this.game.height);
 	        }
-	        
+	
 	        // {x1, y1, x2, y2}
-	        if(bounds.hasOwnProperty('x1') && 
-	            bounds.hasOwnProperty('x2') &&
-	            bounds.hasOwnProperty('y1') &&
-	            bounds.hasOwnProperty('y2')){
-	                this._boundTo = new Phaser.Rectangle(bounds.x1, bounds.y1, bounds.x2 - bounds.x1, bounds.y2 - bounds.y1);
+	        if (bounds.hasOwnProperty('x1') && bounds.hasOwnProperty('x2') && bounds.hasOwnProperty('y1') && bounds.hasOwnProperty('y2')) {
+	            this._boundTo = new Phaser.Rectangle(bounds.x1, bounds.y1, bounds.x2 - bounds.x1, bounds.y2 - bounds.y1);
 	        }
-	        
+	
 	        return this;
 	    },
-	    checkBounds: function(){
-	        if(!this.boundTo || !Object.keys(this.boundTo).length){ 
-	           return;
+	    checkBounds: function checkBounds() {
+	        if (!this.boundTo || !Object.keys(this.boundTo).length) {
+	            return;
 	        }
-	        
+	
 	        // @Point {x, y} 
-	        if(!this.boundTo.hasOwnProperty('width') && 
-	            !Phaser.Rectangle.containsPoint(this.getBounds(), this.boundTo) &&
-	            ((this.x < this.boundTo.x && !this.facingRight) || 
-	            (this.x > this.boundTo.x && this.facingRight))){
-	                this.turn();
+	        if (!this.boundTo.hasOwnProperty('width') && !Phaser.Rectangle.containsPoint(this.getBounds(), this.boundTo) && (this.x < this.boundTo.x && !this.facingRight || this.x > this.boundTo.x && this.facingRight)) {
+	            this.turn();
 	        }
-	        
+	
 	        // @Rectangle {x1, x2} or {x1, y1, x2, y2}
-	        if(this.boundTo &&
-	            this.boundTo.hasOwnProperty('width') && 
-	            (this.x < this.boundTo.x && this.facingLeft || 
-	            this.x > this.boundTo.x + this.boundTo.width && this.facingRight)){
-	                this.turn();
+	        if (this.boundTo && this.boundTo.hasOwnProperty('width') && (this.x < this.boundTo.x && this.facingLeft || this.x > this.boundTo.x + this.boundTo.width && this.facingRight)) {
+	            this.turn();
 	        }
-	        
+	
 	        return this;
 	    }
 	};
@@ -1196,16 +1086,17 @@
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Bear(game, x, y, sprite, props){
+	function Bear(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Bear.prototype = Object.create(AI.prototype);
 	Bear.prototype.constructor = Bear;
 	
 	module.exports = Bear;
-
 
 /***/ },
 /* 25 */
@@ -1214,16 +1105,17 @@
   \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Bug(game, x, y, sprite, props){
+	function Bug(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Bug.prototype = Object.create(AI.prototype);
 	Bug.prototype.constructor = Bug;
 	
 	module.exports = Bug;
-
 
 /***/ },
 /* 26 */
@@ -1232,16 +1124,17 @@
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Dino(game, x, y, sprite, props){
+	function Dino(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Dino.prototype = Object.create(AI.prototype);
 	Dino.prototype.constructor = Dino;
 	
 	module.exports = Dino;
-
 
 /***/ },
 /* 27 */
@@ -1250,16 +1143,17 @@
   \*************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Dragonfly(game, x, y, sprite, props){
+	function Dragonfly(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Dragonfly.prototype = Object.create(AI.prototype);
 	Dragonfly.prototype.constructor = Dragonfly;
 	
 	module.exports = Dragonfly;
-
 
 /***/ },
 /* 28 */
@@ -1268,16 +1162,17 @@
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Frog(game, x, y, sprite, props){
+	function Frog(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Frog.prototype = Object.create(AI.prototype);
 	Frog.prototype.constructor = Frog;
 	
 	module.exports = Frog;
-
 
 /***/ },
 /* 29 */
@@ -1286,16 +1181,17 @@
   \***********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Gorilla(game, x, y, sprite, props){
+	function Gorilla(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Gorilla.prototype = Object.create(AI.prototype);
 	Gorilla.prototype.constructor = Gorilla;
 	
 	module.exports = Gorilla;
-
 
 /***/ },
 /* 30 */
@@ -1304,16 +1200,17 @@
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Insect(game, x, y, sprite, props){
+	function Insect(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Insect.prototype = Object.create(AI.prototype);
 	Insect.prototype.constructor = Insect;
 	
 	module.exports = Insect;
-
 
 /***/ },
 /* 31 */
@@ -1322,16 +1219,17 @@
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Jelly(game, x, y, sprite, props){
+	function Jelly(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Jelly.prototype = Object.create(AI.prototype);
 	Jelly.prototype.constructor = Jelly;
 	
 	module.exports = Jelly;
-
 
 /***/ },
 /* 32 */
@@ -1340,16 +1238,17 @@
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Native(game, x, y, sprite, props){
+	function Native(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Native.prototype = Object.create(AI.prototype);
 	Native.prototype.constructor = Native;
 	
 	module.exports = Native;
-
 
 /***/ },
 /* 33 */
@@ -1358,16 +1257,17 @@
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Parrot(game, x, y, sprite, props){
+	function Parrot(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Parrot.prototype = Object.create(AI.prototype);
 	Parrot.prototype.constructor = Parrot;
 	
 	module.exports = Parrot;
-
 
 /***/ },
 /* 34 */
@@ -1376,16 +1276,17 @@
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Ptero(game, x, y, sprite, props){
+	function Ptero(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Ptero.prototype = Object.create(AI.prototype);
 	Ptero.prototype.constructor = Ptero;
 	
 	module.exports = Ptero;
-
 
 /***/ },
 /* 35 */
@@ -1394,16 +1295,17 @@
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Spider(game, x, y, sprite, props){
+	function Spider(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Spider.prototype = Object.create(AI.prototype);
 	Spider.prototype.constructor = Spider;
 	
 	module.exports = Spider;
-
 
 /***/ },
 /* 36 */
@@ -1412,16 +1314,17 @@
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Tiger(game, x, y, sprite, props){
+	function Tiger(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Tiger.prototype = Object.create(AI.prototype);
 	Tiger.prototype.constructor = Tiger;
 	
 	module.exports = Tiger;
-
 
 /***/ },
 /* 37 */
@@ -1430,17 +1333,17 @@
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var AI = __webpack_require__(/*! ../ai.js */ 15);
 	
-	function Turtle(game, x, y, sprite, props){
+	function Turtle(game, x, y, sprite, props) {
 		AI.call(this, game, x, y, sprite, props);
 	}
 	Turtle.prototype = Object.create(AI.prototype);
 	Turtle.prototype.constructor = Turtle;
 	
 	module.exports = Turtle;
-	
-
 
 /***/ },
 /* 38 */
@@ -1449,6 +1352,8 @@
   \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
 	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 39);
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 40);
@@ -1460,22 +1365,14 @@
 	/*
 	    @Hero
 	*/
-	function Hero(game, x, y, sprite, props){
+	function Hero(game, x, y, sprite, props) {
 	    ExtendedSprite.call(this, game, x, y, sprite, props);
 	}
 	
 	Hero.prototype = Object.create(ExtendedSprite.prototype);
 	Hero.prototype.constructor = Hero;
 	
-	Hero.prototype = Object.assign(
-	    Hero.prototype, 
-	    listen, 
-	    jump,
-	    stop,
-	    move,
-	    hurt,
-	    hit
-	);
+	Hero.prototype = Object.assign(Hero.prototype, listen, jump, stop, move, hurt, hit);
 	
 	module.exports = Hero;
 
@@ -1486,11 +1383,13 @@
   \***********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var listenBehaviour = {
-	    listen: function(eventSource, callback){
+	    listen: function listen(eventSource, callback) {
 	        eventSource.add(callback, this);
 	    },
-	    onEvents: function(event){
+	    onEvents: function onEvents(event) {
 	        console.log('[%s]: ', this.constructor.name, event);
 	    }
 	};
@@ -1504,9 +1403,11 @@
   \*********************************************************/
 /***/ function(module, exports) {
 
+	"use strict";
+	
 	var jumpBehaviour = {
-	    jump: function(){
-	        if(this.body.touching.down || this.body.blocked.down){
+	    jump: function jump() {
+	        if (this.body.touching.down || this.body.blocked.down) {
 	            this.body.velocity.y -= this.props.jumping;
 	        }
 	        return this;
@@ -1522,8 +1423,10 @@
   \*********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var stopBehaviour = {
-	    stop: function(){
+	    stop: function stop() {
 	        // slippery rate: 1.1, should go later to levelConfig
 	        this.body.velocity.x /= 1.1;
 	        this.setState('stop');
@@ -1540,8 +1443,10 @@
   \********************************************************/
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	var hitBehaviour = {
-	    hit: function(){
+	    hit: function hit() {
 	        this.setState('hit');
 	    }
 	};
@@ -1555,73 +1460,75 @@
   \**********************************************/
 /***/ function(module, exports) {
 
-	var update = function(){
-	    
+	'use strict';
+	
+	var update = function update() {
+	
 	    // console.log('[PHASER][Play][Update]');
-	    
+	
 	    // [DEBUG] fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
-	    
+	
 	    // [COLLISIONS]
 	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
-	    
+	
 	    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
-	    
-	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function(){
+	
+	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function () {
 	        this.eventsOf.level.dispatch({ type: 'DIE' });
 	    }.bind(this));
-	    
-	    this.game.physics.arcade.collide(this.player, this.enemies, function(player, enemy){
-	        
+	
+	    this.game.physics.arcade.collide(this.player, this.enemies, function (player, enemy) {
+	
 	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
-	        if(this.player.hasState('hit')){
-	            this.eventsOf.level.dispatch({ 
-	                type: 'HURT', 
+	        if (this.player.hasState('hit')) {
+	            this.eventsOf.level.dispatch({
+	                type: 'HURT',
 	                subject: enemy.id,
-	                direction: enemy.body.touching 
+	                direction: enemy.body.touching
 	            });
 	        } else {
-	            this.eventsOf.level.dispatch({ 
-	                type: 'HURT', 
-	                subject: this.player, 
-	                direction: this.player.body.touching 
+	            this.eventsOf.level.dispatch({
+	                type: 'HURT',
+	                subject: this.player,
+	                direction: this.player.body.touching
 	            });
 	        }
 	    }.bind(this));
-	    
+	
 	    /*
 	    debugEnemies.call(this, function(){
 	        return this.facingRight;
 	    });
 	    */
-	    
+	
 	    // [KEYPRESS] event dispatch
 	    handleKeypress.call(this);
 	};
 	
-	function handleKeypress(){
-	    if(this.player.hasState('hurt')){
+	function handleKeypress() {
+	    if (this.player.hasState('hurt')) {
 	        return;
 	    }
-	    if(this.keys.left.isDown){
+	    if (this.keys.left.isDown) {
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
-	    } else if(this.keys.right.isDown){
+	    } else if (this.keys.right.isDown) {
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
 	    } else {
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
 	    }
-	    
-	    if(this.keys.up.isDown){
+	
+	    if (this.keys.up.isDown) {
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
 	    }
-	    
-	    if(this.keys.space.isDown){
+	
+	    if (this.keys.space.isDown) {
 	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
 	    }
 	}
 	
-	function debugEnemies(debugCallback){
-	    this.enemies.forEachAlive(function(enemy){
+	function debugEnemies(debugCallback) {
+	    this.enemies.forEachAlive(function (enemy) {
 	        enemy.debug(debugCallback.call(enemy));
 	    });
 	}
@@ -1635,6 +1542,8 @@
   \*****************************************************/
 /***/ function(module, exports) {
 
+	"use strict";
+	
 	var eventEmitters = {
 	    eventsOf: {
 	        keys: new Phaser.Signal(),
@@ -1651,6 +1560,8 @@
   \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
 	var create = __webpack_require__(/*! ./create.js */ 46);
 	var update = __webpack_require__(/*! ./update.js */ 47);
@@ -1659,7 +1570,7 @@
 	    @GameOver
 	    inherits from GameState component
 	*/
-	function GameOver(globalConfig){
+	function GameOver(globalConfig) {
 	    GameState.call(this);
 	    this.globalConfig = globalConfig;
 	}
@@ -1676,7 +1587,6 @@
 	
 	module.exports = GameOver;
 
-
 /***/ },
 /* 46 */
 /*!**************************************************!*\
@@ -1684,26 +1594,23 @@
   \**************************************************/
 /***/ function(module, exports) {
 
-	var create = function(){
-	    
+	"use strict";
+	
+	var create = function create() {
+	
 	    // fps debugging
 	    this.game.time.advancedTiming = true;
 	
 	    // CTA text
-	    var text = this.game.add.text(
-	        this.globalConfig.width / 2, 
-	        this.globalConfig.height / 2, 
-	        "Game Over\nPress space \nto continue", 
-	        { font: "48px Courier", fill: "#ffffff", align: "center" }
-	    );
+	    var text = this.game.add.text(this.globalConfig.width / 2, this.globalConfig.height / 2, "Game Over\nPress space \nto continue", { font: "48px Courier", fill: "#ffffff", align: "center" });
 	
 	    text.anchor.set(0.5);
-	    
+	
 	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    spaceKey.onDown.addOnce(function(){
+	    spaceKey.onDown.addOnce(function () {
 	        this.game.state.start('Menu', true, true);
 	    }, this);
-	    
+	
 	    console.log('[PHASER][GameOver][Create]');
 	};
 	
@@ -1716,11 +1623,13 @@
   \**************************************************/
 /***/ function(module, exports) {
 
-	var update = function(){
-	    
+	'use strict';
+	
+	var update = function update() {
+	
 	    // fps 
 	    this.game.debug.text(this.game.time.fps, 5, 20);
-	    
+	
 	    console.log('[PHASER][GameOver][Update]');
 	};
 	

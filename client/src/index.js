@@ -1,4 +1,4 @@
-var globalConfig = require('./globalconfig.js');
+import globalConfig from './globalconfig.js';
 var Menu = require('./gamestates/menu/menu.js');
 var Play = require('./gamestates/play/play.js');
 var GameOver = require('./gamestates/gameover/gameover.js');
