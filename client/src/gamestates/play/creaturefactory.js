@@ -29,6 +29,7 @@ var creatureFactory = {
             this.creatureConfig[creature.type]
         );
         
+        enemy.listen(this.eventsOf.level, enemy.react);
         enemy.setBounds(creature.boundTo);
         
         this.enemies.add(enemy);

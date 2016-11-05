@@ -1,4 +1,5 @@
 var modifyState = require('./behaviours/state.js');
+var listen = require('./behaviours/listen.js');
 var debug = require('./behaviours/debug.js');
 
 /*
@@ -47,6 +48,7 @@ ExtendedSprite.prototype.constructor = ExtendedSprite;
 ExtendedSprite.prototype = Object.assign(
     ExtendedSprite.prototype, 
     modifyState,
+    listen,
     debug
 );
 

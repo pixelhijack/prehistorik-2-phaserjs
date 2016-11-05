@@ -1,5 +1,4 @@
 var ExtendedSprite = require('./extendedsprite.js');
-var listen = require('./behaviours/listen.js');
 var jump = require('./behaviours/jump.js');
 var stop = require('./behaviours/stop.js');
 var move = require('./behaviours/move.js');
@@ -18,7 +17,6 @@ Hero.prototype.constructor = Hero;
 
 Hero.prototype = Object.assign(
     Hero.prototype, 
-    listen, 
     jump,
     stop,
     move,

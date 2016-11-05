@@ -43,9 +43,9 @@ var create = function(){
     
     this.game.camera.follow(this.player);
     
-    this.player.onEvents = reactions;
-    this.player.listen(this.eventsOf.keys, this.player.onEvents);
-    this.player.listen(this.eventsOf.level, this.player.onEvents);
+    this.player.react = reactions;
+    this.player.listen(this.eventsOf.keys, this.player.react);
+    this.player.listen(this.eventsOf.level, this.player.react);
     
     // [CREATURES] spawn enemies
     creatureFactory.createEnemyGroup.call(this);

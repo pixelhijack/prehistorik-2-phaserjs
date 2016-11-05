@@ -575,9 +575,9 @@
 	
 	    this.game.camera.follow(this.player);
 	
-	    this.player.onEvents = reactions;
-	    this.player.listen(this.eventsOf.keys, this.player.onEvents);
-	    this.player.listen(this.eventsOf.level, this.player.onEvents);
+	    this.player.react = reactions;
+	    this.player.listen(this.eventsOf.keys, this.player.react);
+	    this.player.listen(this.eventsOf.level, this.player.react);
 	
 	    // [CREATURES] spawn enemies
 	    creatureFactory.createEnemyGroup.call(this);
@@ -680,8 +680,8 @@
 	
 	function onDie(event) {
 	    // removing event listeners on state shutdown otherwise causing memory leak and GC fails
-	    this.game.state.states.Play.eventsOf.keys.remove(this.onEvents, this);
-	    this.game.state.states.Play.eventsOf.level.remove(this.onEvents, this);
+	    this.game.state.states.Play.eventsOf.keys.remove(this.react, this);
+	    this.game.state.states.Play.eventsOf.level.remove(this.react, this);
 	    this.game.state.start('GameOver', true, false, { levelNumber: 1 });
 	}
 	
@@ -721,6 +721,7 @@
 	    create: function create(creature) {
 	        var enemy = new Creature[creature.type](this.game, creature.origin.x, creature.origin.y, this.globalConfig.textureAtlasName, this.creatureConfig[creature.type]);
 	
+	        enemy.listen(this.eventsOf.level, enemy.react);
 	        enemy.setBounds(creature.boundTo);
 	
 	        this.enemies.add(enemy);
@@ -800,6 +801,7 @@
 	'use strict';
 	
 	var modifyState = __webpack_require__(/*! ./behaviours/state.js */ 17);
+	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 39);
 	var debug = __webpack_require__(/*! ./behaviours/debug.js */ 18);
 	
 	/*
@@ -840,7 +842,7 @@
 	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
 	ExtendedSprite.prototype.constructor = ExtendedSprite;
 	
-	ExtendedSprite.prototype = Object.assign(ExtendedSprite.prototype, modifyState, debug);
+	ExtendedSprite.prototype = Object.assign(ExtendedSprite.prototype, modifyState, listen, debug);
 	
 	/*
 	    facing right: this.scale.x = 1
@@ -1366,7 +1368,6 @@
 	'use strict';
 	
 	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 39);
 	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 40);
 	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 41);
 	var move = __webpack_require__(/*! ./behaviours/move.js */ 20);
@@ -1383,7 +1384,7 @@
 	Hero.prototype = Object.create(ExtendedSprite.prototype);
 	Hero.prototype.constructor = Hero;
 	
-	Hero.prototype = Object.assign(Hero.prototype, listen, jump, stop, move, hurt, hit);
+	Hero.prototype = Object.assign(Hero.prototype, jump, stop, move, hurt, hit);
 	
 	module.exports = Hero;
 
@@ -1400,7 +1401,7 @@
 	    listen: function listen(eventSource, callback) {
 	        eventSource.add(callback, this);
 	    },
-	    onEvents: function onEvents(event) {
+	    react: function react(event) {
 	        console.log('[%s]: ', this.constructor.name, event);
 	    }
 	};
