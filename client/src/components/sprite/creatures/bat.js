@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Bat(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Bat extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Bat.prototype = Object.create(AI.prototype);
-Bat.prototype.constructor = Bat;
 
-module.exports = Bat;
+export default Bat;

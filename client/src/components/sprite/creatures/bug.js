@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Bug(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Bug extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Bug.prototype = Object.create(AI.prototype);
-Bug.prototype.constructor = Bug;
 
-module.exports = Bug;
+export default Bug;

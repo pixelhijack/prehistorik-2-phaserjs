@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Parrot(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Parrot extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Parrot.prototype = Object.create(AI.prototype);
-Parrot.prototype.constructor = Parrot;
 
-module.exports = Parrot;
+export default Parrot;

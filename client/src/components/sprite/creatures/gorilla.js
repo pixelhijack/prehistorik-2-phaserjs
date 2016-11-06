@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Gorilla(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Gorilla extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Gorilla.prototype = Object.create(AI.prototype);
-Gorilla.prototype.constructor = Gorilla;
 
-module.exports = Gorilla;
+export default Gorilla;

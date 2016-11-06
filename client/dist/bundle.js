@@ -801,15 +801,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Bat(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Bat.prototype = Object.create(AI.prototype);
-	Bat.prototype.constructor = Bat;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Bat;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Bat = function (_AI) {
+		_inherits(Bat, _AI);
+	
+		function Bat(game, x, y, sprite, props) {
+			_classCallCheck(this, Bat);
+	
+			return _possibleConstructorReturn(this, (Bat.__proto__ || Object.getPrototypeOf(Bat)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Bat;
+	}(_ai2.default);
+	
+	exports.default = Bat;
 
 /***/ },
 /* 15 */
@@ -1222,15 +1242,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Bug(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Bug.prototype = Object.create(AI.prototype);
-	Bug.prototype.constructor = Bug;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Bug;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Bug = function (_AI) {
+		_inherits(Bug, _AI);
+	
+		function Bug(game, x, y, sprite, props) {
+			_classCallCheck(this, Bug);
+	
+			return _possibleConstructorReturn(this, (Bug.__proto__ || Object.getPrototypeOf(Bug)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Bug;
+	}(_ai2.default);
+	
+	exports.default = Bug;
 
 /***/ },
 /* 27 */
@@ -1241,15 +1281,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Dino(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Dino.prototype = Object.create(AI.prototype);
-	Dino.prototype.constructor = Dino;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Dino;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Dino = function (_AI) {
+		_inherits(Dino, _AI);
+	
+		function Dino(game, x, y, sprite, props) {
+			_classCallCheck(this, Dino);
+	
+			return _possibleConstructorReturn(this, (Dino.__proto__ || Object.getPrototypeOf(Dino)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Dino;
+	}(_ai2.default);
+	
+	exports.default = Dino;
 
 /***/ },
 /* 28 */
@@ -1260,15 +1320,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Dragonfly(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Dragonfly.prototype = Object.create(AI.prototype);
-	Dragonfly.prototype.constructor = Dragonfly;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Dragonfly;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Dragonfly = function (_AI) {
+		_inherits(Dragonfly, _AI);
+	
+		function Dragonfly(game, x, y, sprite, props) {
+			_classCallCheck(this, Dragonfly);
+	
+			return _possibleConstructorReturn(this, (Dragonfly.__proto__ || Object.getPrototypeOf(Dragonfly)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Dragonfly;
+	}(_ai2.default);
+	
+	exports.default = Dragonfly;
 
 /***/ },
 /* 29 */
@@ -1279,15 +1359,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Frog(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Frog.prototype = Object.create(AI.prototype);
-	Frog.prototype.constructor = Frog;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Frog;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Frog = function (_AI) {
+		_inherits(Frog, _AI);
+	
+		function Frog(game, x, y, sprite, props) {
+			_classCallCheck(this, Frog);
+	
+			return _possibleConstructorReturn(this, (Frog.__proto__ || Object.getPrototypeOf(Frog)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Frog;
+	}(_ai2.default);
+	
+	exports.default = Frog;
 
 /***/ },
 /* 30 */
@@ -1298,15 +1398,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Gorilla(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Gorilla.prototype = Object.create(AI.prototype);
-	Gorilla.prototype.constructor = Gorilla;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Gorilla;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Gorilla = function (_AI) {
+		_inherits(Gorilla, _AI);
+	
+		function Gorilla(game, x, y, sprite, props) {
+			_classCallCheck(this, Gorilla);
+	
+			return _possibleConstructorReturn(this, (Gorilla.__proto__ || Object.getPrototypeOf(Gorilla)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Gorilla;
+	}(_ai2.default);
+	
+	exports.default = Gorilla;
 
 /***/ },
 /* 31 */
@@ -1317,15 +1437,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Insect(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Insect.prototype = Object.create(AI.prototype);
-	Insect.prototype.constructor = Insect;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Insect;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Insect = function (_AI) {
+		_inherits(Insect, _AI);
+	
+		function Insect(game, x, y, sprite, props) {
+			_classCallCheck(this, Insect);
+	
+			return _possibleConstructorReturn(this, (Insect.__proto__ || Object.getPrototypeOf(Insect)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Insect;
+	}(_ai2.default);
+	
+	exports.default = Insect;
 
 /***/ },
 /* 32 */
@@ -1336,15 +1476,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Jelly(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Jelly.prototype = Object.create(AI.prototype);
-	Jelly.prototype.constructor = Jelly;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Jelly;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Jelly = function (_AI) {
+		_inherits(Jelly, _AI);
+	
+		function Jelly(game, x, y, sprite, props) {
+			_classCallCheck(this, Jelly);
+	
+			return _possibleConstructorReturn(this, (Jelly.__proto__ || Object.getPrototypeOf(Jelly)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Jelly;
+	}(_ai2.default);
+	
+	exports.default = Jelly;
 
 /***/ },
 /* 33 */
@@ -1355,15 +1515,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Native(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Native.prototype = Object.create(AI.prototype);
-	Native.prototype.constructor = Native;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Native;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Native = function (_AI) {
+		_inherits(Native, _AI);
+	
+		function Native(game, x, y, sprite, props) {
+			_classCallCheck(this, Native);
+	
+			return _possibleConstructorReturn(this, (Native.__proto__ || Object.getPrototypeOf(Native)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Native;
+	}(_ai2.default);
+	
+	exports.default = Native;
 
 /***/ },
 /* 34 */
@@ -1374,15 +1554,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Parrot(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Parrot.prototype = Object.create(AI.prototype);
-	Parrot.prototype.constructor = Parrot;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Parrot;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Parrot = function (_AI) {
+		_inherits(Parrot, _AI);
+	
+		function Parrot(game, x, y, sprite, props) {
+			_classCallCheck(this, Parrot);
+	
+			return _possibleConstructorReturn(this, (Parrot.__proto__ || Object.getPrototypeOf(Parrot)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Parrot;
+	}(_ai2.default);
+	
+	exports.default = Parrot;
 
 /***/ },
 /* 35 */
@@ -1393,15 +1593,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Ptero(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Ptero.prototype = Object.create(AI.prototype);
-	Ptero.prototype.constructor = Ptero;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Ptero;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Ptero = function (_AI) {
+		_inherits(Ptero, _AI);
+	
+		function Ptero(game, x, y, sprite, props) {
+			_classCallCheck(this, Ptero);
+	
+			return _possibleConstructorReturn(this, (Ptero.__proto__ || Object.getPrototypeOf(Ptero)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Ptero;
+	}(_ai2.default);
+	
+	exports.default = Ptero;
 
 /***/ },
 /* 36 */
@@ -1412,15 +1632,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Spider(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Spider.prototype = Object.create(AI.prototype);
-	Spider.prototype.constructor = Spider;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Spider;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Spider = function (_AI) {
+		_inherits(Spider, _AI);
+	
+		function Spider(game, x, y, sprite, props) {
+			_classCallCheck(this, Spider);
+	
+			return _possibleConstructorReturn(this, (Spider.__proto__ || Object.getPrototypeOf(Spider)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Spider;
+	}(_ai2.default);
+	
+	exports.default = Spider;
 
 /***/ },
 /* 37 */
@@ -1431,15 +1671,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Tiger(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Tiger.prototype = Object.create(AI.prototype);
-	Tiger.prototype.constructor = Tiger;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Tiger;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Tiger = function (_AI) {
+		_inherits(Tiger, _AI);
+	
+		function Tiger(game, x, y, sprite, props) {
+			_classCallCheck(this, Tiger);
+	
+			return _possibleConstructorReturn(this, (Tiger.__proto__ || Object.getPrototypeOf(Tiger)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Tiger;
+	}(_ai2.default);
+	
+	exports.default = Tiger;
 
 /***/ },
 /* 38 */
@@ -1450,15 +1710,35 @@
 
 	'use strict';
 	
-	var AI = __webpack_require__(/*! ../ai.js */ 15);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	
-	function Turtle(game, x, y, sprite, props) {
-		AI.call(this, game, x, y, sprite, props);
-	}
-	Turtle.prototype = Object.create(AI.prototype);
-	Turtle.prototype.constructor = Turtle;
+	var _ai = __webpack_require__(/*! ../ai.js */ 15);
 	
-	module.exports = Turtle;
+	var _ai2 = _interopRequireDefault(_ai);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Turtle = function (_AI) {
+		_inherits(Turtle, _AI);
+	
+		function Turtle(game, x, y, sprite, props) {
+			_classCallCheck(this, Turtle);
+	
+			return _possibleConstructorReturn(this, (Turtle.__proto__ || Object.getPrototypeOf(Turtle)).call(this, game, x, y, sprite, props));
+		}
+	
+		return Turtle;
+	}(_ai2.default);
+	
+	exports.default = Turtle;
 
 /***/ },
 /* 39 */

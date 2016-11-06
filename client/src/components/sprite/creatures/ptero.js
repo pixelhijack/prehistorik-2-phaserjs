@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Ptero(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Ptero extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Ptero.prototype = Object.create(AI.prototype);
-Ptero.prototype.constructor = Ptero;
 
-module.exports = Ptero;
+export default Ptero;

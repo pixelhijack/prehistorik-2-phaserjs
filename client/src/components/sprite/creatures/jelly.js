@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Jelly(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Jelly extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Jelly.prototype = Object.create(AI.prototype);
-Jelly.prototype.constructor = Jelly;
 
-module.exports = Jelly;
+export default Jelly;

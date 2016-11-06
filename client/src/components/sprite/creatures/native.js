@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Native(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Native extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Native.prototype = Object.create(AI.prototype);
-Native.prototype.constructor = Native;
 
-module.exports = Native;
+export default Native;

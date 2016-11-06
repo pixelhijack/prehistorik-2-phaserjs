@@ -1,10 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Turtle(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Turtle extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Turtle.prototype = Object.create(AI.prototype);
-Turtle.prototype.constructor = Turtle;
 
-module.exports = Turtle;
-
+export default Turtle;

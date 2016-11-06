@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Dino(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Dino extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Dino.prototype = Object.create(AI.prototype);
-Dino.prototype.constructor = Dino;
 
-module.exports = Dino;
+export default Dino;

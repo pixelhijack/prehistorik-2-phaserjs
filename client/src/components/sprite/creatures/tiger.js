@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Tiger(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Tiger extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Tiger.prototype = Object.create(AI.prototype);
-Tiger.prototype.constructor = Tiger;
 
-module.exports = Tiger;
+export default Tiger;
