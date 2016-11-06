@@ -4,7 +4,7 @@
 
 ### Concept
 
-Revival experiment of the original Titus 1993 DOS game in the browser with PhaserJS game engine.
+Revival experiment of the original Titus 1993 DOS game in the browser with PhaserJS game engine, as an homage to the original creators (Eric Zmiro).
 
 - Version 1.0 / first repo: Canvas-based, full native implementation effort with vanilla physics engine written from scratch (doomed!) 
 - Version 2.0 / second repo: PhaserJS + naive, make it work, spaghetti solution http://pixelhijack.github.io/
