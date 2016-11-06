@@ -546,10 +546,23 @@
 
 	'use strict';
 	
-	var levelLoader = __webpack_require__(/*! ./levelloader.js */ 11);
-	var reactions = __webpack_require__(/*! ./reactions.js */ 12);
-	var creatureFactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
-	var Hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 39);
+	var _levelloader = __webpack_require__(/*! ./levelloader.js */ 11);
+	
+	var _levelloader2 = _interopRequireDefault(_levelloader);
+	
+	var _reactions = __webpack_require__(/*! ./reactions.js */ 12);
+	
+	var _reactions2 = _interopRequireDefault(_reactions);
+	
+	var _creaturefactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
+	
+	var _creaturefactory2 = _interopRequireDefault(_creaturefactory);
+	
+	var _hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 39);
+	
+	var _hero2 = _interopRequireDefault(_hero);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var create = function create() {
 	
@@ -562,26 +575,26 @@
 	    this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	
 	    // [SET LEVEL] load level background, tiles, layers
-	    levelLoader.createBackground.call(this, 'backgroundLayer');
-	    levelLoader.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
-	    levelLoader.createLayers.call(this, this.levelConfig.layers);
+	    _levelloader2.default.createBackground.call(this, 'backgroundLayer');
+	    _levelloader2.default.createTiles.call(this, this.levelConfig.tilemap, this.levelConfig.tileset, this.levelConfig.tilesetImage);
+	    _levelloader2.default.createLayers.call(this, this.levelConfig.layers);
 	
 	    // [SET LEVEL] fix background, resize
 	    this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
 	    this.level.groundLayer.resizeWorld();
 	
 	    // [PLAYER]
-	    this.player = new Hero(this.game, this.levelConfig.entryPoint.x, this.levelConfig.entryPoint.y, this.globalConfig.textureAtlasName, this.creatureConfig.man);
+	    this.player = new _hero2.default(this.game, this.levelConfig.entryPoint.x, this.levelConfig.entryPoint.y, this.globalConfig.textureAtlasName, this.creatureConfig.man);
 	
 	    this.game.camera.follow(this.player);
 	
-	    this.player.react = reactions;
+	    this.player.react = _reactions2.default;
 	    this.player.listen(this.eventsOf.keys, this.player.react);
 	    this.player.listen(this.eventsOf.level, this.player.react);
 	
 	    // [CREATURES] spawn enemies
-	    creatureFactory.createEnemyGroup.call(this);
-	    this.levelConfig.enemies.forEach(creatureFactory.create.bind(this));
+	    _creaturefactory2.default.createEnemyGroup.call(this);
+	    this.levelConfig.enemies.forEach(_creaturefactory2.default.create.bind(this));
 	
 	    // bind keys
 	    this.keys = this.game.input.keyboard.createCursorKeys();
@@ -1787,26 +1800,60 @@
 
 	'use strict';
 	
-	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var jump = __webpack_require__(/*! ./behaviours/jump.js */ 40);
-	var stop = __webpack_require__(/*! ./behaviours/stop.js */ 41);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 21);
-	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 23);
-	var hit = __webpack_require__(/*! ./behaviours/hit.js */ 42);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extendedsprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	
+	var _extendedsprite2 = _interopRequireDefault(_extendedsprite);
+	
+	var _jump = __webpack_require__(/*! ./behaviours/jump.js */ 40);
+	
+	var _jump2 = _interopRequireDefault(_jump);
+	
+	var _stop = __webpack_require__(/*! ./behaviours/stop.js */ 41);
+	
+	var _stop2 = _interopRequireDefault(_stop);
+	
+	var _move = __webpack_require__(/*! ./behaviours/move.js */ 21);
+	
+	var _move2 = _interopRequireDefault(_move);
+	
+	var _hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 23);
+	
+	var _hurt2 = _interopRequireDefault(_hurt);
+	
+	var _hit = __webpack_require__(/*! ./behaviours/hit.js */ 42);
+	
+	var _hit2 = _interopRequireDefault(_hit);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	/*
 	    @Hero
 	*/
-	function Hero(game, x, y, sprite, props) {
-	    ExtendedSprite.call(this, game, x, y, sprite, props);
-	}
+	var Hero = function (_ExtendedSprite) {
+	    _inherits(Hero, _ExtendedSprite);
 	
-	Hero.prototype = Object.create(ExtendedSprite.prototype);
-	Hero.prototype.constructor = Hero;
+	    function Hero(game, x, y, sprite, props) {
+	        _classCallCheck(this, Hero);
 	
-	Hero.prototype = Object.assign(Hero.prototype, jump, stop, move, hurt, hit);
+	        return _possibleConstructorReturn(this, (Hero.__proto__ || Object.getPrototypeOf(Hero)).call(this, game, x, y, sprite, props));
+	    }
 	
-	module.exports = Hero;
+	    return Hero;
+	}(_extendedsprite2.default);
+	
+	Hero.prototype = Object.assign(Hero.prototype, _jump2.default, _stop2.default, _move2.default, _hurt2.default, _hit2.default);
+	
+	exports.default = Hero;
 
 /***/ },
 /* 40 */

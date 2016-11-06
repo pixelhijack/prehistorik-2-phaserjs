@@ -1,7 +1,7 @@
-var levelLoader = require('./levelloader.js');
-var reactions = require('./reactions.js');
-var creatureFactory = require('./creaturefactory.js');
-var Hero = require('../../components/sprite/hero.js');
+import levelLoader from './levelloader.js';
+import reactions from './reactions.js';
+import creatureFactory from './creaturefactory.js';
+import Hero from '../../components/sprite/hero.js';
 
 var create = function(){
     

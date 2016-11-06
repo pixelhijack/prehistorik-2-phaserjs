@@ -1,19 +1,18 @@
-var ExtendedSprite = require('./extendedsprite.js');
-var jump = require('./behaviours/jump.js');
-var stop = require('./behaviours/stop.js');
-var move = require('./behaviours/move.js');
-var hurt = require('./behaviours/hurt.js');
-var hit = require('./behaviours/hit.js');
+import ExtendedSprite from './extendedsprite.js';
+import jump from './behaviours/jump.js';
+import stop from './behaviours/stop.js';
+import move from './behaviours/move.js';
+import hurt from './behaviours/hurt.js';
+import hit from './behaviours/hit.js';
 
 /*
     @Hero
 */
-function Hero(game, x, y, sprite, props){
-    ExtendedSprite.call(this, game, x, y, sprite, props);
+class Hero extends ExtendedSprite{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);
+	}
 }
-
-Hero.prototype = Object.create(ExtendedSprite.prototype);
-Hero.prototype.constructor = Hero;
 
 Hero.prototype = Object.assign(
     Hero.prototype, 
@@ -24,4 +23,4 @@ Hero.prototype = Object.assign(
     hit
 );
 
-module.exports = Hero;
+export default Hero;
