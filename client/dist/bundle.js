@@ -933,14 +933,29 @@
 
 	'use strict';
 	
-	var modifyState = __webpack_require__(/*! ./behaviours/state.js */ 17);
-	var listen = __webpack_require__(/*! ./behaviours/listen.js */ 18);
-	var debug = __webpack_require__(/*! ./behaviours/debug.js */ 19);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _state = __webpack_require__(/*! ./behaviours/state.js */ 17);
+	
+	var _state2 = _interopRequireDefault(_state);
+	
+	var _listen = __webpack_require__(/*! ./behaviours/listen.js */ 18);
+	
+	var _listen2 = _interopRequireDefault(_listen);
+	
+	var _debug = __webpack_require__(/*! ./behaviours/debug.js */ 19);
+	
+	var _debug2 = _interopRequireDefault(_debug);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/*
 	    @ExtendedSprite
 	*/
 	function ExtendedSprite(game, x, y, sprite, props) {
+	    var _this = this;
 	
 	    this.game = game;
 	    this.props = props || { animations: [] };
@@ -948,10 +963,10 @@
 	    Phaser.Sprite.call(this, game, x, y, sprite);
 	
 	    this.props.animations.forEach(function (animation) {
-	        this.animations.add(animation.name, animation.frames.map(function (frame) {
+	        _this.animations.add(animation.name, animation.frames.map(function (frame) {
 	            return frame.toString();
 	        }), animation.fps, animation.loop);
-	    }.bind(this));
+	    });
 	
 	    this.state = {
 	        'die': 0,
@@ -975,7 +990,11 @@
 	ExtendedSprite.prototype = Object.create(Phaser.Sprite.prototype);
 	ExtendedSprite.prototype.constructor = ExtendedSprite;
 	
-	ExtendedSprite.prototype = Object.assign(ExtendedSprite.prototype, modifyState, listen, debug);
+	ExtendedSprite.prototype = Object.assign(ExtendedSprite.prototype, _state2.default, _listen2.default, _debug2.default);
+	
+	ExtendedSprite.prototype.update = function () {
+	    this.animations.play(this.getState());
+	};
 	
 	/*
 	    facing right: this.scale.x = 1
@@ -993,11 +1012,7 @@
 	    }
 	});
 	
-	ExtendedSprite.prototype.update = function () {
-	    this.animations.play(this.getState());
-	};
-	
-	module.exports = ExtendedSprite;
+	exports.default = ExtendedSprite;
 
 /***/ },
 /* 17 */

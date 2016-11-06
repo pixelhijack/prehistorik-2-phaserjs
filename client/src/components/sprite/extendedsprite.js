@@ -1,6 +1,6 @@
-var modifyState = require('./behaviours/state.js');
-var listen = require('./behaviours/listen.js');
-var debug = require('./behaviours/debug.js');
+import modifyState from './behaviours/state.js';
+import listen from './behaviours/listen.js';
+import debug from './behaviours/debug.js';
 
 /*
     @ExtendedSprite
@@ -12,17 +12,15 @@ function ExtendedSprite(game, x, y, sprite, props){
     
     Phaser.Sprite.call(this, game, x, y, sprite);
     
-    this.props.animations.forEach(function(animation){
+    this.props.animations.forEach(animation => {
         this.animations.add(
             animation.name, 
-            animation.frames.map(function(frame){ 
-                return frame.toString(); 
-            }), 
+            animation.frames.map(frame => frame.toString()), 
             animation.fps, 
             animation.loop
         );
-    }.bind(this));
-    
+    });
+
     this.state = {
         'die': 0,
         'hurt': 0,
@@ -52,24 +50,25 @@ ExtendedSprite.prototype = Object.assign(
     debug
 );
 
+
+ExtendedSprite.prototype.update = function(){
+    this.animations.play(this.getState());
+};
+
 /*
     facing right: this.scale.x = 1
     facing left: this.scale.x = -1
 */
 Object.defineProperty(ExtendedSprite.prototype, 'facingRight', {
-    get: function() { 
+    get() { 
         return this.scale.x > 0; 
     }
 });
 
 Object.defineProperty(ExtendedSprite.prototype, 'facingLeft', {
-    get: function() { 
+    get() { 
         return this.scale.x < 0; 
     }
 });
 
-ExtendedSprite.prototype.update = function(){
-    this.animations.play(this.getState());
-};
- 
-module.exports = ExtendedSprite;
+export default ExtendedSprite;
