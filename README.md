@@ -21,6 +21,8 @@ Revival experiment of the original Titus 1993 DOS game in the browser with Phase
 
 Original assets (level maps, tilesets and spritesheets) found on a russian forum page.
 
+![Original assets: spritesheet](./resources/showcase/pre2atlas.png?raw=true "Original assets: spritesheet")
+
 ![Original assets: Level 1 tileset](./resources/showcase/tileset1.png?raw=true "Original assets: Level 1 tileset")
 
 As a first attempt, I tried to create levels in Tiled from the tilesets but fitting 16x16 pixel tiles together was a neverending, exhausting quest. 
@@ -32,9 +34,13 @@ I removed the helper lines with Photoshop, and also combined different level map
 
 ![Original Level 1 parts new arrange](./resources/showcase/original-level-1-cuts.png?raw=true "Original Level 1 parts new arrange")
 
+![Combined level parts editing in Tiled](./resources/showcase/combined-levelmap.png?raw=true "Combined level parts editing in Tiled")
+
 ![Mixed level parts editing in Tiled split in Shoebox](./resources/showcase/mixed-level-parts.png?raw=true "Mixed level parts editing in Tiled split in Shoebox")
 
-![Combined level parts editing in Tiled](./resources/showcase/combined-levelmap.png?raw=true "Combined level parts editing in Tiled")
+![Mixed level parts editing in Tiled](./resources/showcase/mixed-level-parts2.png?raw=true "Mixed level parts editing in Tiled")
+
+This is how brand new levels are created. 
 
 ### Screenshots of new levels
 ![New level edited in Tiled: Hall of Ages](./resources/screenshots/hall-of-ages.png?raw=true "New level edited in Tiled: Hall of Ages")
