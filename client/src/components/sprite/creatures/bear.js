@@ -1,9 +1,9 @@
-var AI = require('../ai.js');
+import AI from '../ai.js';
 
-function Bear(game, x, y, sprite, props){
-	AI.call(this, game, x, y, sprite, props);
+class Bear extends AI{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);   
+	}
 }
-Bear.prototype = Object.create(AI.prototype);
-Bear.prototype.constructor = Bear;
 
-module.exports = Bear;
+export default Bear;

@@ -1,19 +1,35 @@
+import bat from '../../components/sprite/creatures/bat.js';
+import bear from '../../components/sprite/creatures/bear.js';
+import bug from '../../components/sprite/creatures/bug.js';
+import dino from '../../components/sprite/creatures/dino.js';
+import dragonfly from '../../components/sprite/creatures/dragonfly.js';
+import frog from '../../components/sprite/creatures/frog.js';
+import gorilla from '../../components/sprite/creatures/gorilla.js';
+import insect from '../../components/sprite/creatures/insect.js';
+import jelly from '../../components/sprite/creatures/jelly.js';
+import native from '../../components/sprite/creatures/native.js';
+import parrot from '../../components/sprite/creatures/parrot.js';
+import ptero from '../../components/sprite/creatures/ptero.js';
+import spider from '../../components/sprite/creatures/spider.js';
+import tiger from '../../components/sprite/creatures/tiger.js';
+import turtle from '../../components/sprite/creatures/turtle.js';
+
 var Creature = {
-    bat: require('../../components/sprite/creatures/bat.js'),
-    bear: require('../../components/sprite/creatures/bear.js'),
-    bug: require('../../components/sprite/creatures/bug.js'),
-    dino: require('../../components/sprite/creatures/dino.js'),
-    dragonfly: require('../../components/sprite/creatures/dragonfly.js'),
-    frog: require('../../components/sprite/creatures/frog.js'),
-    gorilla: require('../../components/sprite/creatures/gorilla.js'),
-    insect: require('../../components/sprite/creatures/insect.js'),
-    jelly: require('../../components/sprite/creatures/jelly.js'),
-    native: require('../../components/sprite/creatures/native.js'),
-    parrot: require('../../components/sprite/creatures/parrot.js'),
-    ptero: require('../../components/sprite/creatures/ptero.js'),
-    spider: require('../../components/sprite/creatures/spider.js'),
-    tiger: require('../../components/sprite/creatures/tiger.js'),
-    turtle: require('../../components/sprite/creatures/turtle.js')
+    bat: bat,
+    bear: bear,
+    bug: bug,
+    dino: dino,
+    dragonfly: dragonfly,
+    frog: frog,
+    gorilla: gorilla,
+    insect: insect,
+    jelly: jelly,
+    native: native,
+    parrot: parrot,
+    ptero: ptero,
+    spider: spider,
+    tiger: tiger,
+    turtle: turtle
 };
 
 var creatureFactory = {
