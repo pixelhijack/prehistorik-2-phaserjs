@@ -840,26 +840,64 @@
 
 	'use strict';
 	
-	var ExtendedSprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
-	var decide = __webpack_require__(/*! ./behaviours/decide.js */ 20);
-	var move = __webpack_require__(/*! ./behaviours/move.js */ 21);
-	var turn = __webpack_require__(/*! ./behaviours/turn.js */ 22);
-	var hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 23);
-	var boundTo = __webpack_require__(/*! ./behaviours/boundto.js */ 24);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extendedsprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	
+	var _extendedsprite2 = _interopRequireDefault(_extendedsprite);
+	
+	var _decide = __webpack_require__(/*! ./behaviours/decide.js */ 20);
+	
+	var _decide2 = _interopRequireDefault(_decide);
+	
+	var _move = __webpack_require__(/*! ./behaviours/move.js */ 21);
+	
+	var _move2 = _interopRequireDefault(_move);
+	
+	var _turn = __webpack_require__(/*! ./behaviours/turn.js */ 22);
+	
+	var _turn2 = _interopRequireDefault(_turn);
+	
+	var _hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 23);
+	
+	var _hurt2 = _interopRequireDefault(_hurt);
+	
+	var _boundto = __webpack_require__(/*! ./behaviours/boundto.js */ 24);
+	
+	var _boundto2 = _interopRequireDefault(_boundto);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	/*
 	    @Hero
 	*/
-	function AI(game, x, y, sprite, props) {
-	    ExtendedSprite.call(this, game, x, y, sprite, props);
 	
-	    this.id = this.constructor.name + '-' + x + '-' + y;
-	}
+	var AI = function (_ExtendedSprite) {
+	    _inherits(AI, _ExtendedSprite);
 	
-	AI.prototype = Object.create(ExtendedSprite.prototype);
-	AI.prototype.constructor = AI;
+	    function AI(game, x, y, sprite, props) {
+	        _classCallCheck(this, AI);
+	
+	        var _this = _possibleConstructorReturn(this, (AI.__proto__ || Object.getPrototypeOf(AI)).call(this, game, x, y, sprite, props));
+	
+	        _this.id = _this.constructor.name + '-' + x + '-' + y;
+	        return _this;
+	    }
+	
+	    return AI;
+	}(_extendedsprite2.default);
 	
 	// hacky... :(
+	
+	
 	Object.defineProperty(AI.prototype, 'boundTo', {
 	    get: function get() {
 	        return this._boundTo;
@@ -869,9 +907,9 @@
 	    }
 	});
 	
-	AI.prototype = Object.assign(AI.prototype, decide, move, turn, hurt, boundTo);
+	AI.prototype = Object.assign(AI.prototype, _decide2.default, _move2.default, _turn2.default, _hurt2.default, _boundto2.default);
 	
-	module.exports = AI;
+	exports.default = AI;
 
 /***/ },
 /* 16 */

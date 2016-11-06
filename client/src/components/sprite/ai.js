@@ -1,21 +1,20 @@
-var ExtendedSprite = require('./extendedsprite.js');
-var decide = require('./behaviours/decide.js');
-var move = require('./behaviours/move.js');
-var turn = require('./behaviours/turn.js');
-var hurt = require('./behaviours/hurt.js');
-var boundTo = require('./behaviours/boundto.js');
+import ExtendedSprite from './extendedsprite.js';
+import decide from './behaviours/decide.js';
+import move from './behaviours/move.js';
+import turn from './behaviours/turn.js';
+import hurt from './behaviours/hurt.js';
+import boundTo from './behaviours/boundto.js';
 
 /*
     @Hero
 */
-function AI(game, x, y, sprite, props){
-    ExtendedSprite.call(this, game, x, y, sprite, props);
-    
-    this.id = this.constructor.name + '-' + x + '-' + y;
-}
 
-AI.prototype = Object.create(ExtendedSprite.prototype);
-AI.prototype.constructor = AI;
+class AI extends ExtendedSprite{
+	constructor(game, x, y, sprite, props){
+	    super(game, x, y, sprite, props);
+	    this.id = this.constructor.name + '-' + x + '-' + y;
+	}
+}
 
 // hacky... :(
 Object.defineProperty(AI.prototype, 'boundTo', {
@@ -34,4 +33,4 @@ AI.prototype = Object.assign(
     boundTo
 );
 
-module.exports = AI;
+export default AI;
