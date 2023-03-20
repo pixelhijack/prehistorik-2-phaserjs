@@ -1,3 +1,5 @@
+const level = window.location.pathname.split('/level/')[1] || Math.ceil(Math.random() * 6);
+
 var create = function(){
     
     // fps debugging
@@ -24,7 +26,7 @@ var create = function(){
         
         text.setText('Loading...');
         
-        fetch('/level/' + Math.ceil(Math.random() * 6), {
+        fetch('/api/levels/' + level, {
         	method: 'get'
         }).then(function(response) {
             return response.json();

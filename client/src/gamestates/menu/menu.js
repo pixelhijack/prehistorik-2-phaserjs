@@ -1,4 +1,5 @@
-var GameState = require('../../components/gamestate/gamestate.js');
+import GameState from '../../components/gamestate/gamestate.js';
+//var GameState = require('../../components/gamestate/gamestate.js');
 var create = require('./create.js');
 var update = require('./update.js');
 
