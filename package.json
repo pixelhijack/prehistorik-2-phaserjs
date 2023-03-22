@@ -26,5 +26,6 @@
     "server": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "private": false
 }
