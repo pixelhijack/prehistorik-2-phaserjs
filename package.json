@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "webpack --colors --progress --watch -d",
+    "start": "webpack --colors --progress --watch -d",
     "_build": "webpack --config webpack/prod.js ",
     "_start": "webpack-dev-server --config webpack/base.js --open",
     "server": "node server.js"
