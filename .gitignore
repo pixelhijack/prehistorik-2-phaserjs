@@ -3,8 +3,6 @@
 
 .DS_Store
 server/assets/.DS_Store
-client/dist/*
-client/node_modules/
 /npm-debug.log
 # Logs
 logs

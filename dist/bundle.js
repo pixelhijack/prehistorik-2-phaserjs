@@ -42,9 +42,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!*****************************!*\
-  !*** ./client/src/index.js ***!
-  \*****************************/
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57,11 +57,11 @@
 	
 	var _menu2 = _interopRequireDefault(_menu);
 	
-	var _play = __webpack_require__(/*! ./gamestates/play/play.js */ 6);
+	var _play = __webpack_require__(/*! ./gamestates/play/play.js */ 5);
 	
 	var _play2 = _interopRequireDefault(_play);
 	
-	var _gameover = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 45);
+	var _gameover = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 44);
 	
 	var _gameover2 = _interopRequireDefault(_gameover);
 	
@@ -82,9 +82,9 @@
 
 /***/ }),
 /* 1 */
-/*!************************************!*\
-  !*** ./client/src/globalconfig.js ***!
-  \************************************/
+/*!*****************************!*\
+  !*** ./src/globalconfig.js ***!
+  \*****************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -110,9 +110,9 @@
 
 /***/ }),
 /* 2 */
-/*!********************************************!*\
-  !*** ./client/src/gamestates/menu/menu.js ***!
-  \********************************************/
+/*!*************************************!*\
+  !*** ./src/gamestates/menu/menu.js ***!
+  \*************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -121,11 +121,11 @@
 	
 	var _gamestate2 = _interopRequireDefault(_gamestate);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _create = __webpack_require__(/*! ./create.js */ 4);
 	
-	//var GameState = require('../../components/gamestate/gamestate.js');
-	var create = __webpack_require__(/*! ./create.js */ 4);
-	var update = __webpack_require__(/*! ./update.js */ 5);
+	var _create2 = _interopRequireDefault(_create);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/*
 	    @Menu
@@ -142,17 +142,29 @@
 	    @override 
 	*/
 	Menu.prototype = {
-	    create: create,
+	    preload: preload,
+	    create: _create2.default,
 	    update: update
 	};
+	
+	function preload() {
+	    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	    this.game.scale.pageAlignHorizontally = true;
+	    this.game.scale.pageAlignVertically = true;
+	};
+	
+	function update() {
+	    // fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	}
 	
 	module.exports = Menu;
 
 /***/ }),
 /* 3 */
-/*!******************************************************!*\
-  !*** ./client/src/components/gamestate/gamestate.js ***!
-  \******************************************************/
+/*!***********************************************!*\
+  !*** ./src/components/gamestate/gamestate.js ***!
+  \***********************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -181,9 +193,9 @@
 
 /***/ }),
 /* 4 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/menu/create.js ***!
-  \**********************************************/
+/*!***************************************!*\
+  !*** ./src/gamestates/menu/create.js ***!
+  \***************************************/
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -227,38 +239,19 @@
 
 /***/ }),
 /* 5 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/menu/update.js ***!
-  \**********************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	var update = function update() {
-	
-	    // fps 
-	    this.game.debug.text(this.game.time.fps, 5, 20);
-	
-	    console.log('[PHASER][Menu][Update]');
-	};
-	
-	module.exports = update;
-
-/***/ }),
-/* 6 */
-/*!********************************************!*\
-  !*** ./client/src/gamestates/play/play.js ***!
-  \********************************************/
+/*!*************************************!*\
+  !*** ./src/gamestates/play/play.js ***!
+  \*************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var init = __webpack_require__(/*! ./init.js */ 7);
-	var preload = __webpack_require__(/*! ./preload.js */ 9);
-	var create = __webpack_require__(/*! ./create.js */ 10);
-	var update = __webpack_require__(/*! ./update.js */ 43);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 44);
+	var init = __webpack_require__(/*! ./init.js */ 6);
+	var preload = __webpack_require__(/*! ./preload.js */ 8);
+	var create = __webpack_require__(/*! ./create.js */ 9);
+	var update = __webpack_require__(/*! ./update.js */ 42);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 43);
 	
 	/*
 	    @Play
@@ -300,15 +293,15 @@
 	module.exports = Play;
 
 /***/ }),
-/* 7 */
-/*!********************************************!*\
-  !*** ./client/src/gamestates/play/init.js ***!
-  \********************************************/
+/* 6 */
+/*!*************************************!*\
+  !*** ./src/gamestates/play/init.js ***!
+  \*************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var creatureConfig = __webpack_require__(/*! ./creatureconfig.js */ 8);
+	var creatureConfig = __webpack_require__(/*! ./creatureconfig.js */ 7);
 	
 	var init = function init(levelConfig) {
 	
@@ -321,10 +314,10 @@
 	module.exports = init;
 
 /***/ }),
-/* 8 */
-/*!******************************************************!*\
-  !*** ./client/src/gamestates/play/creatureconfig.js ***!
-  \******************************************************/
+/* 7 */
+/*!***********************************************!*\
+  !*** ./src/gamestates/play/creatureconfig.js ***!
+  \***********************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -518,10 +511,10 @@
 	module.exports = creatureConfigs;
 
 /***/ }),
-/* 9 */
-/*!***********************************************!*\
-  !*** ./client/src/gamestates/play/preload.js ***!
-  \***********************************************/
+/* 8 */
+/*!****************************************!*\
+  !*** ./src/gamestates/play/preload.js ***!
+  \****************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -537,8 +530,10 @@
 	
 	    // load background
 	    this.game.load.image(this.levelConfig.backgroundKey, this.globalConfig.backgroundPath + this.levelConfig.backgroundImage + this.levelConfig.backgroundImageExtension);
+	
 	    // load tileset
 	    this.game.load.image(this.levelConfig.tileset, this.globalConfig.tilesetPath + this.levelConfig.tilesetImage + this.levelConfig.tilesetImageExtension);
+	
 	    // load tilemap
 	    this.game.load.tilemap(this.levelConfig.tilemap, this.globalConfig.levelPath + this.levelConfig.tiledJson, null, Phaser.Tilemap.TILED_JSON);
 	};
@@ -546,27 +541,27 @@
 	module.exports = preload;
 
 /***/ }),
-/* 10 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/play/create.js ***!
-  \**********************************************/
+/* 9 */
+/*!***************************************!*\
+  !*** ./src/gamestates/play/create.js ***!
+  \***************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _levelloader = __webpack_require__(/*! ./levelloader.js */ 11);
+	var _levelloader = __webpack_require__(/*! ./levelloader.js */ 10);
 	
 	var _levelloader2 = _interopRequireDefault(_levelloader);
 	
-	var _reactions = __webpack_require__(/*! ./reactions.js */ 12);
+	var _reactions = __webpack_require__(/*! ./reactions.js */ 11);
 	
 	var _reactions2 = _interopRequireDefault(_reactions);
 	
-	var _creaturefactory = __webpack_require__(/*! ./creaturefactory.js */ 13);
+	var _creaturefactory = __webpack_require__(/*! ./creaturefactory.js */ 12);
 	
 	var _creaturefactory2 = _interopRequireDefault(_creaturefactory);
 	
-	var _hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 39);
+	var _hero = __webpack_require__(/*! ../../components/sprite/hero.js */ 38);
 	
 	var _hero2 = _interopRequireDefault(_hero);
 	
@@ -617,10 +612,10 @@
 	module.exports = create;
 
 /***/ }),
-/* 11 */
-/*!***************************************************!*\
-  !*** ./client/src/gamestates/play/levelloader.js ***!
-  \***************************************************/
+/* 10 */
+/*!********************************************!*\
+  !*** ./src/gamestates/play/levelloader.js ***!
+  \********************************************/
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -649,10 +644,10 @@
 	module.exports = levelLoader;
 
 /***/ }),
-/* 12 */
-/*!*************************************************!*\
-  !*** ./client/src/gamestates/play/reactions.js ***!
-  \*************************************************/
+/* 11 */
+/*!******************************************!*\
+  !*** ./src/gamestates/play/reactions.js ***!
+  \******************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -709,71 +704,71 @@
 	module.exports = reactions;
 
 /***/ }),
-/* 13 */
-/*!*******************************************************!*\
-  !*** ./client/src/gamestates/play/creaturefactory.js ***!
-  \*******************************************************/
+/* 12 */
+/*!************************************************!*\
+  !*** ./src/gamestates/play/creaturefactory.js ***!
+  \************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _bat = __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 14);
+	var _bat = __webpack_require__(/*! ../../components/sprite/creatures/bat.js */ 13);
 	
 	var _bat2 = _interopRequireDefault(_bat);
 	
-	var _bear = __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 25);
+	var _bear = __webpack_require__(/*! ../../components/sprite/creatures/bear.js */ 24);
 	
 	var _bear2 = _interopRequireDefault(_bear);
 	
-	var _bug = __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 26);
+	var _bug = __webpack_require__(/*! ../../components/sprite/creatures/bug.js */ 25);
 	
 	var _bug2 = _interopRequireDefault(_bug);
 	
-	var _dino = __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 27);
+	var _dino = __webpack_require__(/*! ../../components/sprite/creatures/dino.js */ 26);
 	
 	var _dino2 = _interopRequireDefault(_dino);
 	
-	var _dragonfly = __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 28);
+	var _dragonfly = __webpack_require__(/*! ../../components/sprite/creatures/dragonfly.js */ 27);
 	
 	var _dragonfly2 = _interopRequireDefault(_dragonfly);
 	
-	var _frog = __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 29);
+	var _frog = __webpack_require__(/*! ../../components/sprite/creatures/frog.js */ 28);
 	
 	var _frog2 = _interopRequireDefault(_frog);
 	
-	var _gorilla = __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 30);
+	var _gorilla = __webpack_require__(/*! ../../components/sprite/creatures/gorilla.js */ 29);
 	
 	var _gorilla2 = _interopRequireDefault(_gorilla);
 	
-	var _insect = __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 31);
+	var _insect = __webpack_require__(/*! ../../components/sprite/creatures/insect.js */ 30);
 	
 	var _insect2 = _interopRequireDefault(_insect);
 	
-	var _jelly = __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 32);
+	var _jelly = __webpack_require__(/*! ../../components/sprite/creatures/jelly.js */ 31);
 	
 	var _jelly2 = _interopRequireDefault(_jelly);
 	
-	var _native = __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 33);
+	var _native = __webpack_require__(/*! ../../components/sprite/creatures/native.js */ 32);
 	
 	var _native2 = _interopRequireDefault(_native);
 	
-	var _parrot = __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 34);
+	var _parrot = __webpack_require__(/*! ../../components/sprite/creatures/parrot.js */ 33);
 	
 	var _parrot2 = _interopRequireDefault(_parrot);
 	
-	var _ptero = __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 35);
+	var _ptero = __webpack_require__(/*! ../../components/sprite/creatures/ptero.js */ 34);
 	
 	var _ptero2 = _interopRequireDefault(_ptero);
 	
-	var _spider = __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 36);
+	var _spider = __webpack_require__(/*! ../../components/sprite/creatures/spider.js */ 35);
 	
 	var _spider2 = _interopRequireDefault(_spider);
 	
-	var _tiger = __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 37);
+	var _tiger = __webpack_require__(/*! ../../components/sprite/creatures/tiger.js */ 36);
 	
 	var _tiger2 = _interopRequireDefault(_tiger);
 	
-	var _turtle = __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 38);
+	var _turtle = __webpack_require__(/*! ../../components/sprite/creatures/turtle.js */ 37);
 	
 	var _turtle2 = _interopRequireDefault(_turtle);
 	
@@ -814,10 +809,10 @@
 	module.exports = creatureFactory;
 
 /***/ }),
-/* 14 */
-/*!*******************************************************!*\
-  !*** ./client/src/components/sprite/creatures/bat.js ***!
-  \*******************************************************/
+/* 13 */
+/*!************************************************!*\
+  !*** ./src/components/sprite/creatures/bat.js ***!
+  \************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -826,7 +821,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -853,10 +848,10 @@
 	exports.default = Bat;
 
 /***/ }),
-/* 15 */
-/*!********************************************!*\
-  !*** ./client/src/components/sprite/ai.js ***!
-  \********************************************/
+/* 14 */
+/*!*************************************!*\
+  !*** ./src/components/sprite/ai.js ***!
+  \*************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -865,27 +860,27 @@
 	    value: true
 	});
 	
-	var _extendedsprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	var _extendedsprite = __webpack_require__(/*! ./extendedsprite.js */ 15);
 	
 	var _extendedsprite2 = _interopRequireDefault(_extendedsprite);
 	
-	var _decide = __webpack_require__(/*! ./behaviours/decide.js */ 20);
+	var _decide = __webpack_require__(/*! ./behaviours/decide.js */ 19);
 	
 	var _decide2 = _interopRequireDefault(_decide);
 	
-	var _move = __webpack_require__(/*! ./behaviours/move.js */ 21);
+	var _move = __webpack_require__(/*! ./behaviours/move.js */ 20);
 	
 	var _move2 = _interopRequireDefault(_move);
 	
-	var _turn = __webpack_require__(/*! ./behaviours/turn.js */ 22);
+	var _turn = __webpack_require__(/*! ./behaviours/turn.js */ 21);
 	
 	var _turn2 = _interopRequireDefault(_turn);
 	
-	var _hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 23);
+	var _hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 22);
 	
 	var _hurt2 = _interopRequireDefault(_hurt);
 	
-	var _boundto = __webpack_require__(/*! ./behaviours/boundto.js */ 24);
+	var _boundto = __webpack_require__(/*! ./behaviours/boundto.js */ 23);
 	
 	var _boundto2 = _interopRequireDefault(_boundto);
 	
@@ -933,10 +928,10 @@
 	exports.default = AI;
 
 /***/ }),
-/* 16 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/extendedsprite.js ***!
-  \********************************************************/
+/* 15 */
+/*!*************************************************!*\
+  !*** ./src/components/sprite/extendedsprite.js ***!
+  \*************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -945,15 +940,15 @@
 	    value: true
 	});
 	
-	var _state = __webpack_require__(/*! ./behaviours/state.js */ 17);
+	var _state = __webpack_require__(/*! ./behaviours/state.js */ 16);
 	
 	var _state2 = _interopRequireDefault(_state);
 	
-	var _listen = __webpack_require__(/*! ./behaviours/listen.js */ 18);
+	var _listen = __webpack_require__(/*! ./behaviours/listen.js */ 17);
 	
 	var _listen2 = _interopRequireDefault(_listen);
 	
-	var _debug = __webpack_require__(/*! ./behaviours/debug.js */ 19);
+	var _debug = __webpack_require__(/*! ./behaviours/debug.js */ 18);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
@@ -1023,10 +1018,10 @@
 	exports.default = ExtendedSprite;
 
 /***/ }),
-/* 17 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/state.js ***!
-  \**********************************************************/
+/* 16 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/behaviours/state.js ***!
+  \***************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1068,10 +1063,10 @@
 	module.exports = statefulCreature;
 
 /***/ }),
-/* 18 */
-/*!***********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/listen.js ***!
-  \***********************************************************/
+/* 17 */
+/*!****************************************************!*\
+  !*** ./src/components/sprite/behaviours/listen.js ***!
+  \****************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1088,10 +1083,10 @@
 	module.exports = listenBehaviour;
 
 /***/ }),
-/* 19 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/debug.js ***!
-  \**********************************************************/
+/* 18 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/behaviours/debug.js ***!
+  \***************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1108,10 +1103,10 @@
 	module.exports = debugBehaviour;
 
 /***/ }),
-/* 20 */
-/*!***********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/decide.js ***!
-  \***********************************************************/
+/* 19 */
+/*!****************************************************!*\
+  !*** ./src/components/sprite/behaviours/decide.js ***!
+  \****************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1128,10 +1123,10 @@
 	module.exports = decideBehaviour;
 
 /***/ }),
-/* 21 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/move.js ***!
-  \*********************************************************/
+/* 20 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/behaviours/move.js ***!
+  \**************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1165,10 +1160,10 @@
 	module.exports = moveBehaviour;
 
 /***/ }),
-/* 22 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/turn.js ***!
-  \*********************************************************/
+/* 21 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/behaviours/turn.js ***!
+  \**************************************************/
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1189,10 +1184,10 @@
 	module.exports = turnBehaviour;
 
 /***/ }),
-/* 23 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/hurt.js ***!
-  \*********************************************************/
+/* 22 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/behaviours/hurt.js ***!
+  \**************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1216,10 +1211,10 @@
 	module.exports = hurtBehaviour;
 
 /***/ }),
-/* 24 */
-/*!************************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/boundto.js ***!
-  \************************************************************/
+/* 23 */
+/*!*****************************************************!*\
+  !*** ./src/components/sprite/behaviours/boundto.js ***!
+  \*****************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1269,10 +1264,10 @@
 	module.exports = boundToBehaviour;
 
 /***/ }),
-/* 25 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/bear.js ***!
-  \********************************************************/
+/* 24 */
+/*!*************************************************!*\
+  !*** ./src/components/sprite/creatures/bear.js ***!
+  \*************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1281,7 +1276,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1308,10 +1303,10 @@
 	exports.default = Bear;
 
 /***/ }),
-/* 26 */
-/*!*******************************************************!*\
-  !*** ./client/src/components/sprite/creatures/bug.js ***!
-  \*******************************************************/
+/* 25 */
+/*!************************************************!*\
+  !*** ./src/components/sprite/creatures/bug.js ***!
+  \************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1320,7 +1315,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1347,10 +1342,10 @@
 	exports.default = Bug;
 
 /***/ }),
-/* 27 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/dino.js ***!
-  \********************************************************/
+/* 26 */
+/*!*************************************************!*\
+  !*** ./src/components/sprite/creatures/dino.js ***!
+  \*************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1359,7 +1354,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1386,10 +1381,10 @@
 	exports.default = Dino;
 
 /***/ }),
-/* 28 */
-/*!*************************************************************!*\
-  !*** ./client/src/components/sprite/creatures/dragonfly.js ***!
-  \*************************************************************/
+/* 27 */
+/*!******************************************************!*\
+  !*** ./src/components/sprite/creatures/dragonfly.js ***!
+  \******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1398,7 +1393,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1425,10 +1420,10 @@
 	exports.default = Dragonfly;
 
 /***/ }),
-/* 29 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/frog.js ***!
-  \********************************************************/
+/* 28 */
+/*!*************************************************!*\
+  !*** ./src/components/sprite/creatures/frog.js ***!
+  \*************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1437,7 +1432,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1464,10 +1459,10 @@
 	exports.default = Frog;
 
 /***/ }),
-/* 30 */
-/*!***********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/gorilla.js ***!
-  \***********************************************************/
+/* 29 */
+/*!****************************************************!*\
+  !*** ./src/components/sprite/creatures/gorilla.js ***!
+  \****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1476,7 +1471,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1503,10 +1498,10 @@
 	exports.default = Gorilla;
 
 /***/ }),
-/* 31 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/insect.js ***!
-  \**********************************************************/
+/* 30 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/creatures/insect.js ***!
+  \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1515,7 +1510,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1542,10 +1537,10 @@
 	exports.default = Insect;
 
 /***/ }),
-/* 32 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/jelly.js ***!
-  \*********************************************************/
+/* 31 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/creatures/jelly.js ***!
+  \**************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1554,7 +1549,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1581,10 +1576,10 @@
 	exports.default = Jelly;
 
 /***/ }),
-/* 33 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/native.js ***!
-  \**********************************************************/
+/* 32 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/creatures/native.js ***!
+  \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1593,7 +1588,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1620,10 +1615,10 @@
 	exports.default = Native;
 
 /***/ }),
-/* 34 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/parrot.js ***!
-  \**********************************************************/
+/* 33 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/creatures/parrot.js ***!
+  \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1632,7 +1627,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1659,10 +1654,10 @@
 	exports.default = Parrot;
 
 /***/ }),
-/* 35 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/ptero.js ***!
-  \*********************************************************/
+/* 34 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/creatures/ptero.js ***!
+  \**************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1671,7 +1666,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1698,10 +1693,10 @@
 	exports.default = Ptero;
 
 /***/ }),
-/* 36 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/spider.js ***!
-  \**********************************************************/
+/* 35 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/creatures/spider.js ***!
+  \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1710,7 +1705,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1737,10 +1732,10 @@
 	exports.default = Spider;
 
 /***/ }),
-/* 37 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/tiger.js ***!
-  \*********************************************************/
+/* 36 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/creatures/tiger.js ***!
+  \**************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1749,7 +1744,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1776,10 +1771,10 @@
 	exports.default = Tiger;
 
 /***/ }),
-/* 38 */
-/*!**********************************************************!*\
-  !*** ./client/src/components/sprite/creatures/turtle.js ***!
-  \**********************************************************/
+/* 37 */
+/*!***************************************************!*\
+  !*** ./src/components/sprite/creatures/turtle.js ***!
+  \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1788,7 +1783,7 @@
 		value: true
 	});
 	
-	var _ai = __webpack_require__(/*! ../ai.js */ 15);
+	var _ai = __webpack_require__(/*! ../ai.js */ 14);
 	
 	var _ai2 = _interopRequireDefault(_ai);
 	
@@ -1815,10 +1810,10 @@
 	exports.default = Turtle;
 
 /***/ }),
-/* 39 */
-/*!**********************************************!*\
-  !*** ./client/src/components/sprite/hero.js ***!
-  \**********************************************/
+/* 38 */
+/*!***************************************!*\
+  !*** ./src/components/sprite/hero.js ***!
+  \***************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1827,27 +1822,27 @@
 	    value: true
 	});
 	
-	var _extendedsprite = __webpack_require__(/*! ./extendedsprite.js */ 16);
+	var _extendedsprite = __webpack_require__(/*! ./extendedsprite.js */ 15);
 	
 	var _extendedsprite2 = _interopRequireDefault(_extendedsprite);
 	
-	var _jump = __webpack_require__(/*! ./behaviours/jump.js */ 40);
+	var _jump = __webpack_require__(/*! ./behaviours/jump.js */ 39);
 	
 	var _jump2 = _interopRequireDefault(_jump);
 	
-	var _stop = __webpack_require__(/*! ./behaviours/stop.js */ 41);
+	var _stop = __webpack_require__(/*! ./behaviours/stop.js */ 40);
 	
 	var _stop2 = _interopRequireDefault(_stop);
 	
-	var _move = __webpack_require__(/*! ./behaviours/move.js */ 21);
+	var _move = __webpack_require__(/*! ./behaviours/move.js */ 20);
 	
 	var _move2 = _interopRequireDefault(_move);
 	
-	var _hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 23);
+	var _hurt = __webpack_require__(/*! ./behaviours/hurt.js */ 22);
 	
 	var _hurt2 = _interopRequireDefault(_hurt);
 	
-	var _hit = __webpack_require__(/*! ./behaviours/hit.js */ 42);
+	var _hit = __webpack_require__(/*! ./behaviours/hit.js */ 41);
 	
 	var _hit2 = _interopRequireDefault(_hit);
 	
@@ -1879,10 +1874,10 @@
 	exports.default = Hero;
 
 /***/ }),
-/* 40 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/jump.js ***!
-  \*********************************************************/
+/* 39 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/behaviours/jump.js ***!
+  \**************************************************/
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1899,10 +1894,10 @@
 	module.exports = jumpBehaviour;
 
 /***/ }),
-/* 41 */
-/*!*********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/stop.js ***!
-  \*********************************************************/
+/* 40 */
+/*!**************************************************!*\
+  !*** ./src/components/sprite/behaviours/stop.js ***!
+  \**************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1919,10 +1914,10 @@
 	module.exports = stopBehaviour;
 
 /***/ }),
-/* 42 */
-/*!********************************************************!*\
-  !*** ./client/src/components/sprite/behaviours/hit.js ***!
-  \********************************************************/
+/* 41 */
+/*!*************************************************!*\
+  !*** ./src/components/sprite/behaviours/hit.js ***!
+  \*************************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1936,10 +1931,10 @@
 	module.exports = hitBehaviour;
 
 /***/ }),
-/* 43 */
-/*!**********************************************!*\
-  !*** ./client/src/gamestates/play/update.js ***!
-  \**********************************************/
+/* 42 */
+/*!***************************************!*\
+  !*** ./src/gamestates/play/update.js ***!
+  \***************************************/
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2018,10 +2013,10 @@
 	module.exports = update;
 
 /***/ }),
-/* 44 */
-/*!*****************************************************!*\
-  !*** ./client/src/gamestates/play/eventemitters.js ***!
-  \*****************************************************/
+/* 43 */
+/*!**********************************************!*\
+  !*** ./src/gamestates/play/eventemitters.js ***!
+  \**********************************************/
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2036,17 +2031,17 @@
 	module.exports = eventEmitters;
 
 /***/ }),
-/* 45 */
-/*!****************************************************!*\
-  !*** ./client/src/gamestates/gameover/gameover.js ***!
-  \****************************************************/
+/* 44 */
+/*!*********************************************!*\
+  !*** ./src/gamestates/gameover/gameover.js ***!
+  \*********************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 46);
-	var update = __webpack_require__(/*! ./update.js */ 47);
+	var create = __webpack_require__(/*! ./create.js */ 45);
+	var update = __webpack_require__(/*! ./update.js */ 46);
 	
 	/*
 	    @GameOver
@@ -2070,10 +2065,10 @@
 	module.exports = GameOver;
 
 /***/ }),
-/* 46 */
-/*!**************************************************!*\
-  !*** ./client/src/gamestates/gameover/create.js ***!
-  \**************************************************/
+/* 45 */
+/*!*******************************************!*\
+  !*** ./src/gamestates/gameover/create.js ***!
+  \*******************************************/
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2099,10 +2094,10 @@
 	module.exports = create;
 
 /***/ }),
-/* 47 */
-/*!**************************************************!*\
-  !*** ./client/src/gamestates/gameover/update.js ***!
-  \**************************************************/
+/* 46 */
+/*!*******************************************!*\
+  !*** ./src/gamestates/gameover/update.js ***!
+  \*******************************************/
 /***/ (function(module, exports) {
 
 	'use strict';

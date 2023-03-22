@@ -6,7 +6,7 @@ var fs = require('fs');
 var app = express();
 var server = http.createServer(app);
 
-app.use(express.static(path.resolve(__dirname, 'client')));
+app.use(express.static(path.resolve(__dirname)));
 app.use(express.static(path.resolve(__dirname, 'server\/assets')));
 
 app.get('/api/levels/:id', function (req, res) {
@@ -16,7 +16,7 @@ app.get('/api/levels/:id', function (req, res) {
 
 app.get('/*', function (req, res) {
   console.info('[/*]', req.params);
-  res.sendFile('index.html', { root: path.join(__dirname, './client')   });
+  res.sendFile('index.html', { root: path.join(__dirname)   });
 });
 
 server.listen(process.env.PORT || 8081, process.env.IP || "0.0.0.0", function(){

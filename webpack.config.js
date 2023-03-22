@@ -3,8 +3,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-var BUILD_DIR = path.resolve(__dirname, 'client/dist');
-var APP_DIR = path.resolve(__dirname, 'client/src');
+var BUILD_DIR = path.resolve(__dirname, 'dist');
+var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
   entry: APP_DIR + '/index.js',
@@ -32,14 +32,14 @@ var config = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      root: path.resolve(__dirname, 'client/src')
+      root: path.resolve(__dirname, 'src')
     }),
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),
       WEBGL_RENDERER: JSON.stringify(true)
     }),
     new HtmlWebpackPlugin({
-      template: "./client/index.html"
+      template: "./index.html"
     })
   ]
 };
