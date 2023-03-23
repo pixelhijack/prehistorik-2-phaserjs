@@ -89,19 +89,6 @@
 	}, {
 		"type": "spider",
 		"number": 1,
-		"lifespan": 40000,
-		"revive": 10000,
-		"origin": {
-			"x": 1,
-			"y": 1
-		},
-		"boundTo": {
-			"x1": 0,
-			"x2": null
-		}
-	}, {
-		"type": "spider",
-		"number": 1,
 		"lifespan": 10000,
 		"revive": 10000,
 		"origin": {
@@ -177,7 +164,7 @@
 		},
 		"boundTo": {
 			"x1": 56,
-			"x2": 1200
+			"x2": 200
 		}
 	}, {
 		"type": "bear",
