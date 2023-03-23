@@ -2,6 +2,9 @@ import levelLoader from './levelloader.js';
 import reactions from './reactions.js';
 import creatureFactory from './creaturefactory.js';
 import Hero from '../../components/sprite/hero.js';
+import Thing from '../../components/sprite/things.js';
+import Group from '../../components/sprite/group.js';
+import assetMap from '../assetmap.js';
 
 var create = function(){
     
@@ -31,6 +34,18 @@ var create = function(){
     // [SET LEVEL] fix background, resize
     this.level.backgroundLayer.fixedToCamera = this.levelConfig.fixedBackground;
     this.level.groundLayer.resizeWorld();
+
+    // [THINGS]
+    let bonuses =  new Group(this.game);
+    this.levelConfig.bonus.forEach(function(bonusConfig){
+        let bonus = new Thing(
+            this.game, 
+            assetMap[bonusConfig.img], 
+            bonusConfig.x, 
+            bonusConfig.y
+        );
+        bonuses.add(bonus);
+    }.bind(this));
     
     // [PLAYER]
     this.player = new Hero(

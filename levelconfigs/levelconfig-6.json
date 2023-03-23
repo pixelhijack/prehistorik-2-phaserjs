@@ -107,42 +107,38 @@
 		"y": 135
 	}, {
 		"img": "ALPHABET_E",
-		"x": 280,
+		"x": 290,
 		"y": 135
 	}, {
 		"img": "ALPHABET_J",
-		"x": 300,
-		"y": 135
-	}, {
-		"img": "ALPHABET_U",
 		"x": 310,
 		"y": 135
 	}, {
-		"img": "ALPHABET_N",
+		"img": "ALPHABET_U",
 		"x": 320,
 		"y": 135
 	}, {
-		"img": "ALPHABET_G",
+		"img": "ALPHABET_N",
 		"x": 330,
 		"y": 135
 	}, {
-		"img": "ALPHABET_L",
+		"img": "ALPHABET_G",
 		"x": 340,
 		"y": 135
 	}, {
-		"img": "ALPHABET_E",
+		"img": "ALPHABET_L",
 		"x": 350,
 		"y": 135
 	}, {
-		"img": "ALPHABET_S",
-		"x": 370,
+		"img": "ALPHABET_E",
+		"x": 360,
 		"y": 135
 	}, {
-		"img": "ALPHABET_L",
+		"img": "ALPHABET_S",
 		"x": 380,
 		"y": 135
 	}, {
-		"img": "ALPHABET_E",
+		"img": "ALPHABET_L",
 		"x": 390,
 		"y": 135
 	}, {
@@ -150,8 +146,12 @@
 		"x": 400,
 		"y": 135
 	}, {
-		"img": "ALPHABET_P",
+		"img": "ALPHABET_E",
 		"x": 410,
+		"y": 135
+	}, {
+		"img": "ALPHABET_P",
+		"x": 420,
 		"y": 135
 	}, {
 		"img": "BONUS_BIG_BANANA",
