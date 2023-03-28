@@ -3,6 +3,7 @@ import reactions from './reactions.js';
 import creatureFactory from './creaturefactory.js';
 import Hero from '../../components/sprite/hero.js';
 import Thing from '../../components/sprite/things.js';
+import Portal from '../../components/sprite/portal.js';
 import Group from '../../components/sprite/group.js';
 import assetMap from '../assetmap.js';
 
@@ -36,7 +37,7 @@ var create = function(){
     this.level.groundLayer.resizeWorld();
 
     // [THINGS]
-    let bonuses =  new Group(this.game);
+    this.level.bonuses =  new Group(this.game);
     this.levelConfig.bonus.forEach(function(bonusConfig){
         let bonus = new Thing(
             this.game, 
@@ -44,7 +45,18 @@ var create = function(){
             bonusConfig.x, 
             bonusConfig.y
         );
-        bonuses.add(bonus);
+        this.level.bonuses.add(bonus);
+    }.bind(this));
+
+    this.level.portals =  new Group(this.game);
+    this.levelConfig.portals.forEach(function(portalConfig){
+        let portal = new Portal(
+            this.game, 
+            portalConfig.jumpTo, 
+            portalConfig.x, 
+            portalConfig.y
+        );
+        this.level.portals.add(portal);
     }.bind(this));
     
     // [PLAYER]

@@ -31,6 +31,12 @@ var update = function(){
             });
         }
     }.bind(this));
+
+    this.level.portals.forEach(function(portal){
+        this.game.physics.arcade.collide(this.player, portal, function(){
+            this.game.state.start('Play', true, false, { levelNumber: portal.jumpTo });
+        }, null, this);
+    }.bind(this));
     
     /*
     debugEnemies.call(this, function(){

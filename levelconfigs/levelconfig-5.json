@@ -35,8 +35,8 @@
 		"y": 73
 	},
 	"portals": [{
-		"jumpTo": "downfall-rifts",
-		"x": 470,
+		"jumpTo": 2,
+		"x": 20,
 		"y": 60
 	}],
 	"platforms": [{
