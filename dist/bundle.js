@@ -61,7 +61,7 @@
 	
 	var _play2 = _interopRequireDefault(_play);
 	
-	var _gameover = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 45);
+	var _gameover = __webpack_require__(/*! ./gamestates/gameover/gameover.js */ 46);
 	
 	var _gameover2 = _interopRequireDefault(_gameover);
 	
@@ -275,8 +275,8 @@
 	var init = __webpack_require__(/*! ./init.js */ 5);
 	var preload = __webpack_require__(/*! ./preload.js */ 7);
 	var create = __webpack_require__(/*! ./create.js */ 8);
-	var update = __webpack_require__(/*! ./update.js */ 43);
-	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 44);
+	var update = __webpack_require__(/*! ./update.js */ 44);
+	var eventEmitters = __webpack_require__(/*! ./eventemitters.js */ 45);
 	
 	/*
 	    @Play
@@ -598,7 +598,7 @@
 	
 	var _group2 = _interopRequireDefault(_group);
 	
-	var _assetmap = __webpack_require__(/*! ../assetmap.js */ 48);
+	var _assetmap = __webpack_require__(/*! ../assetmap.js */ 43);
 	
 	var _assetmap2 = _interopRequireDefault(_assetmap);
 	
@@ -2040,188 +2040,6 @@
 
 /***/ }),
 /* 43 */
-/*!***************************************!*\
-  !*** ./src/gamestates/play/update.js ***!
-  \***************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	var update = function update() {
-	
-	    // console.log('[PHASER][Play][Update]');
-	
-	    // [DEBUG] fps 
-	    this.game.debug.text(this.game.time.fps, 5, 20);
-	
-	    // [COLLISIONS]
-	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
-	
-	    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
-	
-	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function () {
-	        this.eventsOf.level.dispatch({ type: 'DIE' });
-	    }.bind(this));
-	
-	    this.game.physics.arcade.collide(this.player, this.enemies, function (player, enemy) {
-	
-	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
-	        if (this.player.hasState('hit')) {
-	            this.eventsOf.level.dispatch({
-	                type: 'HURT',
-	                subject: enemy.id,
-	                direction: enemy.body.touching
-	            });
-	        } else {
-	            this.eventsOf.level.dispatch({
-	                type: 'HURT',
-	                subject: this.player,
-	                direction: this.player.body.touching
-	            });
-	        }
-	    }.bind(this));
-	
-	    /*
-	    debugEnemies.call(this, function(){
-	        return this.facingRight;
-	    });
-	    */
-	
-	    // [KEYPRESS] event dispatch
-	    handleKeypress.call(this);
-	};
-	
-	function handleKeypress() {
-	    if (this.player.hasState('hurt')) {
-	        return;
-	    }
-	    if (this.keys.left.isDown) {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
-	    } else if (this.keys.right.isDown) {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
-	    } else {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
-	    }
-	
-	    if (this.keys.up.isDown) {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
-	    }
-	
-	    if (this.keys.space.isDown) {
-	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
-	    }
-	}
-	
-	function debugEnemies(debugCallback) {
-	    this.enemies.forEachAlive(function (enemy) {
-	        enemy.debug(debugCallback.call(enemy));
-	    });
-	}
-	
-	module.exports = update;
-
-/***/ }),
-/* 44 */
-/*!**********************************************!*\
-  !*** ./src/gamestates/play/eventemitters.js ***!
-  \**********************************************/
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	var eventEmitters = {
-	    eventsOf: {
-	        keys: new Phaser.Signal(),
-	        level: new Phaser.Signal()
-	    }
-	};
-	
-	module.exports = eventEmitters;
-
-/***/ }),
-/* 45 */
-/*!*********************************************!*\
-  !*** ./src/gamestates/gameover/gameover.js ***!
-  \*********************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
-	var create = __webpack_require__(/*! ./create.js */ 46);
-	var update = __webpack_require__(/*! ./update.js */ 47);
-	
-	/*
-	    @GameOver
-	    inherits from GameState component
-	*/
-	function GameOver(globalConfig) {
-	    GameState.call(this);
-	    this.globalConfig = globalConfig;
-	}
-	GameOver.prototype = Object.create(GameState.prototype);
-	GameOver.prototype.constructor = GameOver;
-	
-	/*
-	    @override 
-	*/
-	GameOver.prototype = {
-	    create: create,
-	    update: update
-	};
-	
-	module.exports = GameOver;
-
-/***/ }),
-/* 46 */
-/*!*******************************************!*\
-  !*** ./src/gamestates/gameover/create.js ***!
-  \*******************************************/
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	var create = function create() {
-	
-	    // fps debugging
-	    this.game.time.advancedTiming = true;
-	
-	    // CTA text
-	    var text = this.game.add.text(this.globalConfig.width / 2, this.globalConfig.height / 2, "Game Over\nPress space \nto continue", { font: "48px Courier", fill: "#ffffff", align: "center" });
-	
-	    text.anchor.set(0.5);
-	
-	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    spaceKey.onDown.addOnce(function () {
-	        this.game.state.start('Menu', true, true);
-	    }, this);
-	
-	    console.log('[PHASER][GameOver][Create]');
-	};
-	
-	module.exports = create;
-
-/***/ }),
-/* 47 */
-/*!*******************************************!*\
-  !*** ./src/gamestates/gameover/update.js ***!
-  \*******************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	var update = function update() {
-	
-	    // fps 
-	    this.game.debug.text(this.game.time.fps, 5, 20);
-	
-	    console.log('[PHASER][GameOver][Update]');
-	};
-	
-	module.exports = update;
-
-/***/ }),
-/* 48 */
 /*!************************************!*\
   !*** ./src/gamestates/assetmap.js ***!
   \************************************/
@@ -2704,6 +2522,188 @@
 	};
 	
 	module.exports = assetMap;
+
+/***/ }),
+/* 44 */
+/*!***************************************!*\
+  !*** ./src/gamestates/play/update.js ***!
+  \***************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	var update = function update() {
+	
+	    // console.log('[PHASER][Play][Update]');
+	
+	    // [DEBUG] fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	
+	    // [COLLISIONS]
+	    this.game.physics.arcade.collide(this.player, this.level.collisionLayer);
+	
+	    this.game.physics.arcade.collide(this.enemies, this.level.collisionLayer);
+	
+	    this.game.physics.arcade.collide(this.player, this.level.deathLayer, function () {
+	        this.eventsOf.level.dispatch({ type: 'DIE' });
+	    }.bind(this));
+	
+	    this.game.physics.arcade.collide(this.player, this.enemies, function (player, enemy) {
+	
+	        this.game.camera.shake(0.003, 500, true, Phaser.Camera.VERTICAL, true);
+	        if (this.player.hasState('hit')) {
+	            this.eventsOf.level.dispatch({
+	                type: 'HURT',
+	                subject: enemy.id,
+	                direction: enemy.body.touching
+	            });
+	        } else {
+	            this.eventsOf.level.dispatch({
+	                type: 'HURT',
+	                subject: this.player,
+	                direction: this.player.body.touching
+	            });
+	        }
+	    }.bind(this));
+	
+	    /*
+	    debugEnemies.call(this, function(){
+	        return this.facingRight;
+	    });
+	    */
+	
+	    // [KEYPRESS] event dispatch
+	    handleKeypress.call(this);
+	};
+	
+	function handleKeypress() {
+	    if (this.player.hasState('hurt')) {
+	        return;
+	    }
+	    if (this.keys.left.isDown) {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'left' });
+	    } else if (this.keys.right.isDown) {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'right' });
+	    } else {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'stop' });
+	    }
+	
+	    if (this.keys.up.isDown) {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'up' });
+	    }
+	
+	    if (this.keys.space.isDown) {
+	        this.eventsOf.keys.dispatch({ type: 'MOVE', key: 'hit' });
+	    }
+	}
+	
+	function debugEnemies(debugCallback) {
+	    this.enemies.forEachAlive(function (enemy) {
+	        enemy.debug(debugCallback.call(enemy));
+	    });
+	}
+	
+	module.exports = update;
+
+/***/ }),
+/* 45 */
+/*!**********************************************!*\
+  !*** ./src/gamestates/play/eventemitters.js ***!
+  \**********************************************/
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	var eventEmitters = {
+	    eventsOf: {
+	        keys: new Phaser.Signal(),
+	        level: new Phaser.Signal()
+	    }
+	};
+	
+	module.exports = eventEmitters;
+
+/***/ }),
+/* 46 */
+/*!*********************************************!*\
+  !*** ./src/gamestates/gameover/gameover.js ***!
+  \*********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var GameState = __webpack_require__(/*! ../../components/gamestate/gamestate.js */ 3);
+	var create = __webpack_require__(/*! ./create.js */ 47);
+	var update = __webpack_require__(/*! ./update.js */ 48);
+	
+	/*
+	    @GameOver
+	    inherits from GameState component
+	*/
+	function GameOver(globalConfig) {
+	    GameState.call(this);
+	    this.globalConfig = globalConfig;
+	}
+	GameOver.prototype = Object.create(GameState.prototype);
+	GameOver.prototype.constructor = GameOver;
+	
+	/*
+	    @override 
+	*/
+	GameOver.prototype = {
+	    create: create,
+	    update: update
+	};
+	
+	module.exports = GameOver;
+
+/***/ }),
+/* 47 */
+/*!*******************************************!*\
+  !*** ./src/gamestates/gameover/create.js ***!
+  \*******************************************/
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	var create = function create() {
+	
+	    // fps debugging
+	    this.game.time.advancedTiming = true;
+	
+	    // CTA text
+	    var text = this.game.add.text(this.globalConfig.width / 2, this.globalConfig.height / 2, "Game Over\nPress space \nto continue", { font: "48px Courier", fill: "#ffffff", align: "center" });
+	
+	    text.anchor.set(0.5);
+	
+	    var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    spaceKey.onDown.addOnce(function () {
+	        this.game.state.start('Menu', true, true);
+	    }, this);
+	
+	    console.log('[PHASER][GameOver][Create]');
+	};
+	
+	module.exports = create;
+
+/***/ }),
+/* 48 */
+/*!*******************************************!*\
+  !*** ./src/gamestates/gameover/update.js ***!
+  \*******************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	var update = function update() {
+	
+	    // fps 
+	    this.game.debug.text(this.game.time.fps, 5, 20);
+	
+	    console.log('[PHASER][GameOver][Update]');
+	};
+	
+	module.exports = update;
 
 /***/ })
 /******/ ]);

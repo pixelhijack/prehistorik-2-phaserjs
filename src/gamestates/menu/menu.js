@@ -89,7 +89,10 @@ function create() {
           id: 'stairway-from-heaven'
         }
       ].map(function(line, i){
-        line.textRef = this.game.add.text(20, 30 + i * 20, line.key +' - '+ line.text, { 
+        line.textRef = this.game.add.text(
+            20, 
+            30 + i * 20, 
+            line.key +' - '+ line.text, { 
             font: "18px Courier", 
             fill: "#ffffff" 
           });

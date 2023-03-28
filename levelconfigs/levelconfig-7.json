@@ -1,0 +1,45 @@
+{
+	"id": "mosquito-falls",
+	"name": "Mosquito Falls",
+	"tileset": "tileset-level-original-level-one",
+	"tilemap": "tilemap-level-original-level-one",
+	"tiledJson": "level-7.json",
+	"tilesetImage": "L1_bank",
+	"backgroundImage": "forest-green",
+	"tilesetImageExtension": ".png",
+    "backgroundImageExtension": ".png",
+    "backgroundKey": "background-2",
+	"width": 768,
+	"height": 416,
+	"layers": {
+		"groundLayer": {
+			"key": "ground-layer",
+			"visible": true
+		},
+		"collisionLayer": {
+			"key": "collision-layer",
+			"visible": false
+		},
+		"deathLayer": {
+			"key": "death-layer",
+			"visible": false
+		},
+		"parallaxLayer": {
+			"key": "parallax-layer",
+			"visible": true
+		}
+	},
+	"fixedBackground": true,
+	"entryPoint": {
+		"x": 28,
+		"y": 206
+	},
+	"portals": [{
+		"jumpTo": "downfall-rifts",
+		"x": 3030,
+		"y": 434
+	}],
+	"platforms": [],
+	"bonus": [],
+	"enemies": []
+}
