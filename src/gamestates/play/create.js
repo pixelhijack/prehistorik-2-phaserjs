@@ -5,6 +5,7 @@ import Hero from '../../components/sprite/hero.js';
 import Thing from '../../components/sprite/things.js';
 import Portal from '../../components/sprite/portal.js';
 import Group from '../../components/sprite/group.js';
+import Platform from '../../components/sprite/platform.js';
 import assetMap from '../assetmap.js';
 
 var create = function(){
@@ -57,6 +58,18 @@ var create = function(){
             portalConfig.y
         );
         this.level.portals.add(portal);
+    }.bind(this));
+
+    this.level.platforms =  new Group(this.game);
+    this.levelConfig.platforms.forEach(function(platformConfig){
+        let platform = new Platform(
+            this.game, 
+            assetMap[platformConfig.img], 
+            platformConfig.x, 
+            platformConfig.y, 
+            platformConfig
+        );
+        this.level.platforms.add(platform);
     }.bind(this));
     
     // [PLAYER]
