@@ -30,6 +30,7 @@ function onMove(event){
             break;
         case 'hit':
             this.hit();
+            console.log(`x: ${this.body.center.x} y: ${this.body.center.y}`);
             break;
     }   
 }

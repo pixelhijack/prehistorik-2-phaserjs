@@ -1,0 +1,116 @@
+{
+	"id": "original-woods",
+	"name": "The Original Woods",
+	"tileset": "tileset-level-original-woods",
+	"tilemap": "tilemap-level-original-woods",
+	"tiledJson": "level-10.json",
+	"tilesetImage": "L5_green",
+	"backgroundImage": "forest",
+	"tilesetImageExtension": ".png",
+    "backgroundImageExtension": ".png",
+    "backgroundKey": "background-2",
+	"width": 1600,
+	"height": 1600,
+	"layers": {
+		"groundLayer": {
+			"key": "ground-layer",
+			"visible": true
+		},
+		"collisionLayer": {
+			"key": "collision-layer",
+			"visible": false
+		},
+		"deathLayer": {
+			"key": "death-layer",
+			"visible": false
+		}
+	},
+	"fixedBackground": true,
+	"entryPoint": {
+		"x": 48,
+		"y": 1690
+	},
+	"portals": [],
+	"platforms": [],
+	"bonus": [
+        {
+            "img": "BONUS_BIG_MCDONALDS",
+            "x": 184,
+            "y": 1571
+        }, {
+            "img": "BONUS_BIG_BANANA",
+            "x": 214,
+            "y": 1610
+        }
+    ],
+	"enemies": [
+        {
+            "type": "native",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 350,
+                "y": 1690
+            },
+            "boundTo": {
+                "x1": 291,
+                "x2": 454
+            }
+        }, {
+            "type": "native",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 632,
+                "y": 1706
+            },
+            "boundTo": {
+                "x1": 570,
+                "x2": 675
+            }
+        }, {
+            "type": "native",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 632,
+                "y": 1706
+            },
+            "boundTo": {
+                "x1": 570,
+                "x2": 675
+            }
+        }, {
+            "type": "dragonfly",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 1053,
+                "y": 1860
+            },
+            "boundTo": {
+                "x1": 943,
+                "x2": 1250
+            }
+        }, {
+            "type": "frog",
+            "number": 1,
+            "lifespan": 20000,
+            "revive": 1000,
+            "active": false,
+            "onClose": "wakeUp",
+            "origin": {
+                "x": 1194,
+                "y": 1594
+            },
+            "boundTo": {
+                "x1": 1112,
+                "x2": 1226
+            }
+        }
+    ]
+}
