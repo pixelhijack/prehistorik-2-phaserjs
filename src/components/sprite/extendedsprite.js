@@ -6,7 +6,7 @@ import debug from './behaviours/debug.js';
     @ExtendedSprite
 */
 function ExtendedSprite(game, x, y, sprite, props){
-    
+    console.log(this.constructor.name);
     this.game = game;
     this.props = props || { animations: [] };
     

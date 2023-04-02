@@ -34,7 +34,13 @@ var update = function(){
 
     this.level.portals.forEach(function(portal){
         this.game.physics.arcade.collide(this.player, portal, function(){
-            this.game.state.start('Play', true, false, { levelNumber: portal.jumpTo });
+            fetch('/api/levels/' + portal.jumpTo, {
+                method: 'get'
+            }).then(function(response) {
+                return response.json();
+            }).then(function(levelconfig) {
+                this.game.state.start('Play', true, true, levelconfig);
+            }.bind(this));
         }, null, this);
     }.bind(this));
     

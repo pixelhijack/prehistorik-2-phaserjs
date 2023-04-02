@@ -111,8 +111,8 @@ function create() {
             method: 'get'
         }).then(function(response) {
             return response.json();
-        }).then(function(json) {
-            this.game.state.start('Play', true, true, json);
+        }).then(function(levelconfig) {
+            this.game.state.start('Play', true, true, levelconfig);
         }.bind(this));
     }
 
