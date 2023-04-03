@@ -1,0 +1,97 @@
+{
+	"id": "fire-forest",
+	"name": "The Fire Forest",
+	"tileset": "tileset-level-fire-forest",
+	"tilemap": "tilemap-level-fire-forest",
+	"tiledJson": "level-12.json",
+	"tilesetImage": "L5_bank",
+	"backgroundImage": "forest-fire",
+	"tilesetImageExtension": ".png",
+    "backgroundImageExtension": ".png",
+    "backgroundKey": "background-2",
+	"width": 1600,
+	"height": 1600,
+	"layers": {
+		"groundLayer": {
+			"key": "ground-layer",
+			"visible": true
+		},
+		"collisionLayer": {
+			"key": "collision-layer",
+			"visible": false
+		},
+		"deathLayer": {
+			"key": "death-layer",
+			"visible": false
+		}
+	},
+	"fixedBackground": true,
+	"entryPoint": {
+		"x": 77,
+		"y": 250
+	},
+	"portals": [],
+	"platforms": [],
+	"bonus": [
+        {
+            "img": "BONUS_FRIDGE",
+            "x": 107,
+            "y": 339
+        }
+    ],
+	"enemies": [
+        {
+            "type": "native",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 450,
+                "y": 266
+            },
+            "boundTo": {
+                "x1": 338,
+                "x2": 516
+            }
+        }, {
+            "type": "native",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 744,
+                "y": 202
+            },
+            "boundTo": {
+                "x1": 740,
+                "x2": 857
+            }
+        }, {
+            "type": "native",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 781,
+                "y": 122
+            },
+            "boundTo": {
+                "x1": 780,
+                "x2": 864
+            }
+        }, {
+            "type": "dragonfly",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 408,
+                "y": 122
+            },
+            "boundTo": {
+                "x1": 300,
+                "x2": 614
+            }
+        }
+    ]
+}
