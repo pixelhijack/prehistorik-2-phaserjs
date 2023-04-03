@@ -2,7 +2,7 @@
   "name": "prehistorik-2-phaserjs",
   "version": "1.0.0",
   "description": "Prehistorik 1993 Titus - PhaserJS Remake",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "dependencies": {
     "express": "^4.14.0",
     "webpack": "^1.13.2"
