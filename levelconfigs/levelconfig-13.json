@@ -1,0 +1,58 @@
+{
+	"id": "original-demon-dungeons",
+	"name": "The Demon Dungeons",
+	"tileset": "tileset-level-demon-dungeons",
+	"tilemap": "tilemap-level-demon-dungeons",
+	"tiledJson": "level-13.json",
+	"tilesetImage": "L9_L10_map_bank",
+	"backgroundImage": "forest-fire",
+	"tilesetImageExtension": ".png",
+    "backgroundImageExtension": ".png",
+    "backgroundKey": "background-2",
+	"width": 1600,
+	"height": 1600,
+	"layers": {
+		"groundLayer": {
+			"key": "ground-layer",
+			"visible": true
+		},
+		"collisionLayer": {
+			"key": "collision-layer",
+			"visible": false
+		},
+		"deathLayer": {
+			"key": "death-layer",
+			"visible": false
+		},
+        "foregroundLayer": {
+			"key": "foreground-layer",
+			"visible": true
+		}
+	},
+	"fixedBackground": true,
+	"entryPoint": {
+		"x": 67,
+		"y": 858
+	},
+	"portals": [],
+	"platforms": [],
+	"bonus": [
+        
+    ],
+	"enemies": [
+        {
+            "type": "dragonfly",
+            "number": 1,
+            "lifespan": null,
+            "revive": false,
+            "origin": {
+                "x": 306,
+                "y": 858
+            },
+            "boundTo": {
+                "x1": 24,
+                "x2": 461
+            }
+        }
+    ]
+}
